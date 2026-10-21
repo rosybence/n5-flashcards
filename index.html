@@ -69,6 +69,16 @@ button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outlin
 .grades button[data-g="0"]{color:var(--bad)} .grades button[data-g="1"]{color:var(--hard)}
 .grades button[data-g="2"]{color:var(--good)} .grades button[data-g="3"]{color:var(--accent)}
 .grades button.suggest{outline:2px solid currentColor;outline-offset:-2px}
+.after{display:flex;flex-direction:column;gap:10px}
+.after .row .btn{padding:16px 10px}
+.next{flex:1.4;font-size:17px;font-weight:600}
+#flip.wrong{color:var(--bad);border-color:var(--bad)}
+#flip.right{color:var(--good);border-color:var(--good)}
+.mark{text-align:center;font-size:13px;color:var(--muted)}
+.mark b{font-weight:600}.mark .ok{color:var(--good)}.mark .no{color:var(--bad)}
+.more summary{font-size:13px;color:var(--muted);cursor:pointer;text-align:center;list-style:none;padding:4px}
+.more summary::-webkit-details-marker{display:none}
+.more[open] summary{margin-bottom:8px}
 .walk{border-radius:16px;padding:14px;background:var(--accent-soft);display:flex;flex-direction:column;gap:10px}
 .walk p{margin:0;font-size:13.5px;color:var(--muted)}
 .walk .status{font-size:17px;font-weight:600;color:var(--ink);min-height:1.45em}
@@ -113,7 +123,14 @@ button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outlin
     <button class="btn" id="mic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg>Speak</button>
     <button class="btn primary" id="reveal">Show answer</button>
   </div>
-  <div class="grades" id="grades" hidden></div>
+  <div class="after" id="after" hidden>
+    <div class="row">
+      <button class="btn" id="flip"></button>
+      <button class="btn primary next" id="next">Next<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    </div>
+    <div class="mark" id="mark"></div>
+    <details class="more"><summary>Rate it yourself</summary><div class="grades" id="grades"></div></details>
+  </div>
 
   <div class="walk">
     <div class="status" id="wStatus">Walk mode</div>
@@ -437,11 +454,14 @@ function render(){
       `<div class="jp">${ruby(cur)}</div><div class="kana">${cur.kana} · ${cur.r}</div>`}</div>`;
   }
   card.innerHTML=html;
-  $('reveal').disabled=revealed;
-  $('mic').disabled=revealed||micBlocked;
-  const g=$('grades');g.hidden=!revealed;
+  $('actions').hidden=revealed;
+  $('mic').disabled=micBlocked;
+  $('after').hidden=!revealed||walking;
   if(revealed){const now=Date.now(),s=st(cur);
-    g.innerHTML=['Again','Hard','Good','Easy'].map((n,i)=>`<button data-g="${i}" class="${suggest===i?'suggest':''}">${n}<small>${fmt(schedule(s,i,now).due-now)}</small></button>`).join('')}
+    const wrong=suggest===0;
+    const f=$('flip');f.className='btn '+(wrong?'right':'wrong');f.textContent=wrong?'✓ I was right':'✗ I got it wrong';
+    $('mark').innerHTML=wrong?`Marked <b class="no">wrong</b> · back in ${fmt(schedule(s,0,now).due-now)}`:`Marked <b class="ok">right</b> · next in ${fmt(schedule(s,2,now).due-now)}`;
+    $('grades').innerHTML=['Again','Hard','Good','Easy'].map((n,i)=>`<button data-g="${i}">${n}<small>${fmt(schedule(s,i,now).due-now)}</small></button>`).join('')}
 }
 function show(){cur=nextCard();revealed=false;feedback=null;suggest=null;render();
   if(cur&&+S.set.auto&&!walking&&userActed){const [t,l]=promptOf(cur);speak(t,l)}}
@@ -454,6 +474,8 @@ document.addEventListener('pointerdown',()=>{userActed=true},{once:true,capture:
 $('play').onclick=()=>{if(!cur)return;const [t,l]=revealed?answerOf(cur):promptOf(cur);speak(t,l)};
 $('reveal').onclick=()=>{if(cur&&!revealed){suggest=null;doReveal()}};
 $('grades').onclick=e=>{const b=e.target.closest('button');if(b)answerGrade(+b.dataset.g)};
+$('next').onclick=()=>answerGrade(suggest===0?0:2);
+$('flip').onclick=()=>{suggest=suggest===0?2:0;render()};
 $('mic').onclick=async()=>{
   if(!cur||revealed||micBlocked)return;
   const b=$('mic');b.classList.add('listening');b.lastChild.textContent='Listening…';
@@ -501,7 +523,8 @@ async function walkLoop(){
         feedback=heard.length?{cls:ok?'ok':'no',text:(ok?'Correct — heard “':'Not quite — heard “')+heard[0]+'”'}:{cls:'no',text:'Didn’t catch anything'};
         status(ok?'Correct':'Here’s the answer');await doReveal();if(!walking)break;
         if(!ok){await wait(500);const [rt,rl]=answerOf(cur);await speak(rt,rl);if(!walking)break;
-          status('Missed — tap if you were actually right');if(await grace('I was right',2500))ok=true}
+          status('Marked wrong — tap if you were right');if(await grace('✓ I was right',3000))ok=true}
+        else{status('Marked right — tap if it was wrong');if(await grace('✗ I got it wrong',2500))ok=false}
         grade(cur,ok?2:0);lastId=cur.id;await wait(500);continue;
       }
     }
@@ -509,7 +532,7 @@ async function walkLoop(){
     for(let s=S.set.gap;s>0&&walking;s--){status('Say it out loud… '+s);await wait(1000)}
     if(!walking)break;
     status('Answer');await doReveal();if(!walking)break;
-    status('Tap if you missed it');const missed=await grace('I missed it',3500);
+    status('Tap if you missed it');const missed=await grace('✗ I got it wrong',3500);
     grade(cur,missed?0:2);lastId=cur.id;await wait(400);
   }
 }
