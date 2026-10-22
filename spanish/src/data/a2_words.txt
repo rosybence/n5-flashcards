@@ -1,0 +1,311 @@
+# Spanish | English | other Spanish answers | other English answers | picture
+el tío|uncle|||👨
+la tía|aunt|||👩
+el primo|cousin (male)|la prima|cousin|🧑
+el sobrino|nephew|||👦
+la sobrina|niece|||👧
+el nieto|grandson|||👦
+la nieta|granddaughter|||👧
+el vecino|neighbour (male)|la vecina|neighbour,neighbor|🏘️
+el compañero|colleague; classmate|la compañera|partner,mate|🧑‍🤝‍🧑
+el jefe|boss|la jefa||👔
+el cliente|customer; client|la clienta||🛍️
+el médico|doctor|la médica,el doctor,la doctora||🧑‍⚕️
+el enfermero|nurse (male)|la enfermera|nurse|🧑‍⚕️
+el profesor|teacher (male)|la profesora|teacher|🧑‍🏫
+el estudiante|student|la estudiante,el alumno,la alumna|pupil|🧑‍🎓
+el camarero|waiter|la camarera|waitress|🧑‍🍳
+el cocinero|cook; chef|la cocinera|chef|🧑‍🍳
+el policía|police officer|la policía|policeman,policewoman|👮
+el abogado|lawyer|la abogada||⚖️
+el ingeniero|engineer|la ingeniera||👷
+el conductor|driver|la conductora||🚗
+el dependiente|shop assistant|la dependienta|sales assistant|🛍️
+la cara|face|||🙂
+la nariz|nose|||👃
+la oreja|ear|el oído||👂
+el diente|tooth|los dientes|teeth|🦷
+el cuello|neck|||🧣
+el hombro|shoulder|||💪
+el brazo|arm|||💪
+el dedo|finger|||☝️
+la pierna|leg|||🦵
+la rodilla|knee|||🦵
+la espalda|back|||🧍
+el estómago|stomach|la barriga,~la tripa|tummy|🫃
+el corazón|heart|||❤️
+el dolor|pain|||🤕|ache
+el dolor de cabeza|headache|||🤕
+la fiebre|fever; temperature|||🤒|a temperature
+el resfriado|cold (illness)|el catarro|a cold|🤧
+la gripe|flu|||🤧
+la medicina|medicine|el medicamento||💊
+la pastilla|pill; tablet|||💊
+la receta|prescription; recipe|||📄
+el dentista|dentist|la dentista||🦷
+la cita|appointment; date|||📅
+la salud|health|||💚
+el desayuno|breakfast|||🥐
+el plato|plate; dish|||🍽️
+el vaso|glass|||🥛
+la taza|cup; mug|||☕
+el tenedor|fork|||🍴
+el cuchillo|knife|||🔪
+la cuchara|spoon|||🥄
+la botella|bottle|||🍾
+la sopa|soup|||🍲
+el bocadillo|sandwich (baguette)|el sándwich|sandwich,baguette|🥖
+el filete|steak|||🥩
+la cebolla|onion|||🧅
+el ajo|garlic|||🧄
+la zanahoria|carrot|||🥕
+la lechuga|lettuce|||🥬
+el limón|lemon|||🍋
+la fresa|strawberry|||🍓
+las uvas|grapes|la uva|grape|🍇
+el aceite|oil|el aceite de oliva|olive oil|🫒
+la mantequilla|butter|||🧈
+el postre|dessert|||🍰|pudding
+el helado|ice cream|||🍦
+el pastel|cake|la tarta||🎂
+el chocolate|chocolate|||🍫
+la galleta|biscuit|||🍪|cookie
+la ropa interior|underwear|||🩲
+el jersey|jumper|el suéter|sweater|🧶
+la chaqueta|jacket|||🧥
+el sombrero|hat|la gorra|cap|👒
+la bufanda|scarf|||🧣
+los guantes|gloves|el guante||🧤
+las gafas|glasses|las gafas de sol|sunglasses,spectacles|👓
+el bolso|handbag|la bolsa|bag|👜
+la mochila|backpack; rucksack|||🎒
+el paraguas|umbrella|||☂️
+la talla|size (clothes)|||📏|size
+el número|number; shoe size|||🔢
+el precio|price|||🏷️
+las rebajas|sales|||🏷️|the sales
+el probador|changing room|||🚪|fitting room
+el ascensor|lift|||🛗|elevator
+la escalera|stairs|las escaleras||🪜
+el jardín|garden|||🌷|yard
+la terraza|terrace; balcony|el balcón||🌇
+el armario|wardrobe; cupboard|||🚪|closet
+la nevera|fridge|el frigorífico|refrigerator|🧊
+el horno|oven|||🔥
+la lavadora|washing machine|||🧺
+la ducha|shower|||🚿
+el espejo|mirror|||🪞
+la lámpara|lamp|la luz|light|💡
+el alquiler|rent|||🏠
+el barrio|neighbourhood; area|||🏘️|neighborhood,district
+el centro|centre; city centre|el centro de la ciudad|center,downtown,town centre|🏙️
+la plaza|square|||⛲
+el puente|bridge|||🌉
+el edificio|building|||🏢
+el ayuntamiento|town hall|||🏛️|city hall
+la biblioteca|library|||📚
+el gimnasio|gym|el gym||🏋️
+la piscina|swimming pool|||🏊|pool
+el estadio|stadium|||🏟️
+la panadería|bakery|||🥖
+la carnicería|butcher's|||🥩
+la frutería|greengrocer's|||🍎
+la peluquería|hairdresser's|||💇
+correos|post office|la oficina de correos||📮
+el buzón|postbox; letterbox|||📮|mailbox
+la carta|letter; menu|||✉️
+el sobre|envelope|||✉️
+el billete|ticket; banknote|el boleto,la entrada|note|🎫
+la entrada|ticket (for a show); entrance|||🎫|entry
+la salida|exit; departure|||🚪
+la llegada|arrival|||🛬
+el andén|platform|la vía||🚉
+el viaje|trip; journey|||🧳|travel
+las vacaciones|holiday|||🏖️|holidays,vacation
+la maleta|suitcase|||🧳
+el pasaporte|passport|||🛂
+el equipaje|luggage|||🧳|baggage
+el mapa|map|||🗺️
+el turista|tourist|la turista||📸
+el barco|boat; ship|||⛵
+la moto|motorbike|la motocicleta|motorcycle|🏍️
+el semáforo|traffic lights|||🚦
+la esquina|corner|||📐
+el norte|north|||⬆️
+el sur|south|||⬇️
+el este|east|||➡️
+el oeste|west|||⬅️
+la naturaleza|nature|||🌿
+el campo|countryside; field|||🌾
+el bosque|forest; woods|||🌲
+el lago|lake|||🏞️
+la isla|island|||🏝️
+el cielo|sky|||🌤️
+la nube|cloud|||☁️
+el viento|wind|||🌬️
+la tormenta|storm|||⛈️
+la temperatura|temperature|||🌡️
+el grado|degree|los grados|degrees|🌡️
+el animal|animal|||🐾
+la vaca|cow|||🐄
+el cerdo|pig|||🐖
+la oveja|sheep|||🐑
+el pez|fish (live)|||🐟|fish
+el ratón|mouse|||🐭
+la flor|flower|||🌸
+el árbol|tree|||🌳
+la música|music|||🎵
+la canción|song|||🎤
+la película|film|la peli|movie|🎬
+la serie|series; TV series|||📺|show
+la televisión|television|la tele|tv|📺
+la radio|radio|||📻
+el periódico|newspaper|el diario|paper|📰
+la revista|magazine|||📰
+la foto|photo|la fotografía|picture|📷
+el deporte|sport|||🏅|sports
+el fútbol|football|||⚽|soccer
+el baloncesto|basketball|||🏀
+el tenis|tennis|||🎾
+el partido|match; game|||🏟️
+el equipo|team; equipment|||👥
+la fiesta|party|||🎉
+el cumpleaños|birthday|||🎂
+el regalo|present; gift|||🎁
+la Navidad|Christmas|||🎄
+el ordenador portátil|laptop|el portátil||💻
+la pantalla|screen|||🖥️
+el correo electrónico|email|el email,el correo,~el mail|e-mail|📧
+la contraseña|password|||🔐
+la página web|website|la web|web page|🌐
+el mensaje|message|||💬|text
+la aplicación|app|la app||📱|application
+la reunión|meeting|||👥
+la empresa|company; firm|la compañía|business|🏢
+el sueldo|salary; wages|el salario|pay|💶
+el horario|timetable; schedule; hours|||🗓️|opening hours
+la clase|class; lesson|||🏫
+el examen|exam|||📝|test
+los deberes|homework|||📝
+la pregunta|question|||❓
+la respuesta|answer|||💡|reply
+la palabra|word|||🔤
+el idioma|language|la lengua||🗣️
+el problema|problem|||⚠️|issue
+la idea|idea|||💡
+la cosa|thing|||📦
+la vez|time (occasion)|una vez|once,occasion|🔁
+el fin|end|el final||🏁
+el principio|beginning; start|el comienzo||▶️
+la mitad|half|||🌗
+el cuarto|quarter|||🕒
+la gente|people|||👥
+divertido|fun; funny|divertida|enjoyable|😄
+aburrido|boring; bored|aburrida||😴
+interesante|interesting|||🤔
+importante|important|||❗
+tranquilo|calm; quiet|tranquila|peaceful|😌
+nervioso|nervous|nerviosa||😬
+simpático|nice; friendly|simpática,amable|kind|😊
+antipático|unfriendly; unpleasant|antipática||😠
+inteligente|clever; intelligent|listo,lista|smart|🧠
+tonto|silly; stupid|tonta||🤪
+alegre|cheerful; happy|||😃
+serio|serious|seria||😐
+gordo|fat|gorda||🫃
+delgado|thin; slim|delgada|skinny|🧍
+rubio|blond; fair-haired|rubia|blonde|👱
+moreno|dark-haired; tanned|morena|brunette,dark|🧑
+rápido|fast; quick|rápida,deprisa||🐆
+lento|slow|lenta,despacio||🐢
+limpio|clean|limpia||✨
+sucio|dirty|sucia||💩
+lleno|full|llena||🍽️
+vacío|empty|vacía||🫙
+abierto|open|abierta||🔓
+cerrado|closed; shut|cerrada||🔒
+mejor|better; best|||⬆️
+peor|worse; worst|||⬇️
+mismo|same|misma||🟰
+otro|other; another|otra||➕
+todo|all; everything|toda,todos,todas||🌐
+cada|each; every|||🔁
+algo|something|||❓
+nada|nothing|||🚫
+alguien|someone; somebody|||🧍|anyone
+nadie|nobody; no one|||🚫|no-one
+ya|already|||✔️
+todavía|still; yet|aún||⏳
+pronto|soon|||⏩
+otra vez|again|de nuevo||🔁
+casi|almost; nearly|||🤏
+bastante|quite; enough|||👌
+demasiado|too; too much|demasiada||⚠️
+solo|only; alone|sólo,solamente|just|1️⃣
+juntos|together|juntas||🤝
+dentro|inside|||📦|in
+fuera|outside|||🌳|out
+encima|on top; above|arriba|up|⬆️
+debajo|under; below|abajo|down,underneath|⬇️
+delante|in front|||⏩
+detrás|behind|||🔙
+al lado|next to; beside|junto a||↔️
+entre|between; among|||↔️
+enfrente|opposite|frente a|across from|↕️
+abrir|to open|||🔓
+apagar|to turn off; to switch off|||📴
+encender|to turn on; to switch on|poner||💡
+cambiar|to change|||🔄
+probar|to try; to taste|probarse|to try on|👅
+llevar|to carry; to wear; to take|||👜
+traer|to bring|||🎁
+poner|to put; to turn on|||📥
+dejar|to leave; to let; to lend|||✋
+perder|to lose; to miss|||😕
+ganar|to win; to earn|||🏆
+olvidar|to forget|olvidarse||🤔
+recordar|to remember|acordarse||💭
+preguntar|to ask|||❓
+contestar|to answer; to reply|responder||💬
+explicar|to explain|||🧑‍🏫
+mandar|to send|enviar||📤
+recibir|to receive; to get|||📥
+alquilar|to rent; to hire|||🏠
+reservar|to book; to reserve|||📅
+visitar|to visit|||🗺️
+conducir|to drive|manejar||🚗
+coger|to take; to catch|tomar|to get|🚌
+bajar|to go down; to get off|bajarse||⬇️
+subir|to go up; to get on|subirse||⬆️
+cruzar|to cross|||🚸
+girar|to turn|torcer||↪️
+seguir|to follow; to continue; to carry on|||➡️|to keep going
+parar|to stop|pararse||🛑
+quedar|to meet up; to remain|quedarse|to stay|📍
+invitar|to invite|||💌
+celebrar|to celebrate|||🎉
+casarse|to get married|||💍|to marry
+nacer|to be born|||👶
+morir|to die|||🪦
+sentir|to feel; to be sorry|sentirse||💭
+doler|to hurt (me duele)|me duele|it hurts|🤕
+cuidar|to look after; to take care of|||🤲
+descansar|to rest|||🛋️|to relax
+despertarse|to wake up|||⏰
+acostarse|to go to bed|||🛏️
+vestirse|to get dressed|||👕
+peinarse|to comb one's hair|||💇|to brush one's hair
+lavarse|to wash (oneself)|||🧼|to have a wash
+afeitarse|to shave|||🪒
+arreglar|to fix; to tidy|||🔧|to repair
+romper|to break|||💔
+preparar|to prepare|||🍳|to get ready
+pedir|to ask for; to order|||🧾
+servir|to serve|||🍽️
+gastar|to spend (money)|||💸|to spend
+ahorrar|to save (money)|||🐷|to save
+costar|to cost|||🏷️
+vender|to sell|||🏷️
+usar|to use|utilizar||🛠️
+llover|to rain|||🌧️
+nevar|to snow|||❄️

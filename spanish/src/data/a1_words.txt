@@ -1,0 +1,359 @@
+# Spanish | English | other Spanish answers | other English answers | picture
+yo|I||me|🙋
+tú|you (informal)|vos|you|👉
+usted|you (formal)|||🤝
+él|he|||👨
+ella|she|||👩
+nosotros|we|nosotras||👥
+vosotros|you (plural, informal)|vosotras,ustedes|you all,you guys|👥
+ellos|they|ellas||👥
+el hombre|man|el señor|gentleman|👨
+la mujer|woman|la señora|lady|👩
+el niño|boy; child|el chico,el crío|kid|👦
+la niña|girl|la chica|kid|👧
+el chico|boy; young man|el muchacho|lad,guy|👦
+la chica|girl; young woman|la muchacha|lass|👧
+la persona|person|||🧍
+la gente|people|||👥
+el amigo|friend (male)|~el colega|mate,pal|🧑‍🤝‍🧑
+la amiga|friend (female)||mate|🧑‍🤝‍🧑
+la familia|family|||👨‍👩‍👧
+el padre|father|~el papá|dad|👨
+la madre|mother|~la mamá|mum,mom|👩
+los padres|parents|||👫
+el hijo|son|||👦
+la hija|daughter|||👧
+el hermano|brother|||👦
+la hermana|sister|||👧
+el abuelo|grandfather|~el abuelito|grandad,grandpa|👴
+la abuela|grandmother|~la abuelita|grandma,granny|👵
+el marido|husband|el esposo||🤵
+la esposa|wife|la mujer||👰
+el novio|boyfriend|||💑
+la novia|girlfriend|||💑
+el bebé|baby|||👶
+el nombre|name|||📛
+el apellido|surname|||📛
+la edad|age|||🎂
+el año|year|||📆
+el mes|month|||🗓️
+la semana|week|||🗓️
+el día|day|||📅
+la hora|hour; time|||⏰
+el minuto|minute|||⏱️
+el segundo|second|||⏱️
+la mañana|morning|||🌅
+la tarde|afternoon; evening|||🌇
+la noche|night|||🌃
+hoy|today|||📅
+mañana|tomorrow|||📅➡️
+ayer|yesterday|||⬅️📅
+ahora|now|ya|right now|⏱️
+luego|later|después|afterwards,then|⏩
+siempre|always|||🔁
+nunca|never|jamás||🚫
+a veces|sometimes|||🔀
+temprano|early|||🐓
+tarde|late|||🌙
+el lunes|Monday|lunes||📅
+el martes|Tuesday|martes||📅
+el miércoles|Wednesday|miércoles||📅
+el jueves|Thursday|jueves||📅
+el viernes|Friday|viernes||📅
+el sábado|Saturday|sábado||📅
+el domingo|Sunday|domingo||📅
+el fin de semana|weekend|el finde||🎉
+enero|January|||❄️
+febrero|February|||❄️
+marzo|March|||🌱
+abril|April|||🌧️
+mayo|May|||🌸
+junio|June|||☀️
+julio|July|||🏖️
+agosto|August|||🏖️
+septiembre|September|setiembre||🍂
+octubre|October|||🎃
+noviembre|November|||🍂
+diciembre|December|||🎄
+la primavera|spring|||🌸
+el verano|summer|||☀️
+el otoño|autumn|||🍂|fall
+el invierno|winter|||❄️
+uno|one|un,una|1|1️⃣
+dos|two||2|2️⃣
+tres|three||3|3️⃣
+cuatro|four||4|4️⃣
+cinco|five||5|5️⃣
+seis|six||6|6️⃣
+siete|seven||7|7️⃣
+ocho|eight||8|8️⃣
+nueve|nine||9|9️⃣
+diez|ten||10|🔟
+once|eleven||11|
+doce|twelve||12|
+trece|thirteen||13|
+catorce|fourteen||14|
+quince|fifteen||15|
+dieciséis|sixteen||16|
+diecisiete|seventeen||17|
+dieciocho|eighteen||18|
+diecinueve|nineteen||19|
+veinte|twenty||20|
+treinta|thirty||30|
+cuarenta|forty||40|
+cincuenta|fifty||50|
+sesenta|sixty||60|
+setenta|seventy||70|
+ochenta|eighty||80|
+noventa|ninety||90|
+cien|one hundred|ciento|hundred,100|💯
+mil|one thousand||thousand,1000|
+el primero|first|primero,la primera,primer|1st|🥇
+el segundo|second (in order)|segundo,la segunda|2nd|🥈
+la casa|house; home|el hogar||🏠
+el piso|flat; floor|el apartamento|apartment|🏢
+la habitación|room; bedroom|el cuarto,el dormitorio||🛏️
+la cocina|kitchen|||🍳
+el baño|bathroom|el servicio,el aseo|toilet|🚻
+el salón|living room|la sala de estar|lounge,sitting room|🛋️
+la puerta|door|||🚪
+la ventana|window|||🪟
+la mesa|table|||🍽️
+la silla|chair|||🪑
+la cama|bed|||🛏️
+el sofá|sofa|||🛋️|couch
+la llave|key|||🔑
+el coche|car|~el auto|automobile|🚗
+el autobús|bus|el bus||🚌
+el tren|train|||🚆
+el metro|underground; metro|||🚇|tube,subway
+el avión|plane|||✈️|aeroplane,airplane
+la bicicleta|bicycle|~la bici|bike|🚲
+el taxi|taxi|||🚕|cab
+la calle|street|||🛣️|road
+la ciudad|city; town|||🏙️
+el pueblo|village; town|||🏘️
+el país|country|||🗺️
+el mundo|world|||🌍
+la tienda|shop|||🏪|store
+el supermercado|supermarket|el súper||🛒
+el mercado|market|||🧺
+el banco|bank; bench|||🏦
+el hospital|hospital|||🏥
+la farmacia|chemist's; pharmacy|||💊|pharmacy,drugstore
+la estación|station|||🚉
+el aeropuerto|airport|||🛫
+el hotel|hotel|||🏨
+el restaurante|restaurant|||🍽️
+el bar|bar|||🍻
+la cafetería|café|||☕|cafe,coffee shop
+el colegio|school|la escuela||🏫
+la universidad|university|~la uni||🎓|college
+la oficina|office|||🏢
+el trabajo|work; job|el empleo||💼
+el parque|park|||🌳
+la playa|beach|||🏖️
+el mar|sea|||🌊
+la montaña|mountain|||⛰️
+el río|river|||🏞️
+el museo|museum|||🏛️
+la iglesia|church|||⛪
+el cine|cinema|||🎬|movie theater,movies
+el teatro|theatre|||🎭|theater
+el agua|water|||💧
+el café|coffee|||☕
+el té|tea|||🍵
+la leche|milk|||🥛
+el zumo|juice|el jugo||🧃
+la cerveza|beer|~la caña||🍺
+el vino|wine|||🍷
+el pan|bread|||🍞
+el queso|cheese|||🧀
+el huevo|egg|||🥚
+la carne|meat|||🥩
+el pollo|chicken|||🍗
+el pescado|fish (food)|||🐟|fish
+el jamón|ham|||🍖
+el arroz|rice|||🍚
+la pasta|pasta|||🍝
+la fruta|fruit|||🍎
+la manzana|apple|||🍎
+la naranja|orange|||🍊
+el plátano|banana|||🍌
+la verdura|vegetables|las verduras|veg|🥦
+la patata|potato|||🥔
+el tomate|tomato|||🍅
+la ensalada|salad|||🥗
+el azúcar|sugar|||🍬
+la sal|salt|||🧂
+el desayuno|breakfast|||🥐
+la comida|food; lunch|el almuerzo||🍱
+la cena|dinner|||🍽️|supper,tea
+el perro|dog|||🐕
+el gato|cat|||🐈
+el pájaro|bird|||🐦
+el caballo|horse|||🐴
+el libro|book|||📖
+el bolígrafo|pen|~el boli||🖊️
+el lápiz|pencil|||✏️
+el papel|paper|||📄
+el ordenador|computer|||💻|laptop
+el móvil|mobile phone|el teléfono móvil,el celular|phone,cell phone,mobile|📱
+el teléfono|telephone|||☎️|phone
+el dinero|money|||💶
+el euro|euro|||💶
+la ropa|clothes|||👕|clothing
+la camisa|shirt|||👔
+la camiseta|T-shirt|||👕|tshirt,t shirt
+los pantalones|trousers|el pantalón|pants|👖
+la falda|skirt|||👗
+el vestido|dress|||👗
+los zapatos|shoes|el zapato||👞
+el abrigo|coat|||🧥
+la cabeza|head|||🙂
+el ojo|eye|||👁️
+la boca|mouth|||👄
+la mano|hand|||✋
+el pie|foot|||🦶
+el pelo|hair|el cabello||💇
+el tiempo|weather; time|||🌦️
+el sol|sun|||☀️
+la lluvia|rain|||🌧️
+la nieve|snow|||❄️
+el calor|heat|||🥵
+el frío|cold|||🥶
+el color|colour|||🎨|color
+rojo|red|roja||🔴
+azul|blue|||🔵
+verde|green|||🟢
+amarillo|yellow|amarilla||🟡
+negro|black|negra||⚫
+blanco|white|blanca||⚪
+gris|grey|||🩶|gray
+marrón|brown|||🟤
+naranja|orange (colour)|||🟠|orange
+rosa|pink|||🩷
+grande|big; large|||🐘
+pequeño|small; little|pequeña||🐭
+bueno|good|buena,buen||👍
+malo|bad|mala,mal||👎
+nuevo|new|nueva||✨
+viejo|old|vieja||🏚️
+joven|young|||🧒
+alto|tall; high|alta||🦒
+bajo|short (height); low|baja|short|🐜
+largo|long|larga||📏
+corto|short (length)|corta|short|✂️
+caro|expensive|cara|dear|💰
+barato|cheap|barata||🏷️
+bonito|pretty; nice|bonita,~guapo,lindo|beautiful|🌸
+guapo|good-looking; handsome|guapa|beautiful,pretty|😍
+feo|ugly|fea||👹
+fácil|easy|||✅
+difícil|difficult|||🧗|hard
+caliente|hot (temperature)|||♨️|hot
+frío|cold (temperature)|fría|cold|🧊
+contento|happy; pleased|contenta,feliz|glad|😊
+triste|sad|||😢
+cansado|tired|cansada||😮‍💨
+enfermo|ill; sick|enferma||🤒
+ocupado|busy|ocupada||📋
+libre|free (available)|||🕊️|free
+mucho|a lot; much|mucha,muchos,muchas|lots,many|🍡
+poco|a little; few|poca,pocos,pocas|not much|🍡
+muy|very|||❗
+más|more|||➕
+menos|less|||➖
+también|also; too|||➕|as well
+aquí|here|acá||📍
+allí|there|ahí,allá|over there|👉
+cerca|near|||📍|close
+lejos|far|||🔭|far away
+bien|well; fine|||👍|good,okay
+mal|badly|||👎|bad
+ser|to be (permanent)|||🧍|to be
+estar|to be (state or place)|||📍|to be
+tener|to have|||🤲
+haber|there is (hay)|hay|there are|☝️
+hacer|to do; to make|||🛠️
+ir|to go|||🚶
+venir|to come|||🚶
+llegar|to arrive|||🏁
+salir|to go out; to leave|||🚪
+entrar|to go in; to enter|||🚪|to come in
+volver|to come back; to return|regresar|to go back|🔙
+comer|to eat|||🍽️
+beber|to drink|tomar||🥤
+dormir|to sleep|||😴
+vivir|to live|||🏠
+trabajar|to work|||💼
+estudiar|to study|||📚
+hablar|to speak; to talk|||🗣️
+decir|to say; to tell|||💬
+escuchar|to listen|oír|to hear|👂
+ver|to see; to watch|mirar|to look|👀
+leer|to read|||📖
+escribir|to write|||✍️
+comprar|to buy|||🛒
+pagar|to pay|||💳
+querer|to want; to love|||❤️
+gustar|to like (me gusta)|me gusta|i like|👍
+poder|to be able to; can|||💪|can
+saber|to know (a fact)|||💡|to know
+conocer|to know (a person or place)|||🤝|to know,to meet
+llamar|to call|||📞
+llamarse|to be called|||📛|my name is
+abrir|to open|||🔓
+cerrar|to close|||🔒|to shut
+empezar|to start; to begin|comenzar||▶️
+terminar|to finish; to end|acabar||🏁
+tomar|to take; to have (food or drink)|coger|to have|🤲
+dar|to give|||🎁
+esperar|to wait; to hope|||⏳
+buscar|to look for|||🔍|to search
+encontrar|to find|||🔍
+ayudar|to help|||🆘
+necesitar|to need|||❗
+pensar|to think|||💭
+creer|to believe; to think|||💭
+entender|to understand|comprender||💡
+aprender|to learn|||📚
+enseñar|to teach; to show|||🧑‍🏫
+jugar|to play (a game or sport)|||⚽|to play
+cocinar|to cook|||🍳
+andar|to walk|caminar||🚶
+correr|to run|||🏃
+nadar|to swim|||🏊
+viajar|to travel|||✈️
+levantarse|to get up|||⏰
+ducharse|to have a shower|||🚿|to shower
+lavar|to wash|||🧼
+limpiar|to clean|||🧹
+bailar|to dance|||💃
+cantar|to sing|||🎤
+qué|what|||❓
+quién|who|quiénes||❓
+dónde|where|||📍
+cuándo|when|||⏰
+cómo|how|||❓
+por qué|why|||❓
+cuánto|how much|cuánta||💶
+cuántos|how many|cuántas||🔢
+cuál|which|cuáles|which one|❓
+y|and|e||➕
+o|or|u||🔀
+pero|but|||✋
+porque|because|||💡
+con|with|||🤝
+sin|without|||🚫
+para|for; in order to|||🎯
+de|of; from|||↩️
+en|in; on; at|||📦
+a|to; at|||➡️
+sí|yes|||✅
+no|no; not|||❌
+hola|hello|~buenas|hi|👋
+adiós|goodbye|~chao,~chau|bye|👋
+gracias|thank you|~muchas gracias|thanks|🙏
+por favor|please|||🙏
+perdón|sorry; excuse me|perdona,perdone,disculpe,lo siento|pardon|🙇

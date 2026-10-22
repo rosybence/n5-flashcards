@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0F1613">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Español">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-180.png">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Spanish Speaking Flashcards</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: one-column phone study app — header, level picker, direction switch, the card, controls under it. Olive-green ink on limewashed paper, Fraunces for Spanish words. */
+:root{
+  --bg:#EEF1EC; --surface:#FFFFFF; --ink:#18241F; --muted:#5C6962; --line:#D4DBD5;
+  --accent:#1E6B57; --accent-soft:#DDEEE7; --good:#23775A; --good-soft:#DDF0E7; --bad:#B0402C; --bad-soft:#F7E1DC; --hard:#9A6A12; --casual:#8A5300; --casual-soft:#FBEBCB;
+  --word:"Fraunces",Georgia,"Times New Roman",serif;
+  --ui:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0F1613; --surface:#18221E; --ink:#E5ECE8; --muted:#9AA8A1; --line:#2A3832;
+  --accent:#7FCBB3; --accent-soft:#1E3129; --good:#5CC79C; --good-soft:#163328; --bad:#EB8A76; --bad-soft:#3A1E1A; --hard:#E2B357; --casual:#EDBB62; --casual-soft:#3B2C12; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F1613; --surface:#18221E; --ink:#E5ECE8; --muted:#9AA8A1; --line:#2A3832;
+  --accent:#7FCBB3; --accent-soft:#1E3129; --good:#5CC79C; --good-soft:#163328; --bad:#EB8A76; --bad-soft:#3A1E1A; --hard:#E2B357; --casual:#EDBB62; --casual-soft:#3B2C12; color-scheme:dark}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--ui);font-size:15px;line-height:1.45}
+.app{max-width:520px;margin:0 auto;padding-block:14px 28px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:14px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:baseline;gap:8px}
+.brand b{font-family:var(--word);font-size:24px;font-weight:700}
+.brand span{font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+.counts{display:flex;gap:6px;font-size:12.5px;font-variant-numeric:tabular-nums}
+.pill{padding:3px 9px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--muted)}
+.pill strong{color:var(--ink);font-weight:600}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.iconbtn{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;border:1px solid var(--line);background:var(--surface)}
+.iconbtn svg{width:20px;height:20px}
+.decks{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.decks button{display:flex;flex-direction:column;align-items:center;gap:1px;padding:7px 2px;border-radius:12px;border:1px solid var(--line);background:var(--surface);font-size:11.5px;color:var(--muted)}
+.decks b{font-family:var(--word);font-size:19px;font-weight:700;color:var(--ink);line-height:1.2}
+.decks button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+.decks button[aria-pressed="true"] b{color:var(--accent)}
+.seg{display:grid;grid-template-columns:1fr 1fr;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:3px}
+.seg button{padding:9px 6px;border-radius:9px;font-size:14px;font-weight:500;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--surface)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px 18px 18px;display:flex;flex-direction:column;align-items:center;gap:14px;min-height:280px;position:relative}
+.tag{position:absolute;top:12px;left:14px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.tag.new{color:var(--accent)}
+.front{flex:1;display:flex;align-items:center;justify-content:center;text-align:center;width:100%;min-width:0;padding-top:18px}
+.es{font-family:var(--word);font-weight:700;font-size:clamp(34px,11vw,52px);line-height:1.15;overflow-wrap:anywhere;text-wrap:balance}
+.es.long{font-size:clamp(24px,7vw,32px)}
+.es .art{font-weight:500;color:var(--muted)}
+.en-front{font-size:clamp(24px,7.5vw,34px);font-weight:500;text-wrap:balance}
+.answer{width:100%;border-top:1px dashed var(--line);padding-top:14px;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center}
+.answer .pic{font-size:64px;line-height:1.1;margin-bottom:4px;font-family:"Noto Color Emoji","Apple Color Emoji","Segoe UI Emoji",sans-serif}
+.answer .es{font-size:30px}
+.answer .en{font-size:20px;font-weight:600;text-wrap:balance}
+.fixarea{display:flex;flex-direction:column;align-items:center}
+#fbBar{align-self:center}
+.fix-btn{margin-top:4px;font-size:12.5px;color:var(--muted);text-decoration:underline;text-underline-offset:3px;padding:6px}
+.fix{width:100%;display:flex;flex-direction:column;gap:8px;margin-top:10px;padding:12px;border-radius:12px;background:var(--surface);border:1px solid var(--line);text-align:left;box-sizing:border-box}
+.fix-kinds{display:flex;flex-wrap:wrap;gap:6px}
+.fix-kinds button{font-size:13px;padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:var(--bg)}
+.fix-kinds button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.fix-label{font-size:13px;color:var(--muted)}
+.fix input{font:inherit;font-size:16px;padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);width:100%;box-sizing:border-box}
+.fix-note{margin:0;font-size:12.5px;color:var(--muted)}
+.fix .btn{text-decoration:none;font-size:14px;padding:11px 8px}
+.alts-btn{margin-top:8px;font-size:13.5px;font-weight:500;color:var(--accent);padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:var(--bg)}
+.alts{display:flex;flex-direction:column;gap:8px;margin-top:6px;width:100%}
+.alts .grp{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px}
+.alts .lbl{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);width:100%}
+.chip{font-size:14px;padding:4px 10px;border-radius:8px;background:var(--accent-soft);color:var(--ink);display:inline-flex;align-items:center;gap:6px}
+.chip.esc{font-family:var(--word);font-size:16px}
+.chip.casual{background:var(--casual-soft);color:var(--casual)}
+.chip small{font-family:var(--ui);font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:1px 5px;border-radius:4px;border:1px solid currentColor}
+.feedback{font-size:14px;padding:7px 12px;border-radius:10px;text-align:center;max-width:100%;overflow-wrap:anywhere}
+.feedback.ok{background:var(--good-soft);color:var(--good)}
+.feedback.no{background:var(--bad-soft);color:var(--bad)}
+.feedback.info{background:var(--accent-soft);color:var(--accent)}
+.row{display:flex;gap:10px}
+.btn{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:13px 10px;border-radius:12px;border:1px solid var(--line);background:var(--surface);font-weight:500}
+.btn svg{width:20px;height:20px;flex:none}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.btn.listening{background:var(--bad);border-color:var(--bad);color:var(--surface)}
+.btn:disabled{opacity:.45;cursor:default}
+.grades{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.grades button{padding:10px 4px;border-radius:12px;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;align-items:center;gap:1px;font-weight:600}
+.grades small{font-weight:400;font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.grades button[data-g="0"]{color:var(--bad)} .grades button[data-g="1"]{color:var(--hard)}
+.grades button[data-g="2"]{color:var(--good)} .grades button[data-g="3"]{color:var(--accent)}
+.after{display:flex;flex-direction:column;gap:10px}
+.after .row .btn{padding:16px 10px}
+.next{flex:1.4;font-size:17px;font-weight:600}
+#flip.wrong{color:var(--bad);border-color:var(--bad)}
+#flip.right{color:var(--good);border-color:var(--good)}
+.mark{text-align:center;font-size:13px;color:var(--muted)}
+.mark b{font-weight:600}.mark .ok{color:var(--good)}.mark .no{color:var(--bad)}
+.more summary{font-size:13px;color:var(--muted);cursor:pointer;text-align:center;list-style:none;padding:4px}
+.more summary::-webkit-details-marker{display:none}
+.more[open] summary{margin-bottom:8px}
+.walk{border-radius:16px;padding:14px;background:var(--accent-soft);display:flex;flex-direction:column;gap:10px}
+.walk .status{font-size:17px;font-weight:600;color:var(--ink);min-height:1.45em}
+.grace{display:flex;gap:8px}
+.grace .btn{padding:14px 6px;font-size:14px}
+.whelp{font-size:13.5px;color:var(--muted)}
+.whelp ol{margin:0;padding-left:20px;display:grid;gap:4px}
+.whelp p{margin:8px 0 0}
+.whelp b{color:var(--ink);font-weight:600}
+.walkseg{background:var(--surface)}
+.notice{font-size:13px;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.notice strong{color:var(--ink)}
+.settings{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px;display:grid;gap:12px}
+.settings label{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:14px}
+.settings select{font:inherit;padding:6px 8px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.danger{color:var(--bad);font-weight:500;justify-self:start;padding:4px 0}
+.done{text-align:center;color:var(--muted)}
+.done b{display:block;font-family:var(--word);font-size:30px;color:var(--ink);margin-bottom:6px}
+@media (prefers-reduced-motion:no-preference){.btn.listening svg{animation:pulse 1s ease-in-out infinite}}
+@keyframes pulse{50%{transform:scale(1.25)}}
+</style>
+
+<div class="app">
+  <header>
+    <div class="brand"><b>Español</b><span id="brandSub">A1</span></div>
+    <div class="counts"><span class="pill"><strong id="cDue">0</strong> due</span><span class="pill"><strong id="cNew">0</strong> new</span></div>
+    <button class="iconbtn" id="setBtn" aria-label="Settings" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg></button>
+  </header>
+
+  <div class="settings" id="settings" hidden>
+    <label>Cards <select id="sTypes"><option value="both">Words and phrases</option><option value="words">Words only</option><option value="phrases">Phrases only</option></select></label>
+    <label>New cards per day <select id="sNew"><option>5</option><option>10</option><option>15</option><option>20</option><option>30</option></select></label>
+    <label>Time to answer (walk mode) <select id="sGap"><option value="4">4 s</option><option value="6">6 s</option><option value="8">8 s</option><option value="10">10 s</option></select></label>
+    <label>Spanish voice speed <select id="sRate"><option value="0.7">Slow</option><option value="0.85">Relaxed</option><option value="1">Natural</option></select></label>
+    <label>Play audio when a card appears <select id="sAuto"><option value="1">On</option><option value="0">Off</option></select></label>
+    <button class="danger" id="reset">Reset all progress</button>
+  </div>
+
+  <div class="decks" role="group" aria-label="Levels">
+    <button data-deck="a1" aria-pressed="true"><b>A1</b>Beginner</button>
+    <button data-deck="a2" aria-pressed="false"><b>A2</b>Elementary</button>
+    <button data-deck="b1" aria-pressed="false"><b>B1</b>Intermediate</button>
+  </div>
+
+  <div class="seg" role="group" aria-label="Direction">
+    <button id="dJE" aria-pressed="true">Español → English</button>
+    <button id="dEJ" aria-pressed="false">English → Español</button>
+  </div>
+
+  <div class="card" id="card"></div>
+  <div class="feedback" id="fbBar" hidden></div>
+
+  <div class="row" id="actions">
+    <button class="btn" id="play"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>Play</button>
+    <button class="btn" id="mic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg>Speak</button>
+    <button class="btn primary" id="reveal">Show answer</button>
+  </div>
+  <div class="after" id="after" hidden>
+    <div class="row">
+      <button class="btn" id="flip"></button>
+      <button class="btn primary next" id="next">Next<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    </div>
+    <div class="mark" id="mark"></div>
+    <details class="more"><summary>Rate it yourself</summary><div class="grades" id="grades"></div></details>
+    <div id="fixArea" class="fixarea"></div>
+  </div>
+
+  <div class="walk">
+    <div class="status" id="wStatus">Walk mode</div>
+    <div class="seg walkseg" id="walkModes" role="group" aria-label="Walk mode type">
+      <button id="wmSpeak" aria-pressed="true">Speak answers</button>
+      <button id="wmListen" aria-pressed="false">Listen only</button>
+    </div>
+    <div id="wHelp" class="whelp"></div>
+    <div class="grace" id="grace" hidden></div>
+    <button class="btn primary" id="walkBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="4" r="1.6"/><path d="M10 21l2-6-2.5-2.5L11 8l4 3 3 1M9.5 12.5L7 14M12 15l3 2 1 4"/></svg><span>Start walk mode</span></button>
+  </div>
+
+  <div class="notice" id="micNote" hidden></div>
+</div>
+
+<script>
+const DATA={"a1w":[["yo","I",[],["me"],"🙋"],["tú","you (informal)",["vos"],["you"],"👉"],["usted","you (formal)",[],[],"🤝"],["él","he",[],[],"👨"],["ella","she",[],[],"👩"],["nosotros","we",["nosotras"],[],"👥"],["vosotros","you (plural, informal)",["vosotras","ustedes"],["you all","you guys"],"👥"],["ellos","they",["ellas"],[],"👥"],["el hombre","man",["el señor"],["gentleman"],"👨"],["la mujer","woman",["la señora"],["lady"],"👩"],["el niño","boy; child",["el chico","el crío"],["kid"],"👦"],["la niña","girl",["la chica"],["kid"],"👧"],["el chico","boy; young man",["el muchacho"],["lad","guy"],"👦"],["la chica","girl; young woman",["la muchacha"],["lass"],"👧"],["la persona","person",[],[],"🧍"],["la gente","people",[],[],"👥"],["el amigo","friend (male)",["~el colega"],["mate","pal"],"🧑‍🤝‍🧑"],["la amiga","friend (female)",[],["mate"],"🧑‍🤝‍🧑"],["la familia","family",[],[],"👨‍👩‍👧"],["el padre","father",["~el papá"],["dad"],"👨"],["la madre","mother",["~la mamá"],["mum","mom"],"👩"],["los padres","parents",[],[],"👫"],["el hijo","son",[],[],"👦"],["la hija","daughter",[],[],"👧"],["el hermano","brother",[],[],"👦"],["la hermana","sister",[],[],"👧"],["el abuelo","grandfather",["~el abuelito"],["grandad","grandpa"],"👴"],["la abuela","grandmother",["~la abuelita"],["grandma","granny"],"👵"],["el marido","husband",["el esposo"],[],"🤵"],["la esposa","wife",["la mujer"],[],"👰"],["el novio","boyfriend",[],[],"💑"],["la novia","girlfriend",[],[],"💑"],["el bebé","baby",[],[],"👶"],["el nombre","name",[],[],"📛"],["el apellido","surname",[],[],"📛"],["la edad","age",[],[],"🎂"],["el año","year",[],[],"📆"],["el mes","month",[],[],"🗓️"],["la semana","week",[],[],"🗓️"],["el día","day",[],[],"📅"],["la hora","hour; time",[],[],"⏰"],["el minuto","minute",[],[],"⏱️"],["el segundo","second",[],[],"⏱️"],["la mañana","morning",[],[],"🌅"],["la tarde","afternoon; evening",[],[],"🌇"],["la noche","night",[],[],"🌃"],["hoy","today",[],[],"📅"],["mañana","tomorrow",[],[],"📅➡️"],["ayer","yesterday",[],[],"⬅️📅"],["ahora","now",["ya"],["right now"],"⏱️"],["luego","later",["después"],["afterwards","then"],"⏩"],["siempre","always",[],[],"🔁"],["nunca","never",["jamás"],[],"🚫"],["a veces","sometimes",[],[],"🔀"],["temprano","early",[],[],"🐓"],["tarde","late",[],[],"🌙"],["el lunes","Monday",["lunes"],[],"📅"],["el martes","Tuesday",["martes"],[],"📅"],["el miércoles","Wednesday",["miércoles"],[],"📅"],["el jueves","Thursday",["jueves"],[],"📅"],["el viernes","Friday",["viernes"],[],"📅"],["el sábado","Saturday",["sábado"],[],"📅"],["el domingo","Sunday",["domingo"],[],"📅"],["el fin de semana","weekend",["el finde"],[],"🎉"],["enero","January",[],[],"❄️"],["febrero","February",[],[],"❄️"],["marzo","March",[],[],"🌱"],["abril","April",[],[],"🌧️"],["mayo","May",[],[],"🌸"],["junio","June",[],[],"☀️"],["julio","July",[],[],"🏖️"],["agosto","August",[],[],"🏖️"],["septiembre","September",["setiembre"],[],"🍂"],["octubre","October",[],[],"🎃"],["noviembre","November",[],[],"🍂"],["diciembre","December",[],[],"🎄"],["la primavera","spring",[],[],"🌸"],["el verano","summer",[],[],"☀️"],["el otoño","autumn",[],["fall"],"🍂"],["el invierno","winter",[],[],"❄️"],["uno","one",["un","una"],["1"],"1️⃣"],["dos","two",[],["2"],"2️⃣"],["tres","three",[],["3"],"3️⃣"],["cuatro","four",[],["4"],"4️⃣"],["cinco","five",[],["5"],"5️⃣"],["seis","six",[],["6"],"6️⃣"],["siete","seven",[],["7"],"7️⃣"],["ocho","eight",[],["8"],"8️⃣"],["nueve","nine",[],["9"],"9️⃣"],["diez","ten",[],["10"],"🔟"],["once","eleven",[],["11"],""],["doce","twelve",[],["12"],""],["trece","thirteen",[],["13"],""],["catorce","fourteen",[],["14"],""],["quince","fifteen",[],["15"],""],["dieciséis","sixteen",[],["16"],""],["diecisiete","seventeen",[],["17"],""],["dieciocho","eighteen",[],["18"],""],["diecinueve","nineteen",[],["19"],""],["veinte","twenty",[],["20"],""],["treinta","thirty",[],["30"],""],["cuarenta","forty",[],["40"],""],["cincuenta","fifty",[],["50"],""],["sesenta","sixty",[],["60"],""],["setenta","seventy",[],["70"],""],["ochenta","eighty",[],["80"],""],["noventa","ninety",[],["90"],""],["cien","one hundred",["ciento"],["hundred","100"],"💯"],["mil","one thousand",[],["thousand","1000"],""],["el primero","first",["primero","la primera","primer"],["1st"],"🥇"],["el segundo","second (in order)",["segundo","la segunda"],["2nd"],"🥈"],["la casa","house; home",["el hogar"],[],"🏠"],["el piso","flat; floor",["el apartamento"],["apartment"],"🏢"],["la habitación","room; bedroom",["el cuarto","el dormitorio"],[],"🛏️"],["la cocina","kitchen",[],[],"🍳"],["el baño","bathroom",["el servicio","el aseo"],["toilet"],"🚻"],["el salón","living room",["la sala de estar"],["lounge","sitting room"],"🛋️"],["la puerta","door",[],[],"🚪"],["la ventana","window",[],[],"🪟"],["la mesa","table",[],[],"🍽️"],["la silla","chair",[],[],"🪑"],["la cama","bed",[],[],"🛏️"],["el sofá","sofa",[],["couch"],"🛋️"],["la llave","key",[],[],"🔑"],["el coche","car",["~el auto"],["automobile"],"🚗"],["el autobús","bus",["el bus"],[],"🚌"],["el tren","train",[],[],"🚆"],["el metro","underground; metro",[],["tube","subway"],"🚇"],["el avión","plane",[],["aeroplane","airplane"],"✈️"],["la bicicleta","bicycle",["~la bici"],["bike"],"🚲"],["el taxi","taxi",[],["cab"],"🚕"],["la calle","street",[],["road"],"🛣️"],["la ciudad","city; town",[],[],"🏙️"],["el pueblo","village; town",[],[],"🏘️"],["el país","country",[],[],"🗺️"],["el mundo","world",[],[],"🌍"],["la tienda","shop",[],["store"],"🏪"],["el supermercado","supermarket",["el súper"],[],"🛒"],["el mercado","market",[],[],"🧺"],["el banco","bank; bench",[],[],"🏦"],["el hospital","hospital",[],[],"🏥"],["la farmacia","chemist's; pharmacy",[],["pharmacy","drugstore"],"💊"],["la estación","station",[],[],"🚉"],["el aeropuerto","airport",[],[],"🛫"],["el hotel","hotel",[],[],"🏨"],["el restaurante","restaurant",[],[],"🍽️"],["el bar","bar",[],[],"🍻"],["la cafetería","café",[],["cafe","coffee shop"],"☕"],["el colegio","school",["la escuela"],[],"🏫"],["la universidad","university",["~la uni"],["college"],"🎓"],["la oficina","office",[],[],"🏢"],["el trabajo","work; job",["el empleo"],[],"💼"],["el parque","park",[],[],"🌳"],["la playa","beach",[],[],"🏖️"],["el mar","sea",[],[],"🌊"],["la montaña","mountain",[],[],"⛰️"],["el río","river",[],[],"🏞️"],["el museo","museum",[],[],"🏛️"],["la iglesia","church",[],[],"⛪"],["el cine","cinema",[],["movie theater","movies"],"🎬"],["el teatro","theatre",[],["theater"],"🎭"],["el agua","water",[],[],"💧"],["el café","coffee",[],[],"☕"],["el té","tea",[],[],"🍵"],["la leche","milk",[],[],"🥛"],["el zumo","juice",["el jugo"],[],"🧃"],["la cerveza","beer",["~la caña"],[],"🍺"],["el vino","wine",[],[],"🍷"],["el pan","bread",[],[],"🍞"],["el queso","cheese",[],[],"🧀"],["el huevo","egg",[],[],"🥚"],["la carne","meat",[],[],"🥩"],["el pollo","chicken",[],[],"🍗"],["el pescado","fish (food)",[],["fish"],"🐟"],["el jamón","ham",[],[],"🍖"],["el arroz","rice",[],[],"🍚"],["la pasta","pasta",[],[],"🍝"],["la fruta","fruit",[],[],"🍎"],["la manzana","apple",[],[],"🍎"],["la naranja","orange",[],[],"🍊"],["el plátano","banana",[],[],"🍌"],["la verdura","vegetables",["las verduras"],["veg"],"🥦"],["la patata","potato",[],[],"🥔"],["el tomate","tomato",[],[],"🍅"],["la ensalada","salad",[],[],"🥗"],["el azúcar","sugar",[],[],"🍬"],["la sal","salt",[],[],"🧂"],["el desayuno","breakfast",[],[],"🥐"],["la comida","food; lunch",["el almuerzo"],[],"🍱"],["la cena","dinner",[],["supper","tea"],"🍽️"],["el perro","dog",[],[],"🐕"],["el gato","cat",[],[],"🐈"],["el pájaro","bird",[],[],"🐦"],["el caballo","horse",[],[],"🐴"],["el libro","book",[],[],"📖"],["el bolígrafo","pen",["~el boli"],[],"🖊️"],["el lápiz","pencil",[],[],"✏️"],["el papel","paper",[],[],"📄"],["el ordenador","computer",[],["laptop"],"💻"],["el móvil","mobile phone",["el teléfono móvil","el celular"],["phone","cell phone","mobile"],"📱"],["el teléfono","telephone",[],["phone"],"☎️"],["el dinero","money",[],[],"💶"],["el euro","euro",[],[],"💶"],["la ropa","clothes",[],["clothing"],"👕"],["la camisa","shirt",[],[],"👔"],["la camiseta","T-shirt",[],["tshirt","t shirt"],"👕"],["los pantalones","trousers",["el pantalón"],["pants"],"👖"],["la falda","skirt",[],[],"👗"],["el vestido","dress",[],[],"👗"],["los zapatos","shoes",["el zapato"],[],"👞"],["el abrigo","coat",[],[],"🧥"],["la cabeza","head",[],[],"🙂"],["el ojo","eye",[],[],"👁️"],["la boca","mouth",[],[],"👄"],["la mano","hand",[],[],"✋"],["el pie","foot",[],[],"🦶"],["el pelo","hair",["el cabello"],[],"💇"],["el tiempo","weather; time",[],[],"🌦️"],["el sol","sun",[],[],"☀️"],["la lluvia","rain",[],[],"🌧️"],["la nieve","snow",[],[],"❄️"],["el calor","heat",[],[],"🥵"],["el frío","cold",[],[],"🥶"],["el color","colour",[],["color"],"🎨"],["rojo","red",["roja"],[],"🔴"],["azul","blue",[],[],"🔵"],["verde","green",[],[],"🟢"],["amarillo","yellow",["amarilla"],[],"🟡"],["negro","black",["negra"],[],"⚫"],["blanco","white",["blanca"],[],"⚪"],["gris","grey",[],["gray"],"🩶"],["marrón","brown",[],[],"🟤"],["naranja","orange (colour)",[],["orange"],"🟠"],["rosa","pink",[],[],"🩷"],["grande","big; large",[],[],"🐘"],["pequeño","small; little",["pequeña"],[],"🐭"],["bueno","good",["buena","buen"],[],"👍"],["malo","bad",["mala","mal"],[],"👎"],["nuevo","new",["nueva"],[],"✨"],["viejo","old",["vieja"],[],"🏚️"],["joven","young",[],[],"🧒"],["alto","tall; high",["alta"],[],"🦒"],["bajo","short (height); low",["baja"],["short"],"🐜"],["largo","long",["larga"],[],"📏"],["corto","short (length)",["corta"],["short"],"✂️"],["caro","expensive",["cara"],["dear"],"💰"],["barato","cheap",["barata"],[],"🏷️"],["bonito","pretty; nice",["bonita","~guapo","lindo"],["beautiful"],"🌸"],["guapo","good-looking; handsome",["guapa"],["beautiful","pretty"],"😍"],["feo","ugly",["fea"],[],"👹"],["fácil","easy",[],[],"✅"],["difícil","difficult",[],["hard"],"🧗"],["caliente","hot (temperature)",[],["hot"],"♨️"],["frío","cold (temperature)",["fría"],["cold"],"🧊"],["contento","happy; pleased",["contenta","feliz"],["glad"],"😊"],["triste","sad",[],[],"😢"],["cansado","tired",["cansada"],[],"😮‍💨"],["enfermo","ill; sick",["enferma"],[],"🤒"],["ocupado","busy",["ocupada"],[],"📋"],["libre","free (available)",[],["free"],"🕊️"],["mucho","a lot; much",["mucha","muchos","muchas"],["lots","many"],"🍡"],["poco","a little; few",["poca","pocos","pocas"],["not much"],"🍡"],["muy","very",[],[],"❗"],["más","more",[],[],"➕"],["menos","less",[],[],"➖"],["también","also; too",[],["as well"],"➕"],["aquí","here",["acá"],[],"📍"],["allí","there",["ahí","allá"],["over there"],"👉"],["cerca","near",[],["close"],"📍"],["lejos","far",[],["far away"],"🔭"],["bien","well; fine",[],["good","okay"],"👍"],["mal","badly",[],["bad"],"👎"],["ser","to be (permanent)",[],["to be"],"🧍"],["estar","to be (state or place)",[],["to be"],"📍"],["tener","to have",[],[],"🤲"],["haber","there is (hay)",["hay"],["there are"],"☝️"],["hacer","to do; to make",[],[],"🛠️"],["ir","to go",[],[],"🚶"],["venir","to come",[],[],"🚶"],["llegar","to arrive",[],[],"🏁"],["salir","to go out; to leave",[],[],"🚪"],["entrar","to go in; to enter",[],["to come in"],"🚪"],["volver","to come back; to return",["regresar"],["to go back"],"🔙"],["comer","to eat",[],[],"🍽️"],["beber","to drink",["tomar"],[],"🥤"],["dormir","to sleep",[],[],"😴"],["vivir","to live",[],[],"🏠"],["trabajar","to work",[],[],"💼"],["estudiar","to study",[],[],"📚"],["hablar","to speak; to talk",[],[],"🗣️"],["decir","to say; to tell",[],[],"💬"],["escuchar","to listen",["oír"],["to hear"],"👂"],["ver","to see; to watch",["mirar"],["to look"],"👀"],["leer","to read",[],[],"📖"],["escribir","to write",[],[],"✍️"],["comprar","to buy",[],[],"🛒"],["pagar","to pay",[],[],"💳"],["querer","to want; to love",[],[],"❤️"],["gustar","to like (me gusta)",["me gusta"],["i like"],"👍"],["poder","to be able to; can",[],["can"],"💪"],["saber","to know (a fact)",[],["to know"],"💡"],["conocer","to know (a person or place)",[],["to know","to meet"],"🤝"],["llamar","to call",[],[],"📞"],["llamarse","to be called",[],["my name is"],"📛"],["abrir","to open",[],[],"🔓"],["cerrar","to close",[],["to shut"],"🔒"],["empezar","to start; to begin",["comenzar"],[],"▶️"],["terminar","to finish; to end",["acabar"],[],"🏁"],["tomar","to take; to have (food or drink)",["coger"],["to have"],"🤲"],["dar","to give",[],[],"🎁"],["esperar","to wait; to hope",[],[],"⏳"],["buscar","to look for",[],["to search"],"🔍"],["encontrar","to find",[],[],"🔍"],["ayudar","to help",[],[],"🆘"],["necesitar","to need",[],[],"❗"],["pensar","to think",[],[],"💭"],["creer","to believe; to think",[],[],"💭"],["entender","to understand",["comprender"],[],"💡"],["aprender","to learn",[],[],"📚"],["enseñar","to teach; to show",[],[],"🧑‍🏫"],["jugar","to play (a game or sport)",[],["to play"],"⚽"],["cocinar","to cook",[],[],"🍳"],["andar","to walk",["caminar"],[],"🚶"],["correr","to run",[],[],"🏃"],["nadar","to swim",[],[],"🏊"],["viajar","to travel",[],[],"✈️"],["levantarse","to get up",[],[],"⏰"],["ducharse","to have a shower",[],["to shower"],"🚿"],["lavar","to wash",[],[],"🧼"],["limpiar","to clean",[],[],"🧹"],["bailar","to dance",[],[],"💃"],["cantar","to sing",[],[],"🎤"],["qué","what",[],[],"❓"],["quién","who",["quiénes"],[],"❓"],["dónde","where",[],[],"📍"],["cuándo","when",[],[],"⏰"],["cómo","how",[],[],"❓"],["por qué","why",[],[],"❓"],["cuánto","how much",["cuánta"],[],"💶"],["cuántos","how many",["cuántas"],[],"🔢"],["cuál","which",["cuáles"],["which one"],"❓"],["y","and",["e"],[],"➕"],["o","or",["u"],[],"🔀"],["pero","but",[],[],"✋"],["porque","because",[],[],"💡"],["con","with",[],[],"🤝"],["sin","without",[],[],"🚫"],["para","for; in order to",[],[],"🎯"],["de","of; from",[],[],"↩️"],["en","in; on; at",[],[],"📦"],["a","to; at",[],[],"➡️"],["sí","yes",[],[],"✅"],["no","no; not",[],[],"❌"],["hola","hello",["~buenas"],["hi"],"👋"],["adiós","goodbye",["~chao","~chau"],["bye"],"👋"],["gracias","thank you",["~muchas gracias"],["thanks"],"🙏"],["por favor","please",[],[],"🙏"],["perdón","sorry; excuse me",["perdona","perdone","disculpe","lo siento"],["pardon"],"🙇"]],"a1p":[["buenos días","good morning",["~buenas"],[],"🌅"],["buenas tardes","good afternoon; good evening",["~buenas"],[],"🌇"],["buenas noches","good night; good evening",[],[],"🌙"],["¿Qué tal?","how are you?; how's it going?",["~¿cómo estás?","~¿cómo va?"],["how are things"],"🙂"],["¿Cómo estás?","how are you? (informal)",["~¿qué tal?","¿cómo está usted?"],["how are you"],"🙂"],["¿Cómo está usted?","how are you? (formal)",["¿cómo está?"],["how are you"],"🙂"],["Estoy bien, gracias.","I'm fine, thanks.",["bien gracias","~muy bien"],["i'm well thanks","i'm good thanks"],"👍"],["¿Y tú?","and you?",["¿y usted?"],["what about you"],"👉"],["Mucho gusto.","nice to meet you",["encantado","encantada"],["pleased to meet you"],"🤝"],["¿Cómo te llamas?","what's your name?",["¿cuál es tu nombre?","¿cómo se llama usted?"],["what is your name"],"📛"],["Me llamo…","my name is…",["mi nombre es","soy"],["i'm called","i am"],"📛"],["¿De dónde eres?","where are you from?",["¿de dónde es usted?"],["where do you come from"],"🌍"],["Soy de Inglaterra.","I'm from England.",["soy inglés","soy inglesa"],["i am from england"],"🇬🇧"],["Soy británico.","I'm British.",["soy británica"],["i am british"],"🇬🇧"],["¿Cuántos años tienes?","how old are you?",["¿qué edad tienes?"],["what's your age"],"🎂"],["Tengo treinta años.","I'm thirty (years old).",["tengo 30 años"],["i am thirty","i'm 30"],"🎂"],["¿Hablas inglés?","do you speak English?",["¿habla usted inglés?","¿habla inglés?"],["can you speak english"],"🇬🇧"],["Hablo un poco de español.","I speak a little Spanish.",["hablo un poco español"],["i speak some spanish"],"🇪🇸"],["No entiendo.","I don't understand.",["no lo entiendo","no comprendo"],["i do not understand"],"🤷"],["¿Puedes repetir, por favor?","can you repeat that, please?",["¿puede repetir?","otra vez por favor"],["say that again please","again please"],"🔁"],["Más despacio, por favor.","more slowly, please",["¿puedes hablar más despacio?"],["slower please","speak slowly please"],"🐢"],["¿Qué significa…?","what does … mean?",["¿qué quiere decir?"],["what does it mean"],"❓"],["¿Cómo se dice … en español?","how do you say … in Spanish?",["¿cómo se dice?"],["how do you say it in spanish"],"❓"],["No sé.","I don't know.",["ni idea"],["no idea"],"🤷"],["Lo siento.","I'm sorry.",["perdón","perdona"],["sorry"],"🙇"],["De nada.","you're welcome",["~nada","no hay de qué"],["no problem","not at all"],"😊"],["¡Hasta luego!","see you later!",["~¡hasta ahora!","~nos vemos","~¡chao!"],["bye","see you"],"👋"],["¡Hasta mañana!","see you tomorrow!",["~hasta mañana"],["until tomorrow"],"📅"],["Nos vemos.","see you",["~¡hasta luego!","~¡hasta pronto!"],["see you around"],"👋"],["¡Que tengas un buen día!","have a good day!",["¡buen día!","¡que tenga un buen día!"],["have a nice day"],"☀️"],["Una mesa para dos, por favor.","a table for two, please",["para dos por favor"],["table for two please"],"🍽️"],["La carta, por favor.","the menu, please",["el menú por favor","¿me trae la carta?"],["can i have the menu"],"📜"],["Quiero un café, por favor.","I'd like a coffee, please.",["~un café por favor","quería un café","me pone un café"],["a coffee please","i want a coffee"],"☕"],["Para mí, una cerveza.","a beer for me",["~una caña por favor","una cerveza por favor"],["i'll have a beer"],"🍺"],["¿Me pone un vaso de agua?","could I have a glass of water?",["un vaso de agua por favor","¿me da un vaso de agua?"],["can i have a glass of water","a glass of water please"],"💧"],["La cuenta, por favor.","the bill, please",["¿me trae la cuenta?","¿nos trae la cuenta?"],["check please","the check please"],"🧾"],["¿Cuánto cuesta?","how much is it?",["¿cuánto es?","¿cuánto vale?"],["how much does it cost"],"💶"],["¿Cuánto cuesta esto?","how much is this?",["¿cuánto vale esto?"],["how much does this cost"],"💶"],["Es muy caro.","it's very expensive",["es demasiado caro"],["it's too expensive"],"💸"],["¿Puedo pagar con tarjeta?","can I pay by card?",["¿se puede pagar con tarjeta?"],["do you take cards","can i pay with card"],"💳"],["¿Dónde está el baño?","where is the toilet?",["¿dónde están los servicios?","¿dónde está el servicio?"],["where's the toilet","where is the bathroom"],"🚻"],["¿Dónde está la estación?","where is the station?",["¿dónde está la estación de tren?"],["where's the station"],"🚉"],["Está a la derecha.","it's on the right",["a la derecha"],["on the right"],"👉"],["Está a la izquierda.","it's on the left",["a la izquierda"],["on the left"],"👈"],["Todo recto.","straight on",["siga todo recto","recto"],["straight ahead"],"⬆️"],["¿Qué hora es?","what time is it?",["¿tienes hora?"],["what's the time"],"🕒"],["Son las tres.","it's three o'clock",["son las 3"],["it's three","three o'clock"],"🕒"],["Es la una.","it's one o'clock",["es la 1"],["it's one"],"🕐"],["Me gusta el café.","I like coffee.",["~me encanta el café"],["i like coffee"],"☕"],["No me gusta.","I don't like it.",["no me gusta nada"],["i don't like that"],"👎"],["Tengo hambre.","I'm hungry.",["~tengo mucha hambre"],["i am hungry"],"🍽️"],["Tengo sed.","I'm thirsty.",["~tengo mucha sed"],["i am thirsty"],"🥤"],["Tengo frío.","I'm cold.",["~tengo mucho frío"],["i am cold"],"🥶"],["Tengo calor.","I'm hot.",["~tengo mucho calor"],["i am hot"],"🥵"],["Estoy cansado.","I'm tired.",["estoy cansada"],["i am tired"],"😮‍💨"],["Hace calor.","it's hot (weather)",["hace mucho calor"],["it's hot","it is hot"],"🥵"],["Hace frío.","it's cold (weather)",["hace mucho frío"],["it's cold","it is cold"],"🥶"],["Está lloviendo.","it's raining",["llueve"],["it is raining"],"🌧️"],["Vivo en Londres.","I live in London.",[],["i'm living in london"],"🏙️"],["Trabajo en una oficina.","I work in an office.",[],["i'm working in an office"],"🏢"],["Estudio español.","I'm studying Spanish.",["estoy estudiando español","aprendo español"],["i study spanish","i'm learning spanish"],"📚"],["¡Salud!","cheers!",[],[],"🥂"],["¡Vale!","OK!",["~¡de acuerdo!","~¡bueno!"],["okay","all right"],"👌"],["¡Claro!","of course!",["¡por supuesto!","~¡claro que sí!"],["sure"],"👍"],["¡Qué bien!","great!; how nice!",["~¡genial!","~¡qué guay!"],["that's great","brilliant"],"🎉"]],"a2w":[["el tío","uncle",[],[],"👨"],["la tía","aunt",[],[],"👩"],["el primo","cousin (male)",["la prima"],["cousin"],"🧑"],["el sobrino","nephew",[],[],"👦"],["la sobrina","niece",[],[],"👧"],["el nieto","grandson",[],[],"👦"],["la nieta","granddaughter",[],[],"👧"],["el vecino","neighbour (male)",["la vecina"],["neighbour","neighbor"],"🏘️"],["el compañero","colleague; classmate",["la compañera"],["partner","mate"],"🧑‍🤝‍🧑"],["el jefe","boss",["la jefa"],[],"👔"],["el cliente","customer; client",["la clienta"],[],"🛍️"],["el médico","doctor",["la médica","el doctor","la doctora"],[],"🧑‍⚕️"],["el enfermero","nurse (male)",["la enfermera"],["nurse"],"🧑‍⚕️"],["el profesor","teacher (male)",["la profesora"],["teacher"],"🧑‍🏫"],["el estudiante","student",["la estudiante","el alumno","la alumna"],["pupil"],"🧑‍🎓"],["el camarero","waiter",["la camarera"],["waitress"],"🧑‍🍳"],["el cocinero","cook; chef",["la cocinera"],["chef"],"🧑‍🍳"],["el policía","police officer",["la policía"],["policeman","policewoman"],"👮"],["el abogado","lawyer",["la abogada"],[],"⚖️"],["el ingeniero","engineer",["la ingeniera"],[],"👷"],["el conductor","driver",["la conductora"],[],"🚗"],["el dependiente","shop assistant",["la dependienta"],["sales assistant"],"🛍️"],["la cara","face",[],[],"🙂"],["la nariz","nose",[],[],"👃"],["la oreja","ear",["el oído"],[],"👂"],["el diente","tooth",["los dientes"],["teeth"],"🦷"],["el cuello","neck",[],[],"🧣"],["el hombro","shoulder",[],[],"💪"],["el brazo","arm",[],[],"💪"],["el dedo","finger",[],[],"☝️"],["la pierna","leg",[],[],"🦵"],["la rodilla","knee",[],[],"🦵"],["la espalda","back",[],[],"🧍"],["el estómago","stomach",["la barriga","~la tripa"],["tummy"],"🫃"],["el corazón","heart",[],[],"❤️"],["el dolor","pain",[],["ache"],"🤕"],["el dolor de cabeza","headache",[],[],"🤕"],["la fiebre","fever; temperature",[],["a temperature"],"🤒"],["el resfriado","cold (illness)",["el catarro"],["a cold"],"🤧"],["la gripe","flu",[],[],"🤧"],["la medicina","medicine",["el medicamento"],[],"💊"],["la pastilla","pill; tablet",[],[],"💊"],["la receta","prescription; recipe",[],[],"📄"],["el dentista","dentist",["la dentista"],[],"🦷"],["la cita","appointment; date",[],[],"📅"],["la salud","health",[],[],"💚"],["el plato","plate; dish",[],[],"🍽️"],["el vaso","glass",[],[],"🥛"],["la taza","cup; mug",[],[],"☕"],["el tenedor","fork",[],[],"🍴"],["el cuchillo","knife",[],[],"🔪"],["la cuchara","spoon",[],[],"🥄"],["la botella","bottle",[],[],"🍾"],["la sopa","soup",[],[],"🍲"],["el bocadillo","sandwich (baguette)",["el sándwich"],["sandwich","baguette"],"🥖"],["el filete","steak",[],[],"🥩"],["la cebolla","onion",[],[],"🧅"],["el ajo","garlic",[],[],"🧄"],["la zanahoria","carrot",[],[],"🥕"],["la lechuga","lettuce",[],[],"🥬"],["el limón","lemon",[],[],"🍋"],["la fresa","strawberry",[],[],"🍓"],["las uvas","grapes",["la uva"],["grape"],"🍇"],["el aceite","oil",["el aceite de oliva"],["olive oil"],"🫒"],["la mantequilla","butter",[],[],"🧈"],["el postre","dessert",[],["pudding"],"🍰"],["el helado","ice cream",[],[],"🍦"],["el pastel","cake",["la tarta"],[],"🎂"],["el chocolate","chocolate",[],[],"🍫"],["la galleta","biscuit",[],["cookie"],"🍪"],["la ropa interior","underwear",[],[],"🩲"],["el jersey","jumper",["el suéter"],["sweater"],"🧶"],["la chaqueta","jacket",[],[],"🧥"],["el sombrero","hat",["la gorra"],["cap"],"👒"],["la bufanda","scarf",[],[],"🧣"],["los guantes","gloves",["el guante"],[],"🧤"],["las gafas","glasses",["las gafas de sol"],["sunglasses","spectacles"],"👓"],["el bolso","handbag",["la bolsa"],["bag"],"👜"],["la mochila","backpack; rucksack",[],[],"🎒"],["el paraguas","umbrella",[],[],"☂️"],["la talla","size (clothes)",[],["size"],"📏"],["el número","number; shoe size",[],[],"🔢"],["el precio","price",[],[],"🏷️"],["las rebajas","sales",[],["the sales"],"🏷️"],["el probador","changing room",[],["fitting room"],"🚪"],["el ascensor","lift",[],["elevator"],"🛗"],["la escalera","stairs",["las escaleras"],[],"🪜"],["el jardín","garden",[],["yard"],"🌷"],["la terraza","terrace; balcony",["el balcón"],[],"🌇"],["el armario","wardrobe; cupboard",[],["closet"],"🚪"],["la nevera","fridge",["el frigorífico"],["refrigerator"],"🧊"],["el horno","oven",[],[],"🔥"],["la lavadora","washing machine",[],[],"🧺"],["la ducha","shower",[],[],"🚿"],["el espejo","mirror",[],[],"🪞"],["la lámpara","lamp",["la luz"],["light"],"💡"],["el alquiler","rent",[],[],"🏠"],["el barrio","neighbourhood; area",[],["neighborhood","district"],"🏘️"],["el centro","centre; city centre",["el centro de la ciudad"],["center","downtown","town centre"],"🏙️"],["la plaza","square",[],[],"⛲"],["el puente","bridge",[],[],"🌉"],["el edificio","building",[],[],"🏢"],["el ayuntamiento","town hall",[],["city hall"],"🏛️"],["la biblioteca","library",[],[],"📚"],["el gimnasio","gym",["el gym"],[],"🏋️"],["la piscina","swimming pool",[],["pool"],"🏊"],["el estadio","stadium",[],[],"🏟️"],["la panadería","bakery",[],[],"🥖"],["la carnicería","butcher's",[],[],"🥩"],["la frutería","greengrocer's",[],[],"🍎"],["la peluquería","hairdresser's",[],[],"💇"],["correos","post office",["la oficina de correos"],[],"📮"],["el buzón","postbox; letterbox",[],["mailbox"],"📮"],["la carta","letter; menu",[],[],"✉️"],["el sobre","envelope",[],[],"✉️"],["el billete","ticket; banknote",["el boleto","la entrada"],["note"],"🎫"],["la entrada","ticket (for a show); entrance",[],["entry"],"🎫"],["la salida","exit; departure",[],[],"🚪"],["la llegada","arrival",[],[],"🛬"],["el andén","platform",["la vía"],[],"🚉"],["el viaje","trip; journey",[],["travel"],"🧳"],["las vacaciones","holiday",[],["holidays","vacation"],"🏖️"],["la maleta","suitcase",[],[],"🧳"],["el pasaporte","passport",[],[],"🛂"],["el equipaje","luggage",[],["baggage"],"🧳"],["el mapa","map",[],[],"🗺️"],["el turista","tourist",["la turista"],[],"📸"],["el barco","boat; ship",[],[],"⛵"],["la moto","motorbike",["la motocicleta"],["motorcycle"],"🏍️"],["el semáforo","traffic lights",[],[],"🚦"],["la esquina","corner",[],[],"📐"],["el norte","north",[],[],"⬆️"],["el sur","south",[],[],"⬇️"],["el este","east",[],[],"➡️"],["el oeste","west",[],[],"⬅️"],["la naturaleza","nature",[],[],"🌿"],["el campo","countryside; field",[],[],"🌾"],["el bosque","forest; woods",[],[],"🌲"],["el lago","lake",[],[],"🏞️"],["la isla","island",[],[],"🏝️"],["el cielo","sky",[],[],"🌤️"],["la nube","cloud",[],[],"☁️"],["el viento","wind",[],[],"🌬️"],["la tormenta","storm",[],[],"⛈️"],["la temperatura","temperature",[],[],"🌡️"],["el grado","degree",["los grados"],["degrees"],"🌡️"],["el animal","animal",[],[],"🐾"],["la vaca","cow",[],[],"🐄"],["el cerdo","pig",[],[],"🐖"],["la oveja","sheep",[],[],"🐑"],["el pez","fish (live)",[],["fish"],"🐟"],["el ratón","mouse",[],[],"🐭"],["la flor","flower",[],[],"🌸"],["el árbol","tree",[],[],"🌳"],["la música","music",[],[],"🎵"],["la canción","song",[],[],"🎤"],["la película","film",["la peli"],["movie"],"🎬"],["la serie","series; TV series",[],["show"],"📺"],["la televisión","television",["la tele"],["tv"],"📺"],["la radio","radio",[],[],"📻"],["el periódico","newspaper",["el diario"],["paper"],"📰"],["la revista","magazine",[],[],"📰"],["la foto","photo",["la fotografía"],["picture"],"📷"],["el deporte","sport",[],["sports"],"🏅"],["el fútbol","football",[],["soccer"],"⚽"],["el baloncesto","basketball",[],[],"🏀"],["el tenis","tennis",[],[],"🎾"],["el partido","match; game",[],[],"🏟️"],["el equipo","team; equipment",[],[],"👥"],["la fiesta","party",[],[],"🎉"],["el cumpleaños","birthday",[],[],"🎂"],["el regalo","present; gift",[],[],"🎁"],["la Navidad","Christmas",[],[],"🎄"],["el ordenador portátil","laptop",["el portátil"],[],"💻"],["la pantalla","screen",[],[],"🖥️"],["el correo electrónico","email",["el email","el correo","~el mail"],["e-mail"],"📧"],["la contraseña","password",[],[],"🔐"],["la página web","website",["la web"],["web page"],"🌐"],["el mensaje","message",[],["text"],"💬"],["la aplicación","app",["la app"],["application"],"📱"],["la reunión","meeting",[],[],"👥"],["la empresa","company; firm",["la compañía"],["business"],"🏢"],["el sueldo","salary; wages",["el salario"],["pay"],"💶"],["el horario","timetable; schedule; hours",[],["opening hours"],"🗓️"],["la clase","class; lesson",[],[],"🏫"],["el examen","exam",[],["test"],"📝"],["los deberes","homework",[],[],"📝"],["la pregunta","question",[],[],"❓"],["la respuesta","answer",[],["reply"],"💡"],["la palabra","word",[],[],"🔤"],["el idioma","language",["la lengua"],[],"🗣️"],["el problema","problem",[],["issue"],"⚠️"],["la idea","idea",[],[],"💡"],["la cosa","thing",[],[],"📦"],["la vez","time (occasion)",["una vez"],["once","occasion"],"🔁"],["el fin","end",["el final"],[],"🏁"],["el principio","beginning; start",["el comienzo"],[],"▶️"],["la mitad","half",[],[],"🌗"],["el cuarto","quarter",[],[],"🕒"],["divertido","fun; funny",["divertida"],["enjoyable"],"😄"],["aburrido","boring; bored",["aburrida"],[],"😴"],["interesante","interesting",[],[],"🤔"],["importante","important",[],[],"❗"],["tranquilo","calm; quiet",["tranquila"],["peaceful"],"😌"],["nervioso","nervous",["nerviosa"],[],"😬"],["simpático","nice; friendly",["simpática","amable"],["kind"],"😊"],["antipático","unfriendly; unpleasant",["antipática"],[],"😠"],["inteligente","clever; intelligent",["listo","lista"],["smart"],"🧠"],["tonto","silly; stupid",["tonta"],[],"🤪"],["alegre","cheerful; happy",[],[],"😃"],["serio","serious",["seria"],[],"😐"],["gordo","fat",["gorda"],[],"🫃"],["delgado","thin; slim",["delgada"],["skinny"],"🧍"],["rubio","blond; fair-haired",["rubia"],["blonde"],"👱"],["moreno","dark-haired; tanned",["morena"],["brunette","dark"],"🧑"],["rápido","fast; quick",["rápida","deprisa"],[],"🐆"],["lento","slow",["lenta","despacio"],[],"🐢"],["limpio","clean",["limpia"],[],"✨"],["sucio","dirty",["sucia"],[],"💩"],["lleno","full",["llena"],[],"🍽️"],["vacío","empty",["vacía"],[],"🫙"],["abierto","open",["abierta"],[],"🔓"],["cerrado","closed; shut",["cerrada"],[],"🔒"],["mejor","better; best",[],[],"⬆️"],["peor","worse; worst",[],[],"⬇️"],["mismo","same",["misma"],[],"🟰"],["otro","other; another",["otra"],[],"➕"],["todo","all; everything",["toda","todos","todas"],[],"🌐"],["cada","each; every",[],[],"🔁"],["algo","something",[],[],"❓"],["nada","nothing",[],[],"🚫"],["alguien","someone; somebody",[],["anyone"],"🧍"],["nadie","nobody; no one",[],["no-one"],"🚫"],["ya","already",[],[],"✔️"],["todavía","still; yet",["aún"],[],"⏳"],["pronto","soon",[],[],"⏩"],["otra vez","again",["de nuevo"],[],"🔁"],["casi","almost; nearly",[],[],"🤏"],["bastante","quite; enough",[],[],"👌"],["demasiado","too; too much",["demasiada"],[],"⚠️"],["solo","only; alone",["sólo","solamente"],["just"],"1️⃣"],["juntos","together",["juntas"],[],"🤝"],["dentro","inside",[],["in"],"📦"],["fuera","outside",[],["out"],"🌳"],["encima","on top; above",["arriba"],["up"],"⬆️"],["debajo","under; below",["abajo"],["down","underneath"],"⬇️"],["delante","in front",[],[],"⏩"],["detrás","behind",[],[],"🔙"],["al lado","next to; beside",["junto a"],[],"↔️"],["entre","between; among",[],[],"↔️"],["enfrente","opposite",["frente a"],["across from"],"↕️"],["apagar","to turn off; to switch off",[],[],"📴"],["encender","to turn on; to switch on",["poner"],[],"💡"],["cambiar","to change",[],[],"🔄"],["probar","to try; to taste",["probarse"],["to try on"],"👅"],["llevar","to carry; to wear; to take",[],[],"👜"],["traer","to bring",[],[],"🎁"],["poner","to put; to turn on",[],[],"📥"],["dejar","to leave; to let; to lend",[],[],"✋"],["perder","to lose; to miss",[],[],"😕"],["ganar","to win; to earn",[],[],"🏆"],["olvidar","to forget",["olvidarse"],[],"🤔"],["recordar","to remember",["acordarse"],[],"💭"],["preguntar","to ask",[],[],"❓"],["contestar","to answer; to reply",["responder"],[],"💬"],["explicar","to explain",[],[],"🧑‍🏫"],["mandar","to send",["enviar"],[],"📤"],["recibir","to receive; to get",[],[],"📥"],["alquilar","to rent; to hire",[],[],"🏠"],["reservar","to book; to reserve",[],[],"📅"],["visitar","to visit",[],[],"🗺️"],["conducir","to drive",["manejar"],[],"🚗"],["coger","to take; to catch",["tomar"],["to get"],"🚌"],["bajar","to go down; to get off",["bajarse"],[],"⬇️"],["subir","to go up; to get on",["subirse"],[],"⬆️"],["cruzar","to cross",[],[],"🚸"],["girar","to turn",["torcer"],[],"↪️"],["seguir","to follow; to continue; to carry on",[],["to keep going"],"➡️"],["parar","to stop",["pararse"],[],"🛑"],["quedar","to meet up; to remain",["quedarse"],["to stay"],"📍"],["invitar","to invite",[],[],"💌"],["celebrar","to celebrate",[],[],"🎉"],["casarse","to get married",[],["to marry"],"💍"],["nacer","to be born",[],[],"👶"],["morir","to die",[],[],"🪦"],["sentir","to feel; to be sorry",["sentirse"],[],"💭"],["doler","to hurt (me duele)",["me duele"],["it hurts"],"🤕"],["cuidar","to look after; to take care of",[],[],"🤲"],["descansar","to rest",[],["to relax"],"🛋️"],["despertarse","to wake up",[],[],"⏰"],["acostarse","to go to bed",[],[],"🛏️"],["vestirse","to get dressed",[],[],"👕"],["peinarse","to comb one's hair",[],["to brush one's hair"],"💇"],["lavarse","to wash (oneself)",[],["to have a wash"],"🧼"],["afeitarse","to shave",[],[],"🪒"],["arreglar","to fix; to tidy",[],["to repair"],"🔧"],["romper","to break",[],[],"💔"],["preparar","to prepare",[],["to get ready"],"🍳"],["pedir","to ask for; to order",[],[],"🧾"],["servir","to serve",[],[],"🍽️"],["gastar","to spend (money)",[],["to spend"],"💸"],["ahorrar","to save (money)",[],["to save"],"🐷"],["costar","to cost",[],[],"🏷️"],["vender","to sell",[],[],"🏷️"],["usar","to use",["utilizar"],[],"🛠️"],["llover","to rain",[],[],"🌧️"],["nevar","to snow",[],[],"❄️"]],"a2p":[["¿Qué hiciste ayer?","what did you do yesterday?",["¿qué has hecho hoy?"],["what did you get up to yesterday"],"📅"],["Ayer fui al cine.","yesterday I went to the cinema",["fui al cine ayer"],["i went to the cinema yesterday","i went to the movies yesterday"],"🎬"],["He estado en España.","I've been to Spain.",["estuve en España"],["i have been to spain"],"🇪🇸"],["Nunca he estado en México.","I've never been to Mexico.",["no he estado nunca en México"],["i have never been to mexico"],"🌎"],["¿Has comido ya?","have you eaten yet?",["¿ya has comido?"],["have you already eaten"],"🍽️"],["Voy a viajar en verano.","I'm going to travel in the summer.",["voy a viajar este verano"],["i will travel in summer"],"✈️"],["¿Qué vas a hacer el fin de semana?","what are you going to do at the weekend?",["¿qué haces el fin de semana?","¿qué planes tienes?"],["what are you doing this weekend"],"🎉"],["¿Quedamos mañana?","shall we meet up tomorrow?",["¿nos vemos mañana?"],["do you want to meet tomorrow"],"📍"],["¿A qué hora quedamos?","what time shall we meet?",["¿a qué hora nos vemos?"],["what time are we meeting"],"⏰"],["¿Te apetece un café?","do you fancy a coffee?",["¿quieres tomar un café?","¿tomamos un café?"],["would you like a coffee"],"☕"],["Me encantaría.","I'd love to.",["~me encanta la idea","~¡vale!"],["i would love to"],"😍"],["Lo siento, no puedo.","sorry, I can't.",["no puedo lo siento"],["i'm sorry i can't"],"🙇"],["Tengo que trabajar.","I have to work.",["tengo trabajo"],["i've got to work"],"💼"],["Me duele la cabeza.","I have a headache.",["tengo dolor de cabeza"],["my head hurts"],"🤕"],["Me duele el estómago.","I have a stomach ache.",["tengo dolor de estómago","~me duele la tripa"],["my stomach hurts","i've got a tummy ache"],"🤢"],["Necesito ir al médico.","I need to go to the doctor.",["tengo que ir al médico"],["i need to see a doctor"],"🧑‍⚕️"],["¿Dónde está la farmacia más cercana?","where is the nearest chemist?",["¿hay una farmacia cerca?"],["where's the nearest pharmacy"],"💊"],["Quería reservar una mesa.","I'd like to book a table.",["quiero reservar una mesa","quisiera reservar una mesa"],["i would like to reserve a table"],"📅"],["Tengo una reserva a nombre de…","I have a reservation under the name…",["tengo una reserva"],["i've got a booking in the name of"],"🧾"],["¿Qué me recomienda?","what do you recommend?",["¿qué recomienda?","¿qué me recomiendas?"],["what would you recommend"],"🤔"],["Soy vegetariano.","I'm vegetarian.",["soy vegetariana"],["i am vegetarian","i'm a vegetarian"],"🥗"],["Soy alérgico a los frutos secos.","I'm allergic to nuts.",["soy alérgica a los frutos secos"],["i am allergic to nuts"],"🥜"],["Estaba muy rico.","it was delicious",["~¡qué rico!","estaba buenísimo","estaba delicioso"],["that was delicious","it was really good"],"😋"],["¿Me lo puedo probar?","can I try it on?",["¿puedo probármelo?"],["may i try it on"],"👕"],["¿Tiene una talla más grande?","do you have a bigger size?",["¿tiene una talla más?"],["have you got a larger size"],"📏"],["Me lo llevo.","I'll take it.",["me lo quedo"],["i'll have it"],"🛍️"],["Solo estoy mirando.","I'm just looking.",["sólo estoy mirando"],["just looking"],"👀"],["¿A qué hora sale el tren?","what time does the train leave?",["¿cuándo sale el tren?"],["when does the train leave"],"🚆"],["Un billete de ida y vuelta, por favor.","a return ticket, please",["un billete de ida y vuelta"],["return ticket please","a round trip ticket please"],"🎫"],["Un billete de ida, por favor.","a single ticket, please",["solo ida por favor"],["one way ticket please","a one-way ticket"],"🎫"],["¿Este autobús va al centro?","does this bus go to the centre?",["¿va este autobús al centro?"],["does this bus go to the city centre","does this bus go downtown"],"🚌"],["Me he perdido.","I'm lost.",["estoy perdido","estoy perdida"],["i've got lost","i am lost"],"🗺️"],["¿Está lejos?","is it far?",["¿está muy lejos?"],["is it a long way"],"🔭"],["Está a cinco minutos andando.","it's five minutes' walk",["está a cinco minutos a pie"],["it's a five minute walk"],"🚶"],["Gire a la derecha.","turn right",["gira a la derecha","tuerce a la derecha"],["turn to the right"],"↪️"],["Gire a la izquierda.","turn left",["gira a la izquierda","tuerce a la izquierda"],["turn to the left"],"↩️"],["Siga todo recto.","go straight on",["sigue todo recto"],["keep going straight","go straight ahead"],"⬆️"],["¿Qué tiempo hace?","what's the weather like?",["¿qué tiempo hace hoy?"],["how's the weather"],"🌦️"],["Hace buen tiempo.","the weather's nice",["hace buen día"],["it's nice weather","the weather is good"],"☀️"],["Hace mal tiempo.","the weather's bad",["hace un día malo"],["it's bad weather"],"🌧️"],["Hace sol.","it's sunny",[],[],"☀️"],["Hace viento.","it's windy",[],[],"🌬️"],["Está nublado.","it's cloudy",[],[],"☁️"],["¿A qué te dedicas?","what do you do (for a living)?",["¿en qué trabajas?","¿a qué se dedica?"],["what's your job","what do you do"],"💼"],["Soy profesor.","I'm a teacher.",["soy profesora"],["i am a teacher"],"🧑‍🏫"],["Me gusta mucho leer.","I really like reading.",["me encanta leer"],["i love reading","i like reading a lot"],"📖"],["En mi tiempo libre juego al fútbol.","in my free time I play football",["juego al fútbol en mi tiempo libre"],["in my spare time i play football","i play soccer in my free time"],"⚽"],["¿Te gusta?","do you like it?",["¿le gusta?"],["do you like that"],"👍"],["Me gusta más el té.","I prefer tea.",["prefiero el té"],["i like tea more","i like tea better"],"🍵"],["Estoy de acuerdo.","I agree.",["~vale","de acuerdo"],["i'm in agreement"],"🤝"],["No estoy de acuerdo.","I don't agree.",[],["i disagree"],"🙅"],["Creo que sí.","I think so.",[],["i believe so"],"👍"],["Creo que no.","I don't think so.",[],["i think not"],"👎"],["¿Qué te pasa?","what's wrong?",["¿qué pasa?","¿qué te ocurre?"],["what's the matter","what's up"],"😟"],["No pasa nada.","it doesn't matter; no problem",["~tranquilo","~no te preocupes"],["never mind","don't worry"],"😌"],["No te preocupes.","don't worry",["no se preocupe"],["no worries"],"😌"],["¡Que te mejores!","get well soon!",["¡que se mejore!"],["hope you feel better"],"💐"],["¡Feliz cumpleaños!","happy birthday!",[],[],"🎂"],["¡Felicidades!","congratulations!",["¡enhorabuena!"],["congrats"],"🎉"],["¡Buen viaje!","have a good trip!",["¡que tengas buen viaje!"],["safe travels"],"🧳"],["¡Buen provecho!","enjoy your meal!",["~¡que aproveche!"],["bon appetit"],"🍽️"],["¡Qué pena!","what a shame!",["~¡qué lástima!"],["what a pity"],"😞"],["¡Qué rollo!","how boring!; what a drag!",["~¡qué aburrido!","~¡qué pesado!"],["what a pain"],"😩"]],"b1w":[["la pareja","partner; couple",[],[],"💑"],["el matrimonio","marriage; married couple",["la boda"],["wedding"],"💍"],["la boda","wedding",[],[],"💒"],["el divorcio","divorce",[],[],"💔"],["la infancia","childhood",["la niñez"],[],"🧸"],["la juventud","youth",[],[],"🧑"],["la vejez","old age",[],[],"👴"],["el adulto","adult",["la adulta"],[],"🧑"],["el ciudadano","citizen",["la ciudadana"],[],"🧑"],["el desconocido","stranger",["la desconocida"],[],"❓"],["la relación","relationship",[],[],"💞"],["la amistad","friendship",[],[],"🤝"],["el carácter","personality; character",["la personalidad"],[],"🎭"],["el sentimiento","feeling",[],[],"💭"],["la emoción","emotion; excitement",[],[],"🎢"],["el miedo","fear",[],[],"😨"],["la vergüenza","embarrassment; shame",[],[],"😳"],["la sorpresa","surprise",[],[],"🎉"],["la alegría","joy; happiness",["la felicidad"],[],"😄"],["la tristeza","sadness",[],[],"😢"],["el enfado","anger",["la rabia","la ira"],[],"😠"],["la preocupación","worry",[],[],"😟"],["la esperanza","hope",[],[],"🌈"],["el sueño","dream; sleepiness",[],[],"💤"],["el recuerdo","memory; souvenir",[],[],"🖼️"],["la experiencia","experience",[],[],"🧭"],["la oportunidad","opportunity; chance",[],[],"🚪"],["la decisión","decision",[],[],"⚖️"],["la opinión","opinion",[],["view"],"💬"],["el consejo","piece of advice",["los consejos"],["advice","tip"],"💡"],["la ventaja","advantage",[],[],"➕"],["la desventaja","disadvantage",["el inconveniente"],["drawback"],"➖"],["la razón","reason",[],[],"💡"],["la verdad","truth",[],[],"✔️"],["la mentira","lie",[],[],"🤥"],["el error","mistake; error",["la equivocación"],[],"❌"],["el éxito","success",[],[],"🏆"],["el fracaso","failure",[],[],"📉"],["el objetivo","goal; aim",["la meta"],["target"],"🎯"],["el esfuerzo","effort",[],[],"💪"],["la carrera","degree; career; race",[],[],"🎓"],["la asignatura","subject (at school)",["la materia"],["subject"],"📚"],["el título","degree; qualification; title",[],[],"🎓"],["el curso","course; school year",[],[],"📘"],["el conocimiento","knowledge",[],[],"🧠"],["la entrevista","interview",[],["job interview"],"🎙️"],["el currículum","CV",["el currículo"],["resume","curriculum vitae"],"📄"],["el puesto","position; job",["el puesto de trabajo"],["post"],"💼"],["el contrato","contract",[],[],"📝"],["el paro","unemployment",["el desempleo"],[],"📉"],["el desempleado","unemployed person",["la desempleada","el parado","la parada"],["unemployed"],"📉"],["la jubilación","retirement",[],[],"👴"],["el negocio","business",[],[],"💼"],["el mercado laboral","job market",[],["labour market"],"📈"],["el impuesto","tax",["los impuestos"],["taxes"],"🧾"],["la factura","bill; invoice",[],[],"🧾"],["el recibo","receipt",[],[],"🧾"],["la cuenta","account; bill",[],[],"🏦"],["la tarjeta de crédito","credit card",["la tarjeta"],[],"💳"],["el préstamo","loan",[],[],"🏦"],["la deuda","debt",[],[],"💸"],["el ahorro","savings",["los ahorros"],[],"🐷"],["la crisis","crisis",[],[],"📉"],["el gobierno","government",[],[],"🏛️"],["la política","politics; policy",[],[],"🏛️"],["las elecciones","election",["las elecciones generales"],["elections"],"🗳️"],["el voto","vote",[],[],"🗳️"],["la ley","law",[],[],"⚖️"],["el derecho","right; law (subject)",["los derechos"],["rights"],"⚖️"],["la sociedad","society",[],[],"👥"],["la cultura","culture",[],[],"🎭"],["la costumbre","custom; habit",["el hábito"],[],"🔁"],["la tradición","tradition",[],[],"🏮"],["la religión","religion",[],[],"🛐"],["el medio ambiente","environment",[],["the environment"],"🌍"],["la contaminación","pollution",[],[],"🏭"],["el reciclaje","recycling",[],[],"♻️"],["la basura","rubbish",["los residuos"],["trash","garbage","waste"],"🗑️"],["el cambio climático","climate change",[],[],"🌡️"],["la energía","energy",[],[],"⚡"],["el recurso","resource",["los recursos"],[],"🛢️"],["la sequía","drought",[],[],"🏜️"],["el incendio","fire (blaze)",["el fuego"],["fire"],"🔥"],["el terremoto","earthquake",[],[],"🌋"],["la inundación","flood",[],[],"🌊"],["la noticia","piece of news",["las noticias"],["news"],"📰"],["el periodista","journalist",["la periodista"],[],"🎙️"],["el anuncio","advert; announcement",["la publicidad"],["advertisement","ad"],"📢"],["la prensa","press",[],["the press"],"📰"],["las redes sociales","social media",[],["social networks"],"📱"],["el usuario","user",["la usuaria"],[],"👤"],["la pantalla táctil","touchscreen",[],[],"📱"],["el archivo","file",["el fichero"],[],"📁"],["la red","network; net",["internet"],["the internet"],"🌐"],["el cargador","charger",[],[],"🔌"],["la batería","battery",["la pila"],[],"🔋"],["la cobertura","signal; coverage",[],["reception"],"📶"],["el enlace","link",[],[],"🔗"],["descargar","to download",["bajar"],[],"⬇️"],["guardar","to save; to keep",[],[],"💾"],["borrar","to delete; to rub out",["eliminar"],["to erase"],"🗑️"],["compartir","to share",[],[],"🔁"],["la salud mental","mental health",[],[],"🧠"],["el estrés","stress",[],[],"😫"],["la dieta","diet",[],[],"🥗"],["el ejercicio","exercise",[],[],"🏋️"],["el sobrepeso","being overweight",[],["overweight"],"⚖️"],["la herida","wound; injury",["la lesión"],[],"🩹"],["el accidente","accident",[],[],"🚑"],["la ambulancia","ambulance",[],[],"🚑"],["las urgencias","A&E; emergency room",[],["emergency"],"🏥"],["el seguro","insurance",[],[],"🛡️"],["la vivienda","housing; dwelling",[],[],"🏘️"],["el propietario","owner; landlord",["la propietaria","el dueño","la dueña"],["landlady"],"🔑"],["el inquilino","tenant",["la inquilina"],[],"🏠"],["la mudanza","house move",[],["move"],"📦"],["el ruido","noise",[],[],"🔊"],["la obra","building work; work (of art)",["las obras"],["roadworks"],"🚧"],["el tráfico","traffic",[],[],"🚗"],["el atasco","traffic jam",[],["jam"],"🚗"],["el aparcamiento","car park",["el parking"],["parking","parking lot"],"🅿️"],["la gasolina","petrol",[],["gas","gasoline"],"⛽"],["el carné de conducir","driving licence",["el carnet de conducir"],["driver's license"],"🪪"],["el vuelo","flight",[],[],"✈️"],["el retraso","delay",[],[],"⏳"],["el destino","destination; fate",[],[],"📍"],["el alojamiento","accommodation",[],["lodging"],"🏨"],["la habitación doble","double room",[],[],"🛏️"],["la recepción","reception",[],[],"🛎️"],["el paisaje","landscape; scenery",[],[],"🏞️"],["la costa","coast",[],[],"🏖️"],["el ambiente","atmosphere",[],["vibe"],"✨"],["la exposición","exhibition",[],[],"🖼️"],["el cuadro","painting; picture",["la pintura"],[],"🖼️"],["el escritor","writer",["la escritora","el autor","la autora"],["author"],"✍️"],["la novela","novel",[],[],"📕"],["el personaje","character (in a story)",[],["character"],"🎭"],["el argumento","plot; argument",["la trama"],[],"📖"],["el concierto","concert",[],[],"🎸"],["el espectáculo","show",[],["performance"],"🎭"],["el aficionado","fan",["la aficionada","el fan"],["supporter"],"📣"],["el entrenamiento","training",[],[],"🏋️"],["la competición","competition",["el campeonato"],["championship"],"🏆"],["desarrollar","to develop",[],[],"📈"],["conseguir","to get; to achieve; to manage",["lograr"],["to obtain"],"🏆"],["intentar","to try",["tratar de"],["to attempt"],"🎯"],["evitar","to avoid",[],[],"🚫"],["mejorar","to improve",[],[],"📈"],["empeorar","to get worse",[],["to worsen"],"📉"],["aumentar","to increase",["subir"],["to rise"],"📈"],["disminuir","to decrease",["bajar","reducir"],["to reduce","to fall"],"📉"],["proteger","to protect",[],[],"🛡️"],["reciclar","to recycle",[],[],"♻️"],["malgastar","to waste",["desperdiciar"],[],"🗑️"],["contaminar","to pollute",[],[],"🏭"],["sufrir","to suffer",[],[],"😣"],["preocuparse","to worry",[],[],"😟"],["enfadarse","to get angry",[],[],"😠"],["alegrarse","to be glad",[],["to be happy"],"😄"],["quejarse","to complain",[],[],"😤"],["disfrutar","to enjoy",[],[],"😄"],["aburrirse","to get bored",[],[],"🥱"],["enamorarse","to fall in love",[],[],"😍"],["separarse","to separate; to split up",[],[],"💔"],["mudarse","to move house",[],["to move"],"📦"],["crecer","to grow up; to grow",[],[],"🌱"],["envejecer","to grow old; to age",[],[],"👴"],["jubilarse","to retire",[],[],"👴"],["contratar","to hire; to take on",[],[],"🤝"],["despedir","to fire; to say goodbye to",[],["to sack","to dismiss"],"👋"],["solicitar","to apply for; to request",[],[],"📝"],["firmar","to sign",[],[],"✍️"],["cobrar","to charge; to get paid",[],["to earn"],"💶"],["deber","to owe; must",[],["should"],"💸"],["prestar","to lend",[],[],"🤲"],["devolver","to give back; to return",[],[],"↩️"],["ofrecer","to offer",[],[],"🎁"],["aceptar","to accept",[],[],"✅"],["rechazar","to reject; to turn down",[],["to refuse"],"❌"],["permitir","to allow; to let",["dejar"],["to permit"],"✅"],["prohibir","to forbid; to ban",[],["to prohibit"],"🚫"],["obligar","to force; to oblige",[],[],"⛓️"],["convencer","to convince; to persuade",[],[],"🗣️"],["discutir","to argue; to discuss",[],[],"🗯️"],["negociar","to negotiate",[],[],"🤝"],["opinar","to think; to give an opinion",[],[],"💬"],["sugerir","to suggest",["proponer"],[],"💡"],["recomendar","to recommend",[],[],"👍"],["aconsejar","to advise",[],[],"💡"],["quejarse de","to complain about",[],[],"😤"],["darse cuenta","to realise",[],["to notice","to realize"],"💡"],["fijarse","to notice; to pay attention",[],[],"👀"],["imaginar","to imagine",["imaginarse"],[],"💭"],["suponer","to suppose; to assume",[],[],"🤔"],["dudar","to doubt",[],[],"🤔"],["confiar","to trust",[],[],"🤝"],["pertenecer","to belong",[],[],"🏷️"],["depender","to depend",[],[],"🔗"],["parecer","to seem; to look like",[],[],"🤔"],["parecerse","to look like; to resemble",[],[],"👯"],["convertirse","to become",["hacerse","ponerse","volverse"],["to turn into"],"🔄"],["llegar a ser","to become",[],[],"🔄"],["tener en cuenta","to take into account",[],["to bear in mind"],"📝"],["echar de menos","to miss (someone)",["extrañar"],["to miss"],"💭"],["tener ganas de","to feel like; to look forward to",[],[],"🤩"],["hacer falta","to be necessary; to need",[],[],"❗"],["merecer la pena","to be worth it",["valer la pena"],[],"👍"],["seguro","sure; safe",["segura"],[],"✅"],["peligroso","dangerous",["peligrosa"],[],"⚠️"],["necesario","necessary",["necesaria"],[],"❗"],["posible","possible",[],[],"✔️"],["imposible","impossible",[],[],"🚫"],["probable","likely; probable",[],[],"🎲"],["suficiente","enough; sufficient",[],[],"👌"],["actual","current; present-day",[],[],"🕒"],["antiguo","old; ancient; former",["antigua"],[],"🏺"],["moderno","modern",["moderna"],[],"🏙️"],["sano","healthy",["sana","saludable"],[],"🥗"],["grave","serious (illness, problem)",[],["serious"],"⚠️"],["orgulloso","proud",["orgullosa"],[],"🦚"],["celoso","jealous",["celosa"],[],"😒"],["tímido","shy",["tímida"],[],"🙈"],["valiente","brave",[],[],"🦁"],["honesto","honest",["honesta","sincero","sincera"],[],"🤝"],["responsable","responsible",[],[],"✅"],["egoísta","selfish",[],[],"🙄"],["generoso","generous",["generosa"],[],"🎁"],["educado","polite; well-mannered",["educada"],[],"🎩"],["maleducado","rude",["maleducada","grosero","grosera"],["bad-mannered"],"😤"],["puntual","punctual; on time",[],[],"⏰"],["agradable","pleasant; nice",[],[],"😊"],["desagradable","unpleasant",[],[],"😖"],["cómodo","comfortable",["cómoda"],[],"🛋️"],["incómodo","uncomfortable; awkward",["incómoda"],[],"😬"],["gratis","free (no cost)",["gratuito","gratuita"],["free of charge"],"🆓"],["sin embargo","however",["no obstante"],[],"🔀"],["además","also; besides; in addition",[],["moreover"],"➕"],["aunque","although; even though",[],["even if"],"🔀"],["por eso","that's why; so",["por lo tanto","así que"],["therefore"],"➡️"],["mientras","while",["mientras que"],[],"⏳"],["en cambio","on the other hand; instead",["por otro lado"],[],"🔀"],["por ejemplo","for example",[],["for instance"],"💡"],["de repente","suddenly",[],["all of a sudden"],"⚡"],["al final","in the end; at the end",["finalmente","por fin"],["finally"],"🏁"],["cada vez más","more and more",[],[],"📈"],["sobre todo","above all; especially",["especialmente"],[],"⭐"],["a menudo","often",["muchas veces","con frecuencia"],["frequently"],"🔁"],["de vez en cuando","from time to time",["a veces"],["now and then","occasionally"],"🔀"],["apenas","hardly; barely",[],[],"🤏"],["quizás","perhaps; maybe",["quizá","tal vez","a lo mejor"],["maybe"],"🤷"]],"b1p":[["Cuando era pequeño, vivía en el campo.","when I was little, I lived in the countryside",["cuando era pequeña vivía en el campo","de pequeño vivía en el campo"],["when i was a child i lived in the countryside"],"🌾"],["Llevo dos años estudiando español.","I've been studying Spanish for two years.",["estudio español desde hace dos años"],["i have been learning spanish for two years"],"📚"],["Hace tres años que vivo aquí.","I've lived here for three years.",["vivo aquí desde hace tres años","llevo tres años viviendo aquí"],["i've been living here for three years"],"🏠"],["Si tuviera tiempo, viajaría más.","if I had time, I'd travel more",["si tuviera más tiempo viajaría más"],["if i had more time i would travel more"],"✈️"],["Si llueve, nos quedamos en casa.","if it rains, we'll stay at home",["si llueve nos quedaremos en casa"],["if it rains we stay home"],"🌧️"],["Espero que te guste.","I hope you like it.",["ojalá te guste"],["hope you like it"],"🎁"],["Quiero que vengas.","I want you to come.",["me gustaría que vinieras"],["i'd like you to come"],"🙋"],["Es importante que lo hagas.","it's important that you do it",["tienes que hacerlo"],["it is important you do it"],"❗"],["Me parece que tienes razón.","I think you're right.",["creo que tienes razón"],["it seems to me you're right"],"👍"],["En mi opinión…","in my opinion…",["para mí","desde mi punto de vista"],["i think","from my point of view"],"💬"],["Por un lado… por otro lado…","on the one hand… on the other hand…",[],["on one hand on the other hand"],"⚖️"],["No me importa.","I don't mind.",["me da igual"],["it doesn't matter to me","i don't care"],"🤷"],["Me da igual.","I don't mind; it's all the same to me",["~me da lo mismo","no me importa"],["i don't care","whatever"],"🤷"],["¡Ojalá!","I hope so!; if only!",["ojalá que sí"],["let's hope so"],"🤞"],["¿Te importa si abro la ventana?","do you mind if I open the window?",["¿puedo abrir la ventana?"],["is it okay if i open the window"],"🪟"],["¿Podrías ayudarme?","could you help me?",["¿me podrías ayudar?","¿me puede ayudar?"],["can you help me"],"🆘"],["¿Me harías un favor?","would you do me a favour?",["¿me haces un favor?"],["can you do me a favour","would you do me a favor"],"🙏"],["Te echo de menos.","I miss you.",["te extraño"],["i've missed you"],"💭"],["Tengo ganas de verte.","I'm looking forward to seeing you.",["tengo muchas ganas de verte"],["i can't wait to see you"],"🤩"],["Me alegro de verte.","I'm glad to see you.",["qué alegría verte"],["good to see you","nice to see you"],"😄"],["¡Cuánto tiempo!","long time no see!",["~¡cuánto tiempo sin verte!"],["it's been ages"],"🤗"],["Vale la pena.","it's worth it",["merece la pena"],["it is worth it"],"👍"],["No vale la pena.","it's not worth it",["no merece la pena"],["it isn't worth it"],"👎"],["Depende.","it depends",["depende de"],["that depends"],"🤷"],["Ya veremos.","we'll see",[],["🤔"],"we will see"],["Me he equivocado.","I've made a mistake.",["me equivoqué"],["i was wrong","i made a mistake"],"❌"],["Tienes razón.","you're right",["tiene razón"],["you are right"],"👍"],["No tienes razón.","you're wrong",["estás equivocado","estás equivocada"],["you are wrong"],"👎"],["Lo que pasa es que…","the thing is…",["el caso es que"],["what happens is that"],"💬"],["Es que…","it's just that…",[],["💬"],"the thing is"],["O sea…","I mean…; in other words…",["~es decir"],["that is to say"],"💬"],["Por cierto…","by the way…",[],["💡"],"incidentally"],["Menos mal.","thank goodness; just as well",["~menos mal que"],["phew","lucky"],"😅"],["¡Qué suerte!","how lucky!",["~¡qué suerte tienes!"],["lucky you"],"🍀"],["¡Qué vergüenza!","how embarrassing!",[],["😳"],"so embarrassing"],["¡Ni idea!","no idea!",["no tengo ni idea"],["i've no idea","i have no idea"],"🤷"],["¡No me digas!","you don't say!; really?",["¿en serio?","~¿de verdad?"],["no way","really"],"😮"],["¡Qué fuerte!","no way!; that's crazy!",["~¡qué fuerte!","~¡madre mía!"],["that's unbelievable","wow"],"😱"],["¡Madre mía!","oh my goodness!",["~¡Dios mío!"],["oh my god","my goodness"],"😱"],["¡Ánimo!","cheer up!; come on, you can do it!",["~¡venga!","¡tú puedes!"],["keep going","chin up"],"💪"],["¡Que te vaya bien!","all the best!; good luck!",["¡que le vaya bien!","¡suerte!"],["take care"],"🍀"],["Quisiera hacer una reclamación.","I'd like to make a complaint.",["quiero poner una reclamación","quiero hacer una queja"],["i want to complain","i would like to make a complaint"],"📝"],["Hay un problema con mi habitación.","there's a problem with my room",["tengo un problema con mi habitación"],["there is a problem with my room"],"🛏️"],["El aire acondicionado no funciona.","the air conditioning isn't working",["no funciona el aire acondicionado"],["the aircon doesn't work","the air conditioning doesn't work"],"❄️"],["¿Está incluido el desayuno?","is breakfast included?",["¿el desayuno está incluido?"],["does it include breakfast"],"🥐"],["He perdido mi cartera.","I've lost my wallet.",["perdí mi cartera"],["i lost my wallet"],"👛"],["Me han robado el móvil.","my phone has been stolen",["me robaron el móvil"],["someone stole my phone","my mobile was stolen"],"📱"],["¿Dónde está la comisaría?","where is the police station?",["¿dónde hay una comisaría?"],["where's the police station"],"👮"],["Llame a una ambulancia.","call an ambulance",["llama a una ambulancia","¡llamen a una ambulancia!"],["call an ambulance please"],"🚑"],["Estoy buscando trabajo.","I'm looking for work.",["busco trabajo"],["i'm looking for a job","i am job hunting"],"💼"],["Tengo experiencia en ventas.","I have experience in sales.",[],["i've got sales experience"],"📈"],["Me gustaría solicitar el puesto.","I'd like to apply for the job.",["quisiera solicitar el puesto"],["i would like to apply for the position"],"📝"],["Deberíamos reciclar más.","we should recycle more",["tenemos que reciclar más"],["we ought to recycle more"],"♻️"],["Hay que cuidar el medio ambiente.","we have to look after the environment",["debemos cuidar el medio ambiente"],["we must protect the environment"],"🌍"]]};
+/* each row: [spanish, english, otherSpanish[], otherEnglish[], picture]; a leading ~ marks a casual form */
+const LEVELS={a1:'A1',a2:'A2',b1:'B1'};
+function build(rows,type,deck){return rows.map(([es,en,esA,enA,pic])=>{
+  const strip=a=>a.map(x=>x.replace(/^~/,''));
+  return{id:deck+':'+es+'|'+en,es,en,type,deck,pic:pic||'',esA:strip(esA),enA:strip(enA),
+    casual:new Set([...esA,...enA].filter(x=>x[0]==='~').map(x=>x.slice(1)))}})}
+const CARDS=[];
+for(const d of ['a1','a2','b1']){
+  const W=build(DATA[d+'w'],'w',d),P=build(DATA[d+'p'],'p',d);let p=0;
+  W.forEach((w,i)=>{if(i%3===0&&p<P.length)CARDS.push(P[p++]);CARDS.push(w)});while(p<P.length)CARDS.push(P[p++]);
+}
+
+/* ---------- storage ---------- */
+const KEY='es-speaking-v1';
+let S={cards:{},day:'',newDone:{je:0,ej:0},set:{dir:'je',newPerDay:10,gap:6,rate:0.85,auto:1,types:'both',decks:['a1'],walkMode:'speak'}};
+try{const s=JSON.parse(localStorage.getItem(KEY));if(s){S={...S,...s,set:{...S.set,...(s.set||{})}}}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function today(){const d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()}
+function rollDay(){if(S.day!==today()){S.day=today();S.newDone={je:0,ej:0};save()}}
+rollDay();
+let _pk='',_pool=[];
+const pool=()=>{const key=S.set.decks.join()+'/'+S.set.types;if(key!==_pk){_pk=key;_pool=CARDS.filter(c=>S.set.decks.includes(c.deck)&&(S.set.types==='both'||(S.set.types==='words')===(c.type==='w')))}return _pool};
+
+/* ---------- scheduler (Anki-style SM-2 with learning steps) ---------- */
+const MIN=60e3,DAY=864e5,STEPS=[1,10];
+const ck=c=>S.set.dir+':'+c.id;
+const st=c=>S.cards[ck(c)];
+function schedule(cs,g,now){
+  cs=cs?{...cs}:{ivl:0,ease:2.5,reps:0,lapses:0,step:0,learning:true};
+  cs.reps++;
+  if(cs.learning){
+    if(g===0){cs.step=0;cs.due=now+STEPS[0]*MIN}
+    else if(g===1){cs.due=now+Math.round(STEPS[cs.step]*1.5)*MIN}
+    else if(g===2){cs.step++;if(cs.step>=STEPS.length){cs.learning=false;cs.ivl=Math.max(1,cs.ivl);cs.due=now+cs.ivl*DAY}else cs.due=now+STEPS[cs.step]*MIN}
+    else{cs.learning=false;cs.ivl=cs.ivl>0?cs.ivl+1:4;cs.due=now+cs.ivl*DAY}
+  }else{
+    if(g===0){cs.lapses++;cs.ease=Math.max(1.3,cs.ease-.2);cs.ivl=Math.max(1,Math.round(cs.ivl*.5));cs.learning=true;cs.step=1;cs.due=now+STEPS[1]*MIN}
+    else{
+      if(g===1){cs.ivl=Math.max(cs.ivl+1,Math.round(cs.ivl*1.2));cs.ease=Math.max(1.3,cs.ease-.15)}
+      if(g===2){cs.ivl=Math.max(cs.ivl+1,Math.round(cs.ivl*cs.ease))}
+      if(g===3){cs.ivl=Math.max(cs.ivl+1,Math.round(cs.ivl*cs.ease*1.3));cs.ease+=.15}
+      cs.due=now+cs.ivl*DAY;
+    }
+  }
+  return cs;
+}
+function fmt(ms){const m=ms/MIN;if(m<60)return Math.max(1,Math.round(m))+'m';const h=m/60;if(h<24)return Math.round(h)+'h';const d=h/24;if(d<30)return Math.round(d)+'d';return (d/30).toFixed(1).replace('.0','')+'mo'}
+function grade(c,g){rollDay();const now=Date.now();if(!st(c))S.newDone[S.set.dir]++;S.cards[ck(c)]=schedule(st(c),g,now);save()}
+function counts(){
+  rollDay();const now=Date.now();let due=0,fresh=0;
+  for(const c of pool()){const s=st(c);if(!s)fresh++;else if(s.due<=now)due++}
+  return{due,fresh:Math.min(fresh,Math.max(0,S.set.newPerDay-S.newDone[S.set.dir]))};
+}
+let lastId=null;
+function nextCard(){
+  rollDay();const now=Date.now();
+  const pick=list=>{list.sort((a,b)=>st(a).due-st(b).due);const f=list.find(c=>c.id!==lastId);return f||list[0]};
+  const due=pool().filter(c=>{const s=st(c);return s&&s.due<=now});
+  if(due.length>1||(due.length===1&&due[0].id!==lastId))return pick(due);
+  if(S.newDone[S.set.dir]<S.set.newPerDay){
+    const ds=S.set.decks;
+    for(let i=0;i<ds.length;i++){const dk=ds[(S.newDone[S.set.dir]+i)%ds.length];const n=pool().find(c=>c.deck===dk&&!st(c)&&c.id!==lastId);if(n)return n}
+  }
+  if(due.length)return due[0];
+  const ahead=pool().filter(c=>{const s=st(c);return s&&s.learning&&s.due<=now+20*MIN});
+  if(ahead.length)return pick(ahead);
+  return null;
+}
+
+/* ---------- speech out ---------- */
+let voices=[];
+function loadVoices(){try{voices=speechSynthesis.getVoices()}catch(e){}}
+if('speechSynthesis' in window){loadVoices();speechSynthesis.onvoiceschanged=loadVoices}
+function pickVoice(lang){const L=lang.toLowerCase();const n=v=>v.lang.replace('_','-').toLowerCase();
+  return voices.find(v=>n(v)===L&&/google|siri|enhanced|premium|natural/i.test(v.name))||voices.find(v=>n(v)===L)||voices.find(v=>n(v).startsWith(L.slice(0,2)))}
+function speak(text,lang){return new Promise(res=>{
+  if(!('speechSynthesis' in window))return res();
+  const u=new SpeechSynthesisUtterance(text);u.lang=lang;const v=pickVoice(lang);if(v)u.voice=v;
+  u.rate=lang.startsWith('es')?+S.set.rate:1;
+  let done=false;const fin=()=>{if(done)return;done=true;clearTimeout(t);res()};
+  u.onend=fin;u.onerror=fin;const t=setTimeout(fin,3000+text.length*120);
+  if(speechSynthesis.speaking)speechSynthesis.cancel();
+  speechSynthesis.speak(u);
+})}
+const sayable=s=>s.replace(/\(.*?\)/g,'').replace(/…/g,'').split(';').map(x=>x.trim()).filter(Boolean);
+const enSay=c=>sayable(c.en).join(', or ');
+const esSay=c=>c.es.replace(/…/g,'');
+const promptOf=c=>S.set.dir==='je'?[esSay(c),'es-ES']:[enSay(c),'en-GB'];
+const answerOf=c=>S.set.dir==='je'?[enSay(c),'en-GB']:[esSay(c),'es-ES'];
+
+let actx;
+function tone(ok){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();const t=actx.currentTime;
+  (ok?[660,880]:[300,220]).forEach((f,i)=>{const o=actx.createOscillator(),g=actx.createGain();o.frequency.value=f;o.type='sine';
+    g.gain.setValueAtTime(0,t+i*.13);g.gain.linearRampToValueAtTime(.18,t+i*.13+.02);g.gain.exponentialRampToValueAtTime(.001,t+i*.13+.22);
+    o.connect(g).connect(actx.destination);o.start(t+i*.13);o.stop(t+i*.13+.25)})}catch(e){}}
+
+/* ---------- speech in ---------- */
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+let micBlocked=!SR,curRec=null;
+function listen(lang,ms,onHeard){return new Promise(res=>{
+  let rec,t,finished=false,alts=[],interim='';
+  const finish=v=>{if(finished)return;finished=true;clearTimeout(t);curRec=null;try{rec&&rec.abort()}catch(e){}res(v)};
+  try{rec=new SR()}catch(e){return finish(null)}
+  curRec=rec;rec.lang=lang;rec.interimResults=true;rec.maxAlternatives=5;rec.continuous=false;
+  rec.onresult=e=>{for(let i=e.resultIndex;i<e.results.length;i++){const r=e.results[i];if(r.isFinal){for(let j=0;j<r.length;j++)alts.push(r[j].transcript)}else interim=r[0].transcript}onHeard&&onHeard(alts[0]||interim)};
+  rec.onerror=e=>{if(/not-allowed|service-not-allowed|audio-capture/.test(e.error)){micBlocked=true;showMicNote();finish(null)}};
+  rec.onend=()=>finish(alts.length?alts:interim?[interim]:[]);
+  t=setTimeout(()=>{try{rec.stop()}catch(e){}t=setTimeout(()=>finish(alts.length?alts:interim?[interim]:[]),900)},ms);
+  try{rec.start()}catch(e){finish(null)}
+})}
+
+/* ---------- answer checking ---------- */
+function lev(a,b){const m=a.length,n=b.length;if(!m||!n)return Math.max(m,n);let p=Array.from({length:n+1},(_,j)=>j);
+  for(let i=1;i<=m;i++){const q=[i];for(let j=1;j<=n;j++)q[j]=Math.min(p[j]+1,q[j-1]+1,p[j-1]+(a[i-1]===b[j-1]?0:1));p=q}return p[n]}
+const sim=(a,b)=>1-lev(a,b)/Math.max(a.length,b.length,1);
+const overlap=(h,t)=>{const tw=t.split(' ');if(tw.length<3)return 0;const hw=new Set(h.split(' '));return tw.filter(w=>hw.has(w)).length/tw.length};
+const NUM={one:'1',two:'2',three:'3',four:'4',five:'5',six:'6',seven:'7',eight:'8',nine:'9',ten:'10'};
+function normEn(s){s=s.toLowerCase().replace(/\(.*?\)/g,' ').replace(/…/g,' ').replace(/[^a-z0-9' ]+/g,' ').replace(/\s+/g,' ').trim();
+  s=s.replace(/^(to|the|a|an|my|it's|its|it is)\s+/,'');return s.split(' ').map(w=>NUM[w]||w).join(' ')}
+const ESNUM={uno:'1',un:'1',una:'1',dos:'2',tres:'3',cuatro:'4',cinco:'5',seis:'6',siete:'7',ocho:'8',nueve:'9',diez:'10'};
+// Spanish: ignore accents, ¿¡ punctuation and a leading article, so "perro" counts for "el perro"
+function normEs(s){s=s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/…/g,' ').replace(/[^a-z0-9ñ ]+/g,' ').replace(/\s+/g,' ').trim();
+  s=s.replace(/^(el|la|los|las|un|una|unos|unas)\s+/,'');return s.split(' ').map(w=>ESNUM[w]||w).join(' ')}
+const enTargets=c=>[...c.en.split(';'),c.en,...c.enA].map(normEn).filter(Boolean);
+const esTargets=c=>[c.es,...c.esA,...c.enA.filter(x=>/^\d+$/.test(x))].map(normEs).filter(Boolean);
+function judge(c,heard){
+  if(!heard||!heard.length)return false;
+  if(S.set.dir==='je'){const T=enTargets(c);return heard.some(h=>{h=normEn(h);return T.some(t=>h===t||(' '+h+' ').includes(' '+t+' ')||sim(h,t)>=.8||overlap(h,t)>=.75)})}
+  const T=esTargets(c);
+  return heard.some(h=>{h=normEs(h);return T.some(t=>h===t||(t.length>3&&(' '+h+' ').includes(' '+t+' '))||(t.length>6&&sim(h,t)>=(t.length>12?.75:.8))||overlap(h,t)>=.8)});
+}
+function casualHit(c,heard){
+  if(!c.casual.size)return false;
+  const n=S.set.dir==='je'?normEn:normEs;const cas=[...c.casual].map(n);
+  const main=S.set.dir==='je'?c.en.split(';').map(normEn):[normEs(c.es)];
+  return heard.some(h=>cas.includes(n(h)))&&!heard.some(h=>main.includes(n(h)));
+}
+
+/* ---------- rendering ---------- */
+const $=id=>document.getElementById(id);
+const escH=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+let cur=null,revealed=false,feedback=null,suggest=null,showAlts=false,showFix=false,fixKind='missing',fixText='',lastHeard='';
+const REPO='https://github.com/rosybence/n5-flashcards/issues/new';
+const KINDS={missing:'Add a missing answer',wrong:'Translation seems wrong',other:'Something else'};
+function fixUrl(){
+  const dir=S.set.dir==='je'?'Spanish → English':'English → Spanish';
+  const title=`[Spanish] ${cur.es} (${cur.en}): ${KINDS[fixKind].toLowerCase()}${fixText?' — '+fixText.slice(0,60):''}`;
+  const body=[`Card: ${cur.es}`,`English: ${cur.en}`,`Level: ${LEVELS[cur.deck]}`,`Mode: ${dir}`,lastHeard?`App heard: ${lastHeard}`:'',`Type: ${KINDS[fixKind]}`,'',`Suggestion: ${fixText||'(none)'}`].filter((x,i)=>x||i===6).join('\n');
+  return REPO+'?title='+encodeURIComponent(title)+'&body='+encodeURIComponent(body)+'&labels=spanish';
+}
+function fixHtml(){
+  if(!showFix)return `<button class="fix-btn" id="fixBtn">Suggest a fix</button>`;
+  return `<div class="fix"><div class="fix-kinds" role="group" aria-label="What's the problem">${Object.entries(KINDS).map(([k,v])=>`<button data-kind="${k}" aria-pressed="${fixKind===k}">${v}</button>`).join('')}</div>
+  <label class="fix-label" for="fixText">${fixKind==='missing'?'What answer should count?':fixKind==='wrong'?'What should it say instead?':'What’s the problem?'}</label>
+  <input id="fixText" type="text" autocomplete="off" value="${escH(fixText).replace(/"/g,'&quot;')}" placeholder="${fixKind==='missing'?'e.g. vale or OK':'Type your suggestion'}">
+  ${lastHeard?`<p class="fix-note">Includes what the app heard: “${escH(lastHeard)}”</p>`:''}
+  <div class="row"><button class="btn" id="fixCancel">Cancel</button><a class="btn primary" id="fixSend" href="${fixUrl()}" target="_blank" rel="noopener">Send on GitHub</a></div></div>`;
+}
+// other answers: only in the language you answer in
+function altsHtml(){
+  const es=S.set.dir==='ej';
+  const xs=(es?cur.esA:cur.enA.filter(x=>!/^\d+$/.test(x)).filter(x=>!cur.en.split(';').map(normEn).includes(normEn(x))));
+  if(!xs.length)return '';
+  if(!showAlts)return `<button class="alts-btn" id="altsBtn" aria-expanded="false">Other answers · ${xs.length}</button>`;
+  const chips=xs.map(x=>{const c=cur.casual.has(x);const t=es?x:x.replace(/\bi\b/g,'I');return `<span class="chip${es?' esc':''}${c?' casual':''}">${escH(t)}${c?'<small>casual</small>':''}</span>`}).join('');
+  return `<button class="alts-btn" id="altsBtn" aria-expanded="true">Hide other answers</button><div class="alts"><div class="grp">${chips}</div></div>`;
+}
+// show the article in a lighter weight: "el perro"
+function esHtml(s){const m=s.match(/^(el|la|los|las)\s+(.*)$/);return m?`<span class="art">${m[1]}</span> ${escH(m[2])}`:escH(s)}
+function render(){
+  const k=counts();$('cDue').textContent=k.due;$('cNew').textContent=k.fresh;
+  document.querySelectorAll('[data-deck]').forEach(b=>b.setAttribute('aria-pressed',S.set.decks.includes(b.dataset.deck)));
+  $('brandSub').textContent=['a1','a2','b1'].filter(d=>S.set.decks.includes(d)).map(d=>LEVELS[d]).join(' · ');
+  $('dJE').setAttribute('aria-pressed',S.set.dir==='je');$('dEJ').setAttribute('aria-pressed',S.set.dir==='ej');
+  const card=$('card');
+  if(!cur){card.innerHTML=`<div class="front"><div class="done"><b>¡Buen trabajo!</b>You're done for now. Come back later for reviews, or raise new cards per day in settings.</div></div>`;
+    $('actions').hidden=true;$('after').hidden=true;$('fbBar').hidden=true;return}
+  const isNew=!st(cur);const long=cur.es.length>18;
+  const front=S.set.dir==='je'?`<div class="es${long?' long':''}">${esHtml(cur.es)}</div>`:`<div class="en-front">${escH(cur.en)}</div>`;
+  let html=`<span class="tag${isNew?' new':''}">${isNew?'New card':'Review'}${cur.type==='p'?' · Phrase':''} · ${LEVELS[cur.deck]}</span><div class="front">${front}</div>`;
+  if(revealed){
+    html+=`<div class="answer">${cur.pic?`<div class="pic" aria-hidden="true">${cur.pic}</div>`:''}${S.set.dir==='je'?`<div class="en">${escH(cur.en)}</div>`:`<div class="es${long?' long':''}">${esHtml(cur.es)}</div>`}${altsHtml()}</div>`;
+  }
+  card.innerHTML=html;
+  const fb=$('fbBar');fb.hidden=!feedback;if(feedback){fb.className='feedback '+feedback.cls;fb.textContent=feedback.text}
+  $('fixArea').innerHTML=revealed?fixHtml():'';
+  $('actions').hidden=revealed;
+  $('mic').disabled=micBlocked;
+  $('after').hidden=!revealed||walking;
+  if(revealed){const now=Date.now(),s=st(cur);
+    const wrong=suggest===0;
+    const f=$('flip');f.className='btn '+(wrong?'right':'wrong');f.textContent=wrong?'✓ I was right':'✗ I got it wrong';
+    $('mark').innerHTML=wrong?`Marked <b class="no">wrong</b> · back in ${fmt(schedule(s,0,now).due-now)}`:`Marked <b class="ok">right</b> · next in ${fmt(schedule(s,2,now).due-now)}`;
+    $('grades').innerHTML=['Again','Hard','Good','Easy'].map((n,i)=>`<button data-g="${i}">${n}<small>${fmt(schedule(s,i,now).due-now)}</small></button>`).join('')}
+}
+function resetCard(){revealed=false;feedback=null;suggest=null;showAlts=false;showFix=false;fixText='';lastHeard=''}
+function show(){cur=nextCard();resetCard();render();
+  const pr=cur&&promptOf(cur);if(pr&&+S.set.auto&&!walking&&userActed)speak(pr[0],pr[1])}
+function doReveal(){revealed=true;render();const [t,l]=answerOf(cur);return speak(t,l)}
+function answerGrade(g){if(!cur)return;grade(cur,g);lastId=cur.id;show()}
+function heardFeedback(ok,heard){lastHeard=heard&&heard[0]||'';
+  feedback=heard&&heard.length?{cls:ok?'ok':'no',text:(ok?'Correct — heard “':'Not quite — heard “')+heard[0]+'”'+(ok&&casualHit(cur,heard)?' · casual form':'')}:{cls:'no',text:'Didn’t catch anything'}}
+
+/* ---------- manual controls ---------- */
+let userActed=false;
+document.addEventListener('pointerdown',()=>{userActed=true},{once:true,capture:true});
+const cardClick=e=>{
+  if(e.target.closest('#altsBtn')){showAlts=!showAlts;render()}
+  else if(e.target.closest('#fixBtn')){showFix=true;render();setTimeout(()=>{const i=$('fixText');i&&i.focus()},50)}
+  else if(e.target.closest('#fixCancel')){showFix=false;fixText='';render()}
+  else if(e.target.closest('[data-kind]')){fixKind=e.target.closest('[data-kind]').dataset.kind;render()}
+  else if(e.target.closest('#fixSend')){setTimeout(()=>{showFix=false;fixText='';feedback={cls:'info',text:'Thanks — suggestion opened on GitHub. Tap Submit there to send it.'};render()},400)}
+};
+const fixInput=e=>{if(e.target.id==='fixText'){fixText=e.target.value;const a=$('fixSend');if(a)a.href=fixUrl()}};
+['card','fixArea'].forEach(id=>{$(id).addEventListener('click',cardClick);$(id).addEventListener('input',fixInput)});
+$('play').onclick=()=>{if(!cur)return;const x=revealed?answerOf(cur):promptOf(cur);speak(x[0],x[1])};
+$('reveal').onclick=()=>{if(cur&&!revealed){suggest=null;doReveal()}};
+$('grades').onclick=e=>{const b=e.target.closest('button');if(b)answerGrade(+b.dataset.g)};
+$('next').onclick=()=>answerGrade(suggest===0?0:2);
+$('flip').onclick=()=>{suggest=suggest===0?2:0;render()};
+$('mic').onclick=async()=>{
+  if(!cur||revealed||micBlocked)return;
+  const b=$('mic');b.classList.add('listening');b.lastChild.textContent='Listening…';
+  const [,lang]=answerOf(cur);
+  const heard=await listen(lang,6000,h=>{if(h){feedback={cls:'info',text:'Heard: '+h};render();b.classList.add('listening')}});
+  b.classList.remove('listening');b.lastChild.textContent='Speak';
+  if(heard===null)return render();
+  const ok=judge(cur,heard);tone(ok);heardFeedback(ok,heard);
+  suggest=ok?2:0;doReveal();
+};
+function setDir(d){if(walking)stopWalk();S.set.dir=d;save();lastId=null;show()}
+document.querySelector('.decks').onclick=e=>{const b=e.target.closest('[data-deck]');if(!b)return;const d=b.dataset.deck;
+  const on=S.set.decks.includes(d);if(on&&S.set.decks.length===1)return;
+  S.set.decks=on?S.set.decks.filter(x=>x!==d):[...S.set.decks,d];save();if(walking)stopWalk();lastId=null;show()};
+$('dJE').onclick=()=>setDir('je');$('dEJ').onclick=()=>setDir('ej');
+
+/* ---------- settings ---------- */
+const bind=(id,key,num)=>{const el=$(id);el.value=String(S.set[key]);el.onchange=()=>{S.set[key]=num?+el.value:el.value;save();render()}};
+bind('sNew','newPerDay',1);bind('sGap','gap',1);bind('sRate','rate',1);bind('sAuto','auto',1);
+$('sTypes').value=S.set.types;$('sTypes').onchange=()=>{S.set.types=$('sTypes').value;save();if(walking)stopWalk();lastId=null;show()};
+$('setBtn').onclick=()=>{const s=$('settings');s.hidden=!s.hidden;$('setBtn').setAttribute('aria-expanded',!s.hidden)};
+let resetArmed=false;
+$('reset').onclick=()=>{if(!resetArmed){resetArmed=true;$('reset').textContent='Tap again to erase all progress';setTimeout(()=>{resetArmed=false;$('reset').textContent='Reset all progress'},4000);return}
+  S.cards={};S.newDone={je:0,ej:0};save();resetArmed=false;$('reset').textContent='Progress reset';lastId=null;show()};
+
+/* ---------- walk mode ---------- */
+let walking=false,wake=null,graceRes=null;
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+function status(t){$('wStatus').textContent=t}
+function parseCmd(t){t=t.toLowerCase();
+  if(/repeat|again|one more|say it|pardon|repite|otra vez/.test(t))return 'repeat';
+  if(/wrong|missed|incorrect|didn.?t know|mal/.test(t))return 'wrong';
+  if(/right|correct|got it|yes|bien/.test(t))return 'right';
+  if(/next|skip|carry on|continue|go on|siguiente/.test(t))return 'next';
+  return null}
+function commandWindow(flipLabel,ms){return new Promise(res=>{
+  const box=$('grace');box.hidden=false;
+  box.innerHTML=`<button class="btn" data-c="repeat">↻ Repeat</button><button class="btn" data-c="flip">${flipLabel}</button><button class="btn primary" data-c="next">Next →</button>`;
+  let done=false,t;const fin=v=>{if(done)return;done=true;clearTimeout(t);box.hidden=true;graceRes=null;try{curRec&&curRec.abort()}catch(e){}res(v)};
+  graceRes=fin;box.onclick=e=>{const b=e.target.closest('[data-c]');if(b)fin(b.dataset.c)};
+  t=setTimeout(()=>fin(null),ms);
+  if(!micBlocked)listen('en-GB',ms-300).then(h=>{if(h&&h.length){const c=parseCmd(h.join(' '));if(c)fin(c)}});
+})}
+async function replay(){const pr=promptOf(cur),an=answerOf(cur);await speak(pr[0],pr[1]);await wait(700);if(walking)await speak(an[0],an[1])}
+async function afterAnswer(ok){
+  for(let i=0;i<6&&walking;i++){
+    status((ok?'Marked right':'Marked wrong')+' — say “repeat”, “'+(ok?'wrong':'right')+'” or “next”');
+    const c=await commandWindow(ok?'✗ I got it wrong':'✓ I was right',micBlocked?3500:4500);
+    if(!walking)return ok;
+    if(c==='repeat'){status('Repeating…');await replay();continue}
+    if(c==='flip')ok=!ok;else if(c==='wrong')ok=false;else if(c==='right')ok=true;
+    return ok;
+  }
+  return ok;
+}
+async function sayItBack(al){
+  const [rt,rl]=answerOf(cur);
+  for(let i=0;i<3&&walking;i++){
+    status('Now say it back'+(i?' — try again':''));await wait(250);
+    const h=await listen(al,S.set.gap*1000,x=>{if(x){feedback={cls:'info',text:'Heard: '+x};render()}});
+    if(!walking||h===null)return;
+    if(judge(cur,h)){tone(true);feedback={cls:'ok',text:'Nice — you said it right'};render();status('Nice — you said it right');await wait(700);return}
+    tone(false);feedback={cls:'no',text:h.length?'Heard “'+h[0]+'” — listen again':'Didn’t catch that — listen again'};render();
+    if(i<2){await wait(300);await speak(rt,rl)}
+  }
+  status('Moving on — this one will come back soon');await wait(600);
+}
+async function walkLoop(){
+  while(walking){
+    cur=nextCard();resetCard();render();
+    if(!cur){status('All done for now');await speak('All done for now. Great work.','en-GB');stopWalk();break}
+    const pr=promptOf(cur);const [,al]=answerOf(cur);
+    status('Listen…');await speak(pr[0],pr[1]);if(!walking)break;
+    let ok=true;
+    if(S.set.walkMode==='listen'||micBlocked){
+      for(let s=S.set.gap;s>0&&walking;s--){status('Think of the answer… '+s);await wait(1000)}
+      if(!walking)break;
+      status('Answer');await doReveal();if(!walking)break;
+    }else{
+      status('Your turn — say it '+(al.startsWith('es')?'in Spanish':'in English'));
+      const heard=await listen(al,S.set.gap*1000,h=>{if(h){feedback={cls:'info',text:'Heard: '+h};render()}});
+      if(!walking)break;
+      ok=heard!==null&&judge(cur,heard);tone(ok);heardFeedback(ok,heard);
+      status(ok?'Correct':'Here’s the answer');await doReveal();if(!walking)break;
+      if(!ok){await wait(500);const [rt,rl]=answerOf(cur);await speak(rt,rl);if(!walking)break;await sayItBack(al);if(!walking)break}
+    }
+    ok=await afterAnswer(ok);if(!walking)break;
+    grade(cur,ok?2:0);lastId=cur.id;await wait(400);
+  }
+}
+function walkHelp(on){const L=S.set.walkMode==='listen'||micBlocked;
+  const steps=L?['You hear the prompt.','Think of the answer during the pause.','You hear the translation.','Say <b>“repeat”</b> to hear it again, <b>“wrong”</b> if you missed it, or <b>“next”</b>. Say nothing and it counts as right.']
+    :['You hear the prompt.','Say the answer out loud.','If you get it wrong, it says the correct answer and waits for you to <b>say it back</b> (up to 3 tries).','Then say <b>“repeat”</b>, <b>“wrong”</b>, <b>“right”</b> or <b>“next”</b>. Say nothing and it moves on.'];
+  return `<ol>${steps.map(x=>`<li>${x}</li>`).join('')}</ol><p>Keep this screen on and the app open.${micBlocked&&!L?' Speaking back isn’t available here, so this works like Listen only.':''}</p>`}
+function setWalkMode(m){S.set.walkMode=m;save();$('wmSpeak').setAttribute('aria-pressed',m==='speak');$('wmListen').setAttribute('aria-pressed',m==='listen');$('wHelp').innerHTML=walkHelp(false)}
+$('wmSpeak').onclick=()=>setWalkMode('speak');$('wmListen').onclick=()=>setWalkMode('listen');
+async function startWalk(){
+  walking=true;userActed=true;
+  $('walkBtn').lastChild.textContent='Stop walk mode';$('walkBtn').classList.remove('primary');
+  $('walkModes').hidden=true;$('wHelp').innerHTML=walkHelp(true);
+  try{wake=await navigator.wakeLock.request('screen')}catch(e){wake=null}
+  try{actx=actx||new (window.AudioContext||window.webkitAudioContext)()}catch(e){}
+  walkLoop();
+}
+function stopWalk(){
+  walking=false;try{speechSynthesis.cancel()}catch(e){}try{curRec&&curRec.abort()}catch(e){}graceRes&&graceRes(null);
+  try{wake&&wake.release()}catch(e){}wake=null;
+  $('walkBtn').lastChild.textContent='Start walk mode';$('walkBtn').classList.add('primary');status('Walk mode');
+  $('walkModes').hidden=false;$('wHelp').innerHTML=walkHelp(false);
+  resetCard();cur=nextCard();render();
+}
+$('walkBtn').onclick=()=>walking?stopWalk():startWalk();
+document.addEventListener('visibilitychange',async()=>{if(walking&&document.visibilityState==='visible'&&!wake){try{wake=await navigator.wakeLock.request('screen')}catch(e){}}});
+
+function showMicNote(){const n=$('micNote');n.hidden=false;
+  n.innerHTML=SR?'<strong>Speaking back is blocked in this view.</strong> Open the app from its own link in Chrome or Safari to answer by voice.':
+  '<strong>This browser can’t listen.</strong> Use Chrome (Android, desktop) or Safari (iPhone) to answer by voice. You can still study by tapping.';render()}
+if(micBlocked)showMicNote();
+setWalkMode(S.set.walkMode);
+show();
+</script>
+
+<script>if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))</script>
+</body>
+</html>
