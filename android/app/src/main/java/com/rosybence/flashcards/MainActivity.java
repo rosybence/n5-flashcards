@@ -172,7 +172,7 @@ public class MainActivity extends Activity {
         return null;
     }
 
-    private void setImmersive(boolean on) {
+    private void applyImmersive(boolean on) {
         View d = getWindow().getDecorView();
         d.setSystemUiVisibility(on
                 ? View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN
@@ -256,7 +256,7 @@ public class MainActivity extends Activity {
         }
 
         @JavascriptInterface public void immersive(boolean on) {
-            main.post(() -> setImmersive(on));
+            main.post(() -> applyImmersive(on));
         }
     }
 
