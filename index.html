@@ -63,6 +63,12 @@ button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outlin
 .answer .jp{font-size:34px}
 .answer .kana{color:var(--muted);font-family:var(--jp);font-size:16px}
 .answer .en{font-size:20px;font-weight:600;text-wrap:balance}
+.alts-btn{margin-top:8px;font-size:13.5px;font-weight:500;color:var(--accent);padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:var(--bg)}
+.alts{display:flex;flex-direction:column;gap:8px;margin-top:6px;width:100%}
+.alts .grp{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px}
+.alts .lbl{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);width:100%}
+.chip{font-size:14px;padding:4px 10px;border-radius:8px;background:var(--accent-soft);color:var(--ink)}
+.chip.jpc{font-family:var(--jp);font-size:16px}
 .feedback{font-size:14px;padding:7px 12px;border-radius:10px;text-align:center;max-width:100%;overflow-wrap:anywhere}
 .feedback.ok{background:var(--good-soft);color:var(--good)}
 .feedback.no{background:var(--bad-soft);color:var(--bad)}
@@ -511,7 +517,15 @@ function judge(c,heard){
 
 /* ---------- rendering ---------- */
 const $=id=>document.getElementById(id);
-let cur=null,revealed=false,feedback=null,suggest=null;
+let cur=null,revealed=false,feedback=null,suggest=null,showAlts=false;
+const escH=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+function altsHtml(){
+  const a=cur.alts;if(!a.length)return '';
+  if(!showAlts)return `<button class="alts-btn" id="altsBtn" aria-expanded="false">Other answers · ${a.length}</button>`;
+  const ja=a.filter(x=>/[^\x00-\x7F]/.test(x)),en=a.filter(x=>!/[^\x00-\x7F]/.test(x)).map(x=>x.replace(/\bi\b/g,'I'));
+  const grp=(l,xs,cls)=>xs.length?`<div class="grp"><span class="lbl">${l}</span>${xs.map(x=>`<span class="chip ${cls}">${escH(x)}</span>`).join('')}</div>`:'';
+  return `<button class="alts-btn" id="altsBtn" aria-expanded="true">Hide other answers</button><div class="alts">${grp('Japanese',ja,'jpc')}${grp('English',en,'')}</div>`;
+}
 function ruby(c){
   const mode=S.set.ruby;const rt=mode==='romaji'?c.r:mode==='kana'&&c.k!==c.kana?c.kana:'';
   const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
@@ -530,7 +544,7 @@ function render(){
   if(feedback)html+=`<div class="feedback ${feedback.cls}">${feedback.text}</div>`;
   if(revealed){
     html+=`<div class="answer">${cur.pic?`<div class="pic" aria-hidden="true">${cur.pic}</div>`:''}${S.set.dir==='je'?`<div class="en">${cur.en}</div><div class="kana">${cur.kana} · ${cur.r}</div>`:
-      `<div class="jp">${ruby(cur)}</div><div class="kana">${cur.kana} · ${cur.r}</div>`}</div>`;
+      `<div class="jp">${ruby(cur)}</div><div class="kana">${cur.kana} · ${cur.r}</div>`}${altsHtml()}</div>`;
   }
   card.innerHTML=html;
   $('actions').hidden=revealed;
@@ -542,7 +556,7 @@ function render(){
     $('mark').innerHTML=wrong?`Marked <b class="no">wrong</b> · back in ${fmt(schedule(s,0,now).due-now)}`:`Marked <b class="ok">right</b> · next in ${fmt(schedule(s,2,now).due-now)}`;
     $('grades').innerHTML=['Again','Hard','Good','Easy'].map((n,i)=>`<button data-g="${i}">${n}<small>${fmt(schedule(s,i,now).due-now)}</small></button>`).join('')}
 }
-function show(){cur=nextCard();revealed=false;feedback=null;suggest=null;render();
+function show(){cur=nextCard();revealed=false;feedback=null;suggest=null;showAlts=false;render();
   if(cur&&+S.set.auto&&!walking&&userActed){const [t,l]=promptOf(cur);speak(t,l)}}
 function doReveal(){revealed=true;render();const [t,l]=answerOf(cur);return speak(t,l)}
 function answerGrade(g){if(!cur)return;grade(cur,g);lastId=cur.id;show()}
@@ -550,6 +564,7 @@ function answerGrade(g){if(!cur)return;grade(cur,g);lastId=cur.id;show()}
 /* ---------- manual controls ---------- */
 let userActed=false;
 document.addEventListener('pointerdown',()=>{userActed=true},{once:true,capture:true});
+$('card').addEventListener('click',e=>{if(e.target.closest('#altsBtn')){showAlts=!showAlts;render()}});
 $('play').onclick=()=>{if(!cur)return;const [t,l]=revealed?answerOf(cur):promptOf(cur);speak(t,l)};
 $('reveal').onclick=()=>{if(cur&&!revealed){suggest=null;doReveal()}};
 $('grades').onclick=e=>{const b=e.target.closest('button');if(b)answerGrade(+b.dataset.g)};
@@ -588,7 +603,7 @@ function grace(label,ms){return new Promise(res=>{
 })}
 async function walkLoop(){
   while(walking){
-    cur=nextCard();revealed=false;feedback=null;suggest=null;render();
+    cur=nextCard();revealed=false;feedback=null;suggest=null;showAlts=false;render();
     if(!cur){status('All done for now');await speak('All done for now. Great work.','en-GB');stopWalk();break}
     const [pt,pl]=promptOf(cur);const [,al]=answerOf(cur);
     status('Listen…');await speak(pt,pl);if(!walking)break;
