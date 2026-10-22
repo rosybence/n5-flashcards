@@ -165,6 +165,14 @@ button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outlin
 .backup{display:grid;gap:8px;font-size:14px}
 .backup .vr .test{flex:1}
 .hbtns{display:flex;gap:6px}
+
+/* keep settings inside the screen: long voice names must not stretch the panel */
+.settings{grid-template-columns:minmax(0,1fr)}
+.settings > *{min-width:0}
+.settings select{max-width:100%;text-overflow:ellipsis}
+.voicerow,.vr,.backup{min-width:0}
+.vr select{width:100%;min-width:0}
+.app{overflow-x:clip}
 </style>
 
 <div class="app">
