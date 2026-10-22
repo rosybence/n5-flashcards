@@ -63,6 +63,15 @@ button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outlin
 .answer .jp{font-size:34px}
 .answer .kana{color:var(--muted);font-family:var(--jp);font-size:16px}
 .answer .en{font-size:20px;font-weight:600;text-wrap:balance}
+.fix-btn{margin-top:4px;font-size:12.5px;color:var(--muted);text-decoration:underline;text-underline-offset:3px;padding:6px}
+.fix{width:100%;display:flex;flex-direction:column;gap:8px;margin-top:10px;padding:12px;border-radius:12px;background:var(--bg);text-align:left}
+.fix-kinds{display:flex;flex-wrap:wrap;gap:6px}
+.fix-kinds button{font-size:13px;padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:var(--surface)}
+.fix-kinds button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.fix-label{font-size:13px;color:var(--muted)}
+.fix input{font:inherit;font-size:16px;padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);width:100%;box-sizing:border-box}
+.fix-note{margin:0;font-size:12.5px;color:var(--muted)}
+.fix .btn{text-decoration:none;font-size:14px;padding:11px 8px}
 .alts-btn{margin-top:8px;font-size:13.5px;font-weight:500;color:var(--accent);padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:var(--bg)}
 .alts{display:flex;flex-direction:column;gap:8px;margin-top:6px;width:100%}
 .alts .grp{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px}
@@ -517,7 +526,23 @@ function judge(c,heard){
 
 /* ---------- rendering ---------- */
 const $=id=>document.getElementById(id);
-let cur=null,revealed=false,feedback=null,suggest=null,showAlts=false;
+let cur=null,revealed=false,feedback=null,suggest=null,showAlts=false,showFix=false,fixKind='missing',fixText='',lastHeard='';
+const REPO='https://github.com/rosybence/n5-flashcards/issues/new';
+const KINDS={missing:'Add a missing answer',wrong:'Translation seems wrong',other:'Something else'};
+function fixUrl(){
+  const dir=S.set.dir==='je'?'Japanese → English':'English → Japanese';
+  const title=`${cur.k} (${cur.en}): ${KINDS[fixKind].toLowerCase()}${fixText?' — '+fixText.slice(0,60):''}`;
+  const body=[`Card: ${cur.k} · ${cur.kana} · ${cur.r}`,`English: ${cur.en}`,`Mode: ${dir}`,lastHeard?`App heard: ${lastHeard}`:'',`Type: ${KINDS[fixKind]}`,'',`Suggestion: ${fixText||'(none)'}`].filter((x,i)=>x||i===5).join('\n');
+  return REPO+'?title='+encodeURIComponent(title)+'&body='+encodeURIComponent(body)+'&labels=feedback';
+}
+function fixHtml(){
+  if(!showFix)return `<button class="fix-btn" id="fixBtn">Suggest a fix</button>`;
+  return `<div class="fix"><div class="fix-kinds" role="group" aria-label="What's the problem">${Object.entries(KINDS).map(([k,v])=>`<button data-kind="${k}" aria-pressed="${fixKind===k}">${v}</button>`).join('')}</div>
+  <label class="fix-label" for="fixText">${fixKind==='missing'?'What answer should count?':fixKind==='wrong'?'What should it say instead?':'What’s the problem?'}</label>
+  <input id="fixText" type="text" autocomplete="off" value="${escH(fixText).replace(/"/g,'&quot;')}" placeholder="${fixKind==='missing'?'e.g. どうも or thanks':'Type your suggestion'}">
+  ${lastHeard?`<p class="fix-note">Includes what the app heard: “${escH(lastHeard)}”</p>`:''}
+  <div class="row"><button class="btn" id="fixCancel">Cancel</button><a class="btn primary" id="fixSend" href="${fixUrl()}" target="_blank" rel="noopener">Send on GitHub</a></div></div>`;
+}
 const escH=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
 function altsHtml(){
   const a=cur.alts;if(!a.length)return '';
@@ -544,7 +569,7 @@ function render(){
   if(feedback)html+=`<div class="feedback ${feedback.cls}">${feedback.text}</div>`;
   if(revealed){
     html+=`<div class="answer">${cur.pic?`<div class="pic" aria-hidden="true">${cur.pic}</div>`:''}${S.set.dir==='je'?`<div class="en">${cur.en}</div><div class="kana">${cur.kana} · ${cur.r}</div>`:
-      `<div class="jp">${ruby(cur)}</div><div class="kana">${cur.kana} · ${cur.r}</div>`}${altsHtml()}</div>`;
+      `<div class="jp">${ruby(cur)}</div><div class="kana">${cur.kana} · ${cur.r}</div>`}${altsHtml()}${fixHtml()}</div>`;
   }
   card.innerHTML=html;
   $('actions').hidden=revealed;
@@ -556,7 +581,7 @@ function render(){
     $('mark').innerHTML=wrong?`Marked <b class="no">wrong</b> · back in ${fmt(schedule(s,0,now).due-now)}`:`Marked <b class="ok">right</b> · next in ${fmt(schedule(s,2,now).due-now)}`;
     $('grades').innerHTML=['Again','Hard','Good','Easy'].map((n,i)=>`<button data-g="${i}">${n}<small>${fmt(schedule(s,i,now).due-now)}</small></button>`).join('')}
 }
-function show(){cur=nextCard();revealed=false;feedback=null;suggest=null;showAlts=false;render();
+function show(){cur=nextCard();revealed=false;feedback=null;suggest=null;showAlts=false;showFix=false;fixText='';lastHeard='';render();
   if(cur&&+S.set.auto&&!walking&&userActed){const [t,l]=promptOf(cur);speak(t,l)}}
 function doReveal(){revealed=true;render();const [t,l]=answerOf(cur);return speak(t,l)}
 function answerGrade(g){if(!cur)return;grade(cur,g);lastId=cur.id;show()}
@@ -564,7 +589,14 @@ function answerGrade(g){if(!cur)return;grade(cur,g);lastId=cur.id;show()}
 /* ---------- manual controls ---------- */
 let userActed=false;
 document.addEventListener('pointerdown',()=>{userActed=true},{once:true,capture:true});
-$('card').addEventListener('click',e=>{if(e.target.closest('#altsBtn')){showAlts=!showAlts;render()}});
+$('card').addEventListener('click',e=>{
+  if(e.target.closest('#altsBtn')){showAlts=!showAlts;render()}
+  else if(e.target.closest('#fixBtn')){showFix=true;render();setTimeout(()=>{const i=$('fixText');i&&i.focus()},50)}
+  else if(e.target.closest('#fixCancel')){showFix=false;fixText='';render()}
+  else if(e.target.closest('[data-kind]')){fixKind=e.target.closest('[data-kind]').dataset.kind;render()}
+  else if(e.target.closest('#fixSend')){setTimeout(()=>{showFix=false;fixText='';feedback={cls:'info',text:'Thanks — suggestion opened on GitHub. Tap Submit there to send it.'};render()},400)}
+});
+$('card').addEventListener('input',e=>{if(e.target.id==='fixText'){fixText=e.target.value;const a=$('fixSend');if(a)a.href=fixUrl()}});
 $('play').onclick=()=>{if(!cur)return;const [t,l]=revealed?answerOf(cur):promptOf(cur);speak(t,l)};
 $('reveal').onclick=()=>{if(cur&&!revealed){suggest=null;doReveal()}};
 $('grades').onclick=e=>{const b=e.target.closest('button');if(b)answerGrade(+b.dataset.g)};
@@ -578,7 +610,7 @@ $('mic').onclick=async()=>{
   b.classList.remove('listening');b.lastChild.textContent='Speak';
   if(heard===null)return render();
   const ok=judge(cur,heard);tone(ok);
-  feedback=heard.length?{cls:ok?'ok':'no',text:(ok?'Correct — heard “':'Not quite — heard “')+heard[0]+'”'}:{cls:'no',text:'Didn’t catch anything'};
+  lastHeard=heard[0]||'';feedback=heard.length?{cls:ok?'ok':'no',text:(ok?'Correct — heard “':'Not quite — heard “')+heard[0]+'”'}:{cls:'no',text:'Didn’t catch anything'};
   suggest=ok?2:0;doReveal();
 };
 function setDir(d){if(walking)stopWalk();S.set.dir=d;save();lastId=null;show()}
@@ -603,7 +635,7 @@ function grace(label,ms){return new Promise(res=>{
 })}
 async function walkLoop(){
   while(walking){
-    cur=nextCard();revealed=false;feedback=null;suggest=null;showAlts=false;render();
+    cur=nextCard();revealed=false;feedback=null;suggest=null;showAlts=false;showFix=false;fixText='';lastHeard='';render();
     if(!cur){status('All done for now');await speak('All done for now. Great work.','en-GB');stopWalk();break}
     const [pt,pl]=promptOf(cur);const [,al]=answerOf(cur);
     status('Listen…');await speak(pt,pl);if(!walking)break;
@@ -614,7 +646,7 @@ async function walkLoop(){
       if(!walking)break;
       if(heard!==null){
         ok=judge(cur,heard);tone(ok);
-        feedback=heard.length?{cls:ok?'ok':'no',text:(ok?'Correct — heard “':'Not quite — heard “')+heard[0]+'”'}:{cls:'no',text:'Didn’t catch anything'};
+        lastHeard=heard[0]||'';feedback=heard.length?{cls:ok?'ok':'no',text:(ok?'Correct — heard “':'Not quite — heard “')+heard[0]+'”'}:{cls:'no',text:'Didn’t catch anything'};
         status(ok?'Correct':'Here’s the answer');await doReveal();if(!walking)break;
         if(!ok){await wait(500);const [rt,rl]=answerOf(cur);await speak(rt,rl);if(!walking)break;
           status('Marked wrong — tap if you were right');if(await grace('✓ I was right',3000))ok=true}
