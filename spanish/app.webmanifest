@@ -4,15 +4,30 @@
   "description": "Spanish speaking flashcards, A1 to B1",
   "start_url": "./",
   "scope": "./",
-  "id": "./spanish",
+  "id": "/n5-flashcards/spanish/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#F2C14E",
   "theme_color": "#0F1613",
   "lang": "es",
   "icons": [
-    {"src": "icon2-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
-    {"src": "icon2-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
-    {"src": "icon2-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+    {
+      "src": "icon2-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon2-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon2-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
   ]
 }
