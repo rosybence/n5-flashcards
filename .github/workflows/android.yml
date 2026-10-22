@@ -29,11 +29,17 @@ jobs:
         with:
           gradle-version: '8.7'
 
+      - name: Check the code compiles
+        working-directory: android
+        run: |
+          set -o pipefail
+          gradle compileJpReleaseJavaWithJavac compileEsReleaseJavaWithJavac --no-daemon --console=plain 2>&1 | tee ../build.log
+
       - name: Signing key
         env:
           KS_PASS: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
-          if [ -z "$KS_PASS" ]; then echo "::error::Add the ANDROID_KEY_PASSWORD secret (repo Settings → Secrets and variables → Actions)"; echo "missing ANDROID_KEY_PASSWORD secret" > build.log; exit 1; fi
+          if [ -z "$KS_PASS" ]; then echo "::error::Add the ANDROID_KEY_PASSWORD secret (repo Settings → Secrets and variables → Actions)"; echo "MISSING ANDROID_KEY_PASSWORD SECRET (code compiled OK)" >> build.log; exit 1; fi
           if [ ! -f android/signing.p12 ]; then
             # first run: make a new key, protected by the secret password, and keep it in the repo
             keytool -genkeypair -noprompt -keystore android/signing.p12 -storetype PKCS12 \
