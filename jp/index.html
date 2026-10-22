@@ -2034,7 +2034,7 @@ function listenNative(lang,ms,onHeard){return new Promise(res=>{
   const id='r'+(++_nid);let interim='',done=false,t;
   const fin=v=>{if(done)return;done=true;clearTimeout(t);delete _nsr[id];curRec=null;res(v)};
   _nsr[id]={partial:x=>{if(x){interim=x;onHeard&&onHeard(x)}},result:a=>fin(a&&a.length?a:interim?[interim]:[]),
-    error:c=>{if(c==='not-allowed'){micBlocked=true;showMicNote();fin(null)}else fin(interim?[interim]:[])}};
+    error:c=>{if(c==='not-allowed'||c==='unavailable'){micBlocked=true;showMicNote();fin(null)}else fin(interim?[interim]:[])}};
   curRec={abort(){try{NAT.abortListening()}catch(e){}fin(interim?[interim]:[])}};
   t=setTimeout(()=>{try{NAT.stopListening()}catch(e){}t=setTimeout(()=>fin(interim?[interim]:[]),2000)},ms);
   NAT.listen(lang,id)})}
@@ -2068,7 +2068,21 @@ function tone(ok){try{actx=actx||new (window.AudioContext||window.webkitAudioCon
 /* ---------- speech in ---------- */
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
 let micBlocked=NAT?!NAT.srAvailable():!SR,curRec=null;
-function listen(lang,ms,onHeard){return NAT?listenNative(lang,ms,onHeard):listenWeb(lang,ms,onHeard)}
+// keep listening until the answer time is up: phone recognizers often stop after a second or two of silence
+let listenGen=0;
+function abortListening(){listenGen++;try{curRec&&curRec.abort()}catch(e){}}
+async function listen(lang,ms,onHeard){
+  const gen=++listenGen,until=Date.now()+ms;
+  await new Promise(r=>setTimeout(r,250));
+  while(gen===listenGen){
+    const left=until-Date.now();if(left<700)return [];
+    const h=await (NAT?listenNative:listenWeb)(lang,left,onHeard);
+    if(h===null)return null;
+    if(gen!==listenGen||h.some(x=>x&&x.trim()))return h;
+    await new Promise(r=>setTimeout(r,200));
+  }
+  return [];
+}
 function listenWeb(lang,ms,onHeard){return new Promise(res=>{
   let rec,t,finished=false,alts=[],interim='';
   const finish=v=>{if(finished)return;finished=true;clearTimeout(t);curRec=null;try{rec&&rec.abort()}catch(e){}res(v)};
@@ -2249,7 +2263,7 @@ function parseCmd(t){t=t.toLowerCase();
 function commandWindow(flipLabel,ms){return new Promise(res=>{
   const box=$('grace');box.hidden=false;
   box.innerHTML=`<button class="btn" data-c="repeat">↻ Repeat</button><button class="btn" data-c="flip">${flipLabel}</button><button class="btn primary" data-c="next">Next →</button>`;
-  let done=false,t;const fin=v=>{if(done)return;done=true;clearTimeout(t);box.hidden=true;graceRes=null;try{curRec&&curRec.abort()}catch(e){}res(v)};
+  let done=false,t;const fin=v=>{if(done)return;done=true;clearTimeout(t);box.hidden=true;graceRes=null;abortListening();res(v)};
   graceRes=fin;box.onclick=e=>{const b=e.target.closest('[data-c]');if(b)fin(b.dataset.c)};
   t=setTimeout(()=>fin(null),ms);
   if(!micBlocked)listen('en-GB',ms-300).then(h=>{if(h&&h.length){const c=parseCmd(h.join(' '));if(c)fin(c)}});
@@ -2295,6 +2309,7 @@ async function walkLoop(){
       status('Your turn — say it '+(al.startsWith('ja')?'in Japanese':'in English'));
       const heard=await listen(al,S.set.gap*1000,h=>{if(h){feedback={cls:'info',text:'Heard: '+h};render()}});
       if(!walking)break;
+      if(heard===null){for(let t=S.set.gap;t>0&&walking;t--){status('Think of the answer… '+t);await wait(1000)}if(!walking)break}
       ok=heard!==null&&judge(cur,heard);tone(ok);
       lastHeard=heard&&heard[0]||'';feedback=heard&&heard.length?{cls:ok?'ok':'no',text:(ok?'Correct — heard “':'Not quite — heard “')+heard[0]+'”'+(ok&&casualHit(cur,heard)?' · casual form':'')}:{cls:'no',text:'Didn’t catch anything'};
       status(ok?'Correct':'Here’s the answer');await doReveal();if(!walking)break;
@@ -2314,7 +2329,7 @@ async function startWalk(){
   walkLoop();
 }
 function stopWalk(){
-  walking=false;try{NAT?(NAT.stopSpeaking(),NAT.keepAwake(false)):speechSynthesis.cancel()}catch(e){}try{curRec&&curRec.abort()}catch(e){}graceRes&&graceRes(false);
+  walking=false;try{NAT?(NAT.stopSpeaking(),NAT.keepAwake(false)):speechSynthesis.cancel()}catch(e){}abortListening();graceRes&&graceRes(false);
   try{wake&&wake.release()}catch(e){}wake=null;
   $('walkBtn').lastChild.textContent='Start walk mode';$('walkBtn').classList.add('primary');status('Walk mode');
   $('walkModes').hidden=false;$('pocketBtn').hidden=true;pocketOff();$('wHelp').innerHTML=walkHelp(false);
