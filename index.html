@@ -152,28 +152,28 @@ button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outlin
 <script>
 // kanji | kana | romaji | English (alternatives split by ;) | extra accepted answers
 const RAW=`おはようございます|おはようございます|ohayō gozaimasu|good morning
-こんにちは|こんにちは|konnichiwa|hello; good afternoon
-こんばんは|こんばんは|konbanwa|good evening
-ありがとうございます|ありがとうございます|arigatō gozaimasu|thank you|どうも,ありがとう,どうもありがとう
-すみません|すみません|sumimasen|excuse me; sorry
-お願いします|おねがいします|onegai shimasu|please
-大丈夫です|だいじょうぶです|daijōbu desu|it's OK; I'm fine
-私|わたし|watashi|I; me
-人|ひと|hito|person
-男|おとこ|otoko|man
-女|おんな|onna|woman
-子供|こども|kodomo|child|子ども
-友達|ともだち|tomodachi|friend
+こんにちは|こんにちは|konnichiwa|hello; good afternoon|こんにちわ,hi,good day
+こんばんは|こんばんは|konbanwa|good evening|こんばんわ
+ありがとうございます|ありがとうございます|arigatō gozaimasu|thank you|どうも,ありがとう,どうもありがとう,thanks,thank you very much
+すみません|すみません|sumimasen|excuse me; sorry|すいません,ごめんなさい,ごめん,pardon,i am sorry,sorry
+お願いします|おねがいします|onegai shimasu|please|おねがい,お願い
+大丈夫です|だいじょうぶです|daijōbu desu|it's OK; I'm fine|大丈夫,okay,ok,all right,alright,no problem
+私|わたし|watashi|I; me|僕,ぼく,あたし,myself
+人|ひと|hito|person|people,human
+男|おとこ|otoko|man|男の人,男性,male
+女|おんな|onna|woman|女の人,女性,female,lady
+子供|こども|kodomo|child|子ども,kid,kids,children
+友達|ともだち|tomodachi|friend|友人,friends,mate
 先生|せんせい|sensei|teacher
-学生|がくせい|gakusei|student
-医者|いしゃ|isha|doctor
-父|ちち|chichi|(my) father; dad
-母|はは|haha|(my) mother; mum
-兄|あに|ani|(my) older brother; big brother
-姉|あね|ane|(my) older sister; big sister
-弟|おとうと|otōto|(my) younger brother; little brother
-妹|いもうと|imōto|(my) younger sister; little sister
-名前|なまえ|namae|name
+学生|がくせい|gakusei|student|生徒,pupil
+医者|いしゃ|isha|doctor|お医者さん
+父|ちち|chichi|(my) father; dad|お父さん,パパ,daddy,father
+母|はは|haha|(my) mother; mum|お母さん,ママ,mom,mother
+兄|あに|ani|(my) older brother; big brother|お兄さん,brother
+姉|あね|ane|(my) older sister; big sister|お姉さん,sister
+弟|おとうと|otōto|(my) younger brother; little brother|弟さん,brother
+妹|いもうと|imōto|(my) younger sister; little sister|妹さん,sister
+名前|なまえ|namae|name|お名前
 一|いち|ichi|one|1
 二|に|ni|two|2
 三|さん|san|three|3
@@ -188,20 +188,20 @@ const RAW=`おはようございます|おはようございます|ohayō gozaim
 千|せん|sen|thousand; one thousand|1000
 万|まん|man|ten thousand|10000,一万
 円|えん|en|yen
-日|ひ|hi|day; sun
+日|ひ|hi|day; sun|太陽,にち
 月|つき|tsuki|moon; month
-今|いま|ima|now
+今|いま|ima|now|right now
 今日|きょう|kyō|today
-明日|あした|ashita|tomorrow
+明日|あした|ashita|tomorrow|あす
 昨日|きのう|kinō|yesterday
-毎日|まいにち|mainichi|every day
+毎日|まいにち|mainichi|every day|daily,everyday
 朝|あさ|asa|morning
-昼|ひる|hiru|noon; daytime
-夜|よる|yoru|night
-午前|ごぜん|gozen|a.m.; morning|am
+昼|ひる|hiru|noon; daytime|midday,lunchtime
+夜|よる|yoru|night|晩,ばん,evening
+午前|ごぜん|gozen|a.m.; morning|am,before noon
 午後|ごご|gogo|p.m.; afternoon|pm
-時間|じかん|jikan|time; hours
-半|はん|han|half; half past
+時間|じかん|jikan|time; hours|hour
+半|はん|han|half; half past|thirty
 今週|こんしゅう|konshū|this week
 来週|らいしゅう|raishū|next week
 先週|せんしゅう|senshū|last week
@@ -216,18 +216,18 @@ const RAW=`おはようございます|おはようございます|ohayō gozaim
 土曜日|どようび|doyōbi|Saturday
 日曜日|にちようび|nichiyōbi|Sunday
 学校|がっこう|gakkō|school
-大学|だいがく|daigaku|university
-会社|かいしゃ|kaisha|company
-駅|えき|eki|station
-店|みせ|mise|shop
+大学|だいがく|daigaku|university|college,uni
+会社|かいしゃ|kaisha|company|business,office,firm
+駅|えき|eki|station|train station
+店|みせ|mise|shop|お店,store
 銀行|ぎんこう|ginkō|bank
 病院|びょういん|byōin|hospital
 図書館|としょかん|toshokan|library
-家|いえ|ie|house; home
+家|いえ|ie|house; home|うち,house
 部屋|へや|heya|room
-国|くに|kuni|country
+国|くに|kuni|country|nation
 外国|がいこく|gaikoku|foreign country; abroad
-道|みち|michi|road; street; way
+道|みち|michi|road; street; way|道路,path
 山|やま|yama|mountain
 川|かわ|kawa|river
 空|そら|sora|sky
@@ -235,22 +235,22 @@ const RAW=`おはようございます|おはようございます|ohayō gozaim
 雨|あめ|ame|rain
 雪|ゆき|yuki|snow
 花|はな|hana|flower
-木|き|ki|tree
+木|き|ki|tree|wood
 水|みず|mizu|water
 魚|さかな|sakana|fish
 肉|にく|niku|meat
-牛乳|ぎゅうにゅう|gyūnyū|milk
-お茶|おちゃ|ocha|tea; green tea
+牛乳|ぎゅうにゅう|gyūnyū|milk|ミルク
+お茶|おちゃ|ocha|tea; green tea|茶,緑茶
 食べ物|たべもの|tabemono|food
-飲み物|のみもの|nomimono|drink
+飲み物|のみもの|nomimono|drink|drinks,beverage
 電車|でんしゃ|densha|train
-車|くるま|kuruma|car
-自転車|じてんしゃ|jitensha|bicycle; bike
+車|くるま|kuruma|car|自動車
+自転車|じてんしゃ|jitensha|bicycle; bike|cycle
 本|ほん|hon|book
-新聞|しんぶん|shinbun|newspaper
-電話|でんわ|denwa|telephone; phone
+新聞|しんぶん|shinbun|newspaper|paper
+電話|でんわ|denwa|telephone; phone|call
 手紙|てがみ|tegami|letter
-写真|しゃしん|shashin|photo; photograph
+写真|しゃしん|shashin|photo; photograph|picture
 映画|えいが|eiga|film; movie
 音楽|おんがく|ongaku|music
 日本語|にほんご|nihongo|Japanese; Japanese language
@@ -263,47 +263,47 @@ const RAW=`おはようございます|おはようございます|ohayō gozaim
 北|きた|kita|north
 右|みぎ|migi|right
 左|ひだり|hidari|left
-上|うえ|ue|above; up; on top
-下|した|shita|below; down; under
-前|まえ|mae|front; before
-後ろ|うしろ|ushiro|behind; back
+上|うえ|ue|above; up; on top|over
+下|した|shita|below; down; under|beneath
+前|まえ|mae|front; before|in front,ahead
+後ろ|うしろ|ushiro|behind; back|後
 中|なか|naka|inside; in; middle
 外|そと|soto|outside
-目|め|me|eye; eyes
-耳|みみ|mimi|ear; ears
+目|め|me|eye; eyes|eyes
+耳|みみ|mimi|ear; ears|ears
 口|くち|kuchi|mouth
-手|て|te|hand; hands
-足|あし|ashi|foot; leg
+手|て|te|hand; hands|hands
+足|あし|ashi|foot; leg|脚,feet,legs
 体|からだ|karada|body
 行く|いく|iku|to go
 来る|くる|kuru|to come
-帰る|かえる|kaeru|to go home; to return
+帰る|かえる|kaeru|to go home; to return|戻る,come back,go back
 食べる|たべる|taberu|to eat
 飲む|のむ|nomu|to drink
 見る|みる|miru|to see; to watch; to look
-聞く|きく|kiku|to listen; to hear; to ask
+聞く|きく|kiku|to listen; to hear; to ask|聴く
 読む|よむ|yomu|to read
 書く|かく|kaku|to write
 話す|はなす|hanasu|to speak; to talk
-言う|いう|iu|to say
-買う|かう|kau|to buy
-会う|あう|au|to meet
+言う|いう|iu|to say|tell
+買う|かう|kau|to buy|purchase
+会う|あう|au|to meet|see
 待つ|まつ|matsu|to wait
 起きる|おきる|okiru|to wake up; to get up
-寝る|ねる|neru|to sleep; to go to bed
-休む|やすむ|yasumu|to rest; to take time off
+寝る|ねる|neru|to sleep; to go to bed|go to sleep
+休む|やすむ|yasumu|to rest; to take time off|take a break,have a break
 歩く|あるく|aruku|to walk
-入る|はいる|hairu|to enter; to go in
-出る|でる|deru|to leave; to go out
-立つ|たつ|tatsu|to stand
-分かる|わかる|wakaru|to understand
+入る|はいる|hairu|to enter; to go in|come in
+出る|でる|deru|to leave; to go out|exit
+立つ|たつ|tatsu|to stand|stand up
+分かる|わかる|wakaru|to understand|know
 教える|おしえる|oshieru|to teach; to tell
-大きい|おおきい|ōkii|big; large
-小さい|ちいさい|chiisai|small; little
+大きい|おおきい|ōkii|big; large|大きな
+小さい|ちいさい|chiisai|small; little|小さな,tiny
 新しい|あたらしい|atarashii|new
 古い|ふるい|furui|old (things)
-高い|たかい|takai|expensive; tall; high
-安い|やすい|yasui|cheap
+高い|たかい|takai|expensive; tall; high|pricey
+安い|やすい|yasui|cheap|inexpensive
 長い|ながい|nagai|long
 白い|しろい|shiroi|white
 赤い|あかい|akai|red
@@ -311,15 +311,15 @@ const RAW=`おはようございます|おはようございます|ohayō gozaim
 黒い|くろい|kuroi|black
 暑い|あつい|atsui|hot (weather)
 寒い|さむい|samui|cold (weather)
-多い|おおい|ōi|many; a lot
-少ない|すくない|sukunai|few; a little
+多い|おおい|ōi|many; a lot|たくさん,lots,plenty,much
+少ない|すくない|sukunai|few; a little|少し,not many
 早い|はやい|hayai|early
-近い|ちかい|chikai|near; close
-遠い|とおい|tōi|far
-元気|げんき|genki|well; healthy; energetic
+近い|ちかい|chikai|near; close|nearby
+遠い|とおい|tōi|far|distant,far away
+元気|げんき|genki|well; healthy; energetic|fine,good
 好き|すき|suki|like; liked
-有名|ゆうめい|yūmei|famous
-静か|しずか|shizuka|quiet`;
+有名|ゆうめい|yūmei|famous|well known
+静か|しずか|shizuka|quiet|calm,peaceful`;
 
 const CARDS=RAW.trim().split('\n').map((l,i)=>{const [k,kana,r,en,alts]=l.split('|');return{id:k+'/'+kana,k,kana,r,en,alts:alts?alts.split(','):[]}});
 
