@@ -29,7 +29,26 @@ jobs:
         with:
           gradle-version: '8.7'
 
+      - name: Signing key
+        env:
+          KS_PASS: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          if [ -z "$KS_PASS" ]; then echo "::error::Add the ANDROID_KEY_PASSWORD secret (repo Settings → Secrets and variables → Actions)"; echo "missing ANDROID_KEY_PASSWORD secret" > build.log; exit 1; fi
+          if [ ! -f android/signing.p12 ]; then
+            # first run: make a new key, protected by the secret password, and keep it in the repo
+            keytool -genkeypair -noprompt -keystore android/signing.p12 -storetype PKCS12 \
+              -storepass "$KS_PASS" -keypass "$KS_PASS" -alias flashcards -keyalg RSA -keysize 3072 \
+              -validity 20000 -dname "CN=rosybence flashcards"
+            git config user.name "build-bot"
+            git config user.email "build-bot@users.noreply.github.com"
+            git add android/signing.p12
+            git commit -qm "Add password-protected signing key"
+            git push origin HEAD:main
+          fi
+
       - name: Build both apps
+        env:
+          KS_PASS: ${{ secrets.ANDROID_KEY_PASSWORD }}
         working-directory: android
         timeout-minutes: 20
         run: |

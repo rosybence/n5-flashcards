@@ -18,10 +18,11 @@ android {
 
     signingConfigs {
         release {
-            storeFile file('../release.keystore')
-            storePassword 'flashcards'
+            // password-protected key; the password is a GitHub secret, never stored in the code
+            storeFile file('../signing.p12')
+            storePassword System.getenv('KS_PASS')
             keyAlias 'flashcards'
-            keyPassword 'flashcards'
+            keyPassword System.getenv('KS_PASS')
         }
     }
 

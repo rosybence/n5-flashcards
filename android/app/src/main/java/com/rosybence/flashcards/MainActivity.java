@@ -44,6 +44,8 @@ public class MainActivity extends Activity {
     private WebView web;
     private TextToSpeech tts;
     private volatile boolean ttsReady = false;
+    /** True only while the page shown is the app's own page on its own site (checked on every page load). */
+    private volatile boolean trusted = false;
     private SpeechRecognizer recognizer;
     private final Handler main = new Handler(Looper.getMainLooper());
 
@@ -67,10 +69,19 @@ public class MainActivity extends Activity {
         web.setWebChromeClient(new WebChromeClient());
         web.setWebViewClient(new WebViewClient() {
             @Override
+            public void onPageStarted(WebView view, String url, android.graphics.Bitmap favicon) {
+                trusted = isOwnPage(url == null ? null : Uri.parse(url));
+            }
+
+            @Override
+            public void doUpdateVisitedHistory(WebView view, String url, boolean isReload) {
+                trusted = isOwnPage(url == null ? null : Uri.parse(url));
+            }
+
+            @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest req) {
                 Uri u = req.getUrl();
-                String path = u.getPath() == null ? "" : u.getPath();
-                if ("rosybence.github.io".equals(u.getHost()) && path.startsWith(BuildConfig.SCOPE)) return false;
+                if (isOwnPage(u)) return false;
                 try { startActivity(new Intent(Intent.ACTION_VIEW, u)); } catch (Exception ignored) { }
                 return true;
             }
@@ -90,6 +101,13 @@ public class MainActivity extends Activity {
 
         if (savedInstanceState == null) web.loadUrl(BuildConfig.START_URL);
         else web.restoreState(savedInstanceState);
+    }
+
+    /** Only https pages inside this app's folder on rosybence.github.io may use the microphone and voices. */
+    private static boolean isOwnPage(Uri u) {
+        if (u == null) return false;
+        String path = u.getPath() == null ? "" : u.getPath();
+        return "https".equals(u.getScheme()) && "rosybence.github.io".equals(u.getHost()) && path.startsWith(BuildConfig.SCOPE);
     }
 
     private boolean isInstalled(String pkg) {
@@ -183,10 +201,12 @@ public class MainActivity extends Activity {
     /** Methods the web page can call as window.NativeApp.* */
     private class Bridge {
         @JavascriptInterface public boolean srAvailable() {
+            if (!trusted) return false;
             return SpeechRecognizer.isRecognitionAvailable(MainActivity.this);
         }
 
         @JavascriptInterface public void speak(String text, String lang, float rate, String id, String voiceName) {
+            if (!trusted) return;
             main.post(() -> {
                 if (!ttsReady) { ttsDone(id); return; }
                 Voice v = findVoice(voiceName);
@@ -197,11 +217,13 @@ public class MainActivity extends Activity {
         }
 
         @JavascriptInterface public void stopSpeaking() {
+            if (!trusted) return;
             main.post(() -> { if (tts != null) tts.stop(); });
         }
 
         /** Installed voices for a language ("ja", "es", "en"), best quality first. */
         @JavascriptInterface public String voices(String prefix) {
+            if (!trusted) return "[]";
             JSONArray out = new JSONArray();
             if (!ttsReady) return out.toString();
             try {
@@ -237,18 +259,22 @@ public class MainActivity extends Activity {
         }
 
         @JavascriptInterface public void listen(String lang, String id) {
+            if (!trusted) return;
             main.post(() -> startListening(lang, id));
         }
 
         @JavascriptInterface public void stopListening() {
+            if (!trusted) return;
             main.post(() -> { if (recognizer != null) recognizer.stopListening(); });
         }
 
         @JavascriptInterface public void abortListening() {
+            if (!trusted) return;
             main.post(() -> { if (recognizer != null) recognizer.cancel(); });
         }
 
         @JavascriptInterface public void keepAwake(boolean on) {
+            if (!trusted) return;
             main.post(() -> {
                 if (on) getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                 else getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -256,6 +282,7 @@ public class MainActivity extends Activity {
         }
 
         @JavascriptInterface public void immersive(boolean on) {
+            if (!trusted) return;
             main.post(() -> applyImmersive(on));
         }
     }
