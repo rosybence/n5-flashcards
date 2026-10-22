@@ -557,7 +557,9 @@ function fixHtml(){
 const escH=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
 function rdOf(x){const r=READ[x];if(!r)return '';const m=S.set.ruby;const t=m==='romaji'?r[1]:m==='kana'?r[0]:'';return t?`<span class="rd">${escH(t)}</span>`:''}
 function altsHtml(){
-  const a=cur.alts;if(!a.length)return '';
+  // hide kana-only spellings of something already shown (e.g. おねがい when お願い is listed)
+  const kanaOf=new Set([cur.kana,...cur.alts.map(x=>READ[x]&&READ[x][0]).filter(Boolean)]);
+  const a=cur.alts.filter(x=>!(READ[x]&&!READ[x][0]&&kanaOf.has(x)));if(!a.length)return '';
   if(!showAlts)return `<button class="alts-btn" id="altsBtn" aria-expanded="false">Other answers · ${a.length}</button>`;
   const ja=a.filter(x=>/[^\x00-\x7F]/.test(x)),en=a.filter(x=>!/[^\x00-\x7F]/.test(x)).map(x=>x.replace(/\bi\b/g,'I'));
     const grp=(l,xs,cls)=>xs.length?`<div class="grp"><span class="lbl">${l}</span>${xs.map(x=>{const c=cur.casual.has(x)||cur.casual.has(x.replace(/\bI\b/g,'i'));const r=cls==='jpc'?rdOf(x):'';return `<span class="chip ${cls}${c?' casual':''}"><span class="cw">${r}<span>${escH(x)}</span></span>${c?'<small>casual</small>':''}</span>`}).join('')}</div>`:'';
