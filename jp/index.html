@@ -2057,7 +2057,7 @@ function speakWeb(text,lang){return new Promise(res=>{
 })}
 const enSay=c=>c.en.replace(/\(.*?\)/g,'').split(';').map(s=>s.trim()).join(', or ');
 const promptOf=c=>c.type==='k'?null:S.set.dir==='je'?[c.kana,'ja-JP']:[enSay(c),'en-GB'];
-const answerOf=c=>c.type==='k'?[c.kana,'ja-JP']:S.set.dir==='je'?[enSay(c),'en-GB']:[c.kana,'ja-JP'];
+const answerOf=c=>c.type==='k'?[c.kana,'ja-JP']:S.set.dir==='je'?[enSay(c),'en-GB']:[altShown&&c===cur?(READ[altShown]&&READ[altShown][0]||altShown):c.kana,'ja-JP'];
 
 let actx;
 function tone(ok){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();const t=actx.currentTime;
@@ -2109,6 +2109,8 @@ function casualHit(c,heard){
   const n=S.set.dir==='je'?normEn:normJa;const cas=[...c.casual].map(n);
   return heard.some(h=>{h=n(h);return cas.includes(h)})&&!heard.some(h=>{h=n(h);return h===n(c.k)||h===n(c.kana)||c.en.split(';').some(e=>normEn(e)===h)});
 }
+let lastMatch=null,altShown=null;
+function judgeShow(c,heard){const ok=judge(c,heard);altShown=ok&&S.set.dir==='ej'?lastMatch:null;return ok}
 function judge(c,heard){
   if(!heard||!heard.length)return false;
   if(c.type==='k'){const T=[c.k,...c.alts].map(normJa),R=normEn(c.r.replace(/\(.*?\)/g,''));return heard.some(h=>T.includes(normJa(h))||normEn(h)===R)}
@@ -2116,8 +2118,12 @@ function judge(c,heard){
     const T=[...c.en.split(';'),c.en,...c.alts,...c.jl].map(normEn).filter(Boolean);
     return heard.some(h=>{h=normEn(h);return T.some(t=>h===t||(' '+h+' ').includes(' '+t+' ')||sim(h,t)>=.8||overlap(h,t)>=.75)});
   }
-  const T=[c.k,c.kana,...c.alts,...c.alts.map(x=>READ[x]&&READ[x][0]).filter(Boolean)].map(normJa);
-  return heard.some(h=>{h=normJa(h);return T.some(t=>h===t||(t.length>1&&h.includes(t))||sim(h,t)>=(t.length>8?.7:.75))});
+  // find which answer you gave: exact matches first, then close ones; the card's own answer wins ties
+  const P=[[c.k,[c.k,c.kana]],...c.alts.map(a=>[a,[a,READ[a]&&READ[a][0]].filter(Boolean)])].map(([l,ts])=>[l,ts.map(normJa)]);
+  const H=heard.map(normJa);lastMatch=null;
+  const close=(h,t)=>h===t||(t.length>1&&h.includes(t))||sim(h,t)>=(t.length>8?.7:.75);
+  for(const pass of [(h,t)=>h===t,close])for(const [l,ts] of P)if(H.some(h=>ts.some(t=>pass(h,t)))){lastMatch=l===c.k?null:l;return true}
+  return false;
 }
 
 /* ---------- rendering ---------- */
@@ -2141,7 +2147,15 @@ function fixHtml(){
 }
 const escH=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
 function rdOf(x){const r=READ[x];if(!r)return '';const m=S.set.ruby;const t=m==='romaji'?r[1]:m==='kana'?r[0]:'';return t?`<span class="rd">${escH(t)}</span>`:''}
+function shownCard(){if(!altShown||S.set.dir!=='ej')return cur;const r=READ[altShown]||['',''];return{...cur,k:altShown,kana:r[0]||altShown,r:r[1]||''}}
+// with your own answer shown, the card's answer joins the other answers
 function altsHtml(){
+  if(!altShown||S.set.dir!=='ej')return altsHtmlBase();
+  const keep=cur;READ[keep.k]=READ[keep.k]||[keep.k!==keep.kana?keep.kana:'',keep.r];
+  cur={...keep,k:altShown,kana:(READ[altShown]&&READ[altShown][0])||altShown,alts:[keep.k,...keep.alts.filter(x=>x!==altShown)]};
+  try{return altsHtmlBase()}finally{cur=keep}
+}
+function altsHtmlBase(){
   // hide kana-only spellings of something already shown (e.g. おねがい when お願い is listed)
   const kanaOf=new Set([cur.kana,...cur.alts.map(x=>READ[x]&&READ[x][0]).filter(Boolean)]);
   const shown=new Set(cur.en.split(';').map(normEn));
@@ -2176,7 +2190,7 @@ function render(){
   let html=`<span class="tag${isNew?' new':''}">${isNew?'New card':'Review'}${cur.type==='p'?' · Phrase':''} · ${cur.type==='k'?DECKS[cur.deck]:(JW[cur.k]||JW[cur.kana])?'JLPT '+(JW[cur.k]||JW[cur.kana]):'Extra'}</span><div class="front">${front}</div>`;
   if(revealed){
     html+=`<div class="answer">${cur.pic?`<div class="pic" aria-hidden="true">${cur.pic}</div>`:''}${S.set.dir==='je'?`<div class="en">${cur.en}</div>`:
-      `<div class="jp">${ruby(cur)}</div>${cur.type==='k'&&S.set.ruby==='romaji'?`<div class="kana">${cur.r}</div>`:''}`}${altsHtml()}</div>`;
+      `<div class="jp">${ruby(shownCard())}</div>${cur.type==='k'&&S.set.ruby==='romaji'?`<div class="kana">${cur.r}</div>`:''}`}${altsHtml()}</div>`;
   }
   card.innerHTML=html;
   const fb=$('fbBar');fb.hidden=!feedback;if(feedback){fb.className='feedback '+feedback.cls;fb.textContent=feedback.text}
@@ -2191,7 +2205,7 @@ function render(){
     $('grades').innerHTML=['Again','Hard','Good','Easy'].map((n,i)=>`<button data-g="${i}">${n}<small>${fmt(schedule(s,i,now).due-now)}</small></button>`).join('')}
 }
 let triedWrong=false;
-function show(){triedWrong=false;cur=nextCard();revealed=false;feedback=null;suggest=null;showAlts=false;showFix=false;fixText='';lastHeard='';render();
+function show(){triedWrong=false;cur=nextCard();revealed=false;feedback=null;suggest=null;showAlts=false;altShown=null;showFix=false;fixText='';lastHeard='';render();
   const pr=cur&&promptOf(cur);if(pr&&+S.set.auto&&!walking&&userActed)speak(pr[0],pr[1])}
 function doReveal(){revealed=true;render();const [t,l]=answerOf(cur);return speak(t,l)}
 function answerGrade(g){if(!cur)return;grade(cur,g);lastId=cur.id;show()}
@@ -2224,7 +2238,7 @@ $('mic').onclick=async()=>{
   b.classList.remove('listening');b.lastChild.textContent='Speak';
   if(heard===null){feedback=null;return render()}
   if(!heard.length||!heard.some(x=>x&&x.trim())){feedback={cls:'no',text:'Didn’t catch that. Tap Speak to try again.'};return render()}
-  const ok=judge(cur,heard);tone(ok);lastHeard=heard[0];
+  const ok=judgeShow(cur,heard);tone(ok);lastHeard=heard[0];
   if(!ok){triedWrong=true;feedback={cls:'no',text:'Not quite — heard “'+heard[0]+'”. Try again, or tap Show answer.'};return render()}
   feedback={cls:'ok',text:(triedWrong?'Got it on another try — heard “':'Correct — heard “')+heard[0]+'”'+(casualHit(cur,heard)?' · casual form':'')};
   suggest=triedWrong?0:2;doReveal();
@@ -2301,7 +2315,7 @@ async function sayItBack(al){
 }
 async function walkLoop(){
   while(walking){
-    cur=nextCard();revealed=false;feedback=null;suggest=null;showAlts=false;showFix=false;fixText='';lastHeard='';render();
+    cur=nextCard();revealed=false;feedback=null;suggest=null;showAlts=false;altShown=null;showFix=false;fixText='';lastHeard='';render();
     if(!cur){status('All done for now');await speak('All done for now. Great work.','en-GB');stopWalk();break}
     const pr=promptOf(cur);const [,al]=answerOf(cur);
     if(pr){status('Listen…');await speak(pr[0],pr[1])}else{status('Read the card…');await wait(700)}if(!walking)break;
@@ -2316,7 +2330,7 @@ async function walkLoop(){
       const heard=await listen(al,S.set.gap*1000,h=>{if(h){feedback={cls:'info',text:'Heard: '+h};render()}});
       if(!walking)break;
       if(heard===null){for(let t=S.set.gap;t>0&&walking;t--){status('Think of the answer… '+t);await wait(1000)}if(!walking)break}
-      ok=heard!==null&&judge(cur,heard);tone(ok);
+      ok=heard!==null&&judgeShow(cur,heard);tone(ok);
       lastHeard=heard&&heard[0]||'';feedback=heard&&heard.length?{cls:ok?'ok':'no',text:(ok?'Correct — heard “':'Not quite — heard “')+heard[0]+'”'+(ok&&casualHit(cur,heard)?' · casual form':'')}:{cls:'no',text:'Didn’t catch anything'};
       status(ok?'Correct':'Here’s the answer');await doReveal();if(!walking)break;
       if(!ok){await wait(500);const [rt,rl]=answerOf(cur);await speak(rt,rl);if(!walking)break;await sayItBack(al);if(!walking)break}

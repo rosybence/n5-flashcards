@@ -400,7 +400,7 @@ const sayable=s=>s.replace(/\(.*?\)/g,'').replace(/…/g,'').split(';').map(x=>x
 const enSay=c=>sayable(c.en).join(', or ');
 const esSay=c=>c.es.replace(/…/g,'');
 const promptOf=c=>S.set.dir==='je'?[esSay(c),'es-ES']:[enSay(c),'en-GB'];
-const answerOf=c=>S.set.dir==='je'?[enSay(c),'en-GB']:[esSay(c),'es-ES'];
+const answerOf=c=>S.set.dir==='je'?[enSay(c),'en-GB']:[altShown&&c===cur?altShown.replace(/…/g,''):esSay(c),'es-ES'];
 
 let actx;
 function tone(ok){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();const t=actx.currentTime;
@@ -452,11 +452,17 @@ function normEs(s){s=s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').rep
   s=s.replace(/^(el|la|los|las|un|una|unos|unas)\s+/,'');return s.split(' ').map(w=>ESNUM[w]||w).join(' ')}
 const enTargets=c=>[...c.en.split(';'),c.en,...c.enA].map(normEn).filter(Boolean);
 const esTargets=c=>[c.es,...c.esA,...c.enA.filter(x=>/^\d+$/.test(x))].map(normEs).filter(Boolean);
+let lastMatch=null,altShown=null;
+function judgeShow(c,heard){const ok=judge(c,heard);altShown=ok&&S.set.dir==='ej'?lastMatch:null;return ok}
 function judge(c,heard){
   if(!heard||!heard.length)return false;
   if(S.set.dir==='je'){const T=enTargets(c);return heard.some(h=>{h=normEn(h);return T.some(t=>h===t||(' '+h+' ').includes(' '+t+' ')||sim(h,t)>=.8||overlap(h,t)>=.75)})}
-  const T=esTargets(c);
-  return heard.some(h=>{h=normEs(h);return T.some(t=>h===t||(t.length>3&&(' '+h+' ').includes(' '+t+' '))||(t.length>6&&sim(h,t)>=(t.length>12?.75:.8))||overlap(h,t)>=.8)});
+  // find which answer you gave: exact matches first, then close ones; the card's own answer wins ties
+  const P=[[c.es,[c.es,...c.enA.filter(x=>/^\d+$/.test(x))]],...c.esA.map(a=>[a,[a]])].map(([l,ts])=>[l,ts.map(normEs).filter(Boolean)]);
+  const H=heard.map(normEs);lastMatch=null;
+  const close=(h,t)=>h===t||(t.length>3&&(' '+h+' ').includes(' '+t+' '))||(t.length>6&&sim(h,t)>=(t.length>12?.75:.8))||overlap(h,t)>=.8;
+  for(const pass of [(h,t)=>h===t,close])for(const [l,ts] of P)if(H.some(h=>ts.some(t=>pass(h,t)))){lastMatch=l===c.es?null:l;return true}
+  return false;
 }
 function casualHit(c,heard){
   if(!c.casual.size)return false;
@@ -488,7 +494,7 @@ function fixHtml(){
 // other answers: only in the language you answer in
 function altsHtml(){
   const es=S.set.dir==='ej';
-  const xs=(es?cur.esA:cur.enA.filter(x=>!/^\d+$/.test(x)).filter(x=>!cur.en.split(';').map(normEn).includes(normEn(x))));
+  const xs=(es?(altShown?[cur.es,...cur.esA.filter(x=>x!==altShown)]:cur.esA):cur.enA.filter(x=>!/^\d+$/.test(x)).filter(x=>!cur.en.split(';').map(normEn).includes(normEn(x))));
   if(!xs.length)return '';
   if(!showAlts)return `<button class="alts-btn" id="altsBtn" aria-expanded="false">Other answers · ${xs.length}</button>`;
   const chips=xs.map(x=>{const c=cur.casual.has(x);const t=es?x:x.replace(/\bi\b/g,'I');return `<span class="chip${es?' esc':''}${c?' casual':''}">${escH(t)}${c?'<small>casual</small>':''}</span>`}).join('');
@@ -508,7 +514,7 @@ function render(){
   const front=S.set.dir==='je'?`<div class="es${long?' long':''}">${esHtml(cur.es)}</div>`:`<div class="en-front">${escH(cur.en)}</div>`;
   let html=`<span class="tag${isNew?' new':''}">${isNew?'New card':'Review'}${cur.type==='p'?' · Phrase':''} · ${LEVELS[cur.deck]}</span><div class="front">${front}</div>`;
   if(revealed){
-    html+=`<div class="answer">${cur.pic?`<div class="pic" aria-hidden="true">${cur.pic}</div>`:''}${S.set.dir==='je'?`<div class="en">${escH(cur.en)}</div>`:`<div class="es${long?' long':''}">${esHtml(cur.es)}</div>`}${altsHtml()}</div>`;
+    html+=`<div class="answer">${cur.pic?`<div class="pic" aria-hidden="true">${cur.pic}</div>`:''}${S.set.dir==='je'?`<div class="en">${escH(cur.en)}</div>`:`<div class="es${long?' long':''}">${esHtml(altShown||cur.es)}</div>`}${altsHtml()}</div>`;
   }
   card.innerHTML=html;
   const fb=$('fbBar');fb.hidden=!feedback;if(feedback){fb.className='feedback '+feedback.cls;fb.textContent=feedback.text}
@@ -522,7 +528,7 @@ function render(){
     $('mark').innerHTML=wrong?`Marked <b class="no">wrong</b> · back in ${fmt(schedule(s,0,now).due-now)}`:`Marked <b class="ok">right</b> · next in ${fmt(schedule(s,2,now).due-now)}`;
     $('grades').innerHTML=['Again','Hard','Good','Easy'].map((n,i)=>`<button data-g="${i}">${n}<small>${fmt(schedule(s,i,now).due-now)}</small></button>`).join('')}
 }
-function resetCard(){revealed=false;feedback=null;suggest=null;showAlts=false;showFix=false;fixText='';lastHeard=''}
+function resetCard(){altShown=null;revealed=false;feedback=null;suggest=null;showAlts=false;showFix=false;fixText='';lastHeard=''}
 let triedWrong=false;
 function show(){triedWrong=false;cur=nextCard();resetCard();render();
   const pr=cur&&promptOf(cur);if(pr&&+S.set.auto&&!walking&&userActed)speak(pr[0],pr[1])}
@@ -559,7 +565,7 @@ $('mic').onclick=async()=>{
   b.classList.remove('listening');b.lastChild.textContent='Speak';
   if(heard===null){feedback=null;return render()}
   if(!heard.length||!heard.some(x=>x&&x.trim())){feedback={cls:'no',text:'Didn’t catch that. Tap Speak to try again.'};return render()}
-  const ok=judge(cur,heard);tone(ok);lastHeard=heard[0];
+  const ok=judgeShow(cur,heard);tone(ok);lastHeard=heard[0];
   if(!ok){triedWrong=true;feedback={cls:'no',text:'Not quite — heard “'+heard[0]+'”. Try again, or tap Show answer.'};return render()}
   feedback={cls:'ok',text:(triedWrong?'Got it on another try — heard “':'Correct — heard “')+heard[0]+'”'+(casualHit(cur,heard)?' · casual form':'')};
   suggest=triedWrong?0:2;doReveal();
@@ -644,7 +650,7 @@ async function walkLoop(){
       const heard=await listen(al,S.set.gap*1000,h=>{if(h){feedback={cls:'info',text:'Heard: '+h};render()}});
       if(!walking)break;
       if(heard===null){for(let t=S.set.gap;t>0&&walking;t--){status('Think of the answer… '+t);await wait(1000)}if(!walking)break}
-      ok=heard!==null&&judge(cur,heard);tone(ok);heardFeedback(ok,heard);
+      ok=heard!==null&&judgeShow(cur,heard);tone(ok);heardFeedback(ok,heard);
       status(ok?'Correct':'Here’s the answer');await doReveal();if(!walking)break;
       if(!ok){await wait(500);const [rt,rl]=answerOf(cur);await speak(rt,rl);if(!walking)break;await sayItBack(al);if(!walking)break}
     }
