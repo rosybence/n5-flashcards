@@ -39,6 +39,8 @@ import java.util.Set;
  */
 public class MainActivity extends Activity {
     private static final int MIC_REQUEST = 1;
+    private static final int FILE_REQUEST = 2;
+    private static final int SAVE_REQUEST = 3;
     private static final String GOOGLE_TTS = "com.google.android.tts";
 
     private WebView web;
@@ -49,6 +51,8 @@ public class MainActivity extends Activity {
     private SpeechRecognizer recognizer;
     private final Handler main = new Handler(Looper.getMainLooper());
 
+    private android.webkit.ValueCallback<Uri[]> fileCallback;
+    private String pendingSave;
     private String pendingLang;
     private String pendingId;
 
@@ -66,7 +70,25 @@ public class MainActivity extends Activity {
         s.setCacheMode(WebSettings.LOAD_DEFAULT);
 
         web.addJavascriptInterface(new Bridge(), "NativeApp");
-        web.setWebChromeClient(new WebChromeClient());
+        web.setWebChromeClient(new WebChromeClient() {
+            // lets "Restore from file" open the phone's file picker
+            @Override
+            public boolean onShowFileChooser(WebView view, android.webkit.ValueCallback<Uri[]> callback, FileChooserParams params) {
+                if (!trusted) return false;
+                if (fileCallback != null) fileCallback.onReceiveValue(null);
+                fileCallback = callback;
+                try {
+                    Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+                    i.addCategory(Intent.CATEGORY_OPENABLE);
+                    i.setType("*/*");
+                    startActivityForResult(Intent.createChooser(i, "Choose a backup file"), FILE_REQUEST);
+                } catch (Exception e) {
+                    fileCallback = null;
+                    return false;
+                }
+                return true;
+            }
+        });
         web.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageStarted(WebView view, String url, android.graphics.Bitmap favicon) {
@@ -174,6 +196,27 @@ public class MainActivity extends Activity {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == FILE_REQUEST) {
+            Uri[] result = null;
+            if (resultCode == RESULT_OK && data != null && data.getData() != null) result = new Uri[]{data.getData()};
+            if (fileCallback != null) fileCallback.onReceiveValue(result);
+            fileCallback = null;
+        } else if (requestCode == SAVE_REQUEST) {
+            boolean ok = false;
+            if (resultCode == RESULT_OK && data != null && data.getData() != null && pendingSave != null) {
+                try (java.io.OutputStream out = getContentResolver().openOutputStream(data.getData(), "wt")) {
+                    out.write(pendingSave.getBytes(java.nio.charset.StandardCharsets.UTF_8));
+                    ok = true;
+                } catch (Exception ignored) { }
+            }
+            pendingSave = null;
+            js("window.__nativeSaved&&window.__nativeSaved(" + ok + ")");
+        }
+    }
+
+    @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] results) {
         if (requestCode != MIC_REQUEST || pendingId == null) return;
         String lang = pendingLang, id = pendingId;
@@ -278,6 +321,20 @@ public class MainActivity extends Activity {
             main.post(() -> {
                 if (on) getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                 else getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            });
+        }
+
+        /** "Save backup file": lets you pick where to save it (e.g. Downloads or Google Drive). */
+        @JavascriptInterface public void saveFile(String name, String content) {
+            if (!trusted) return;
+            main.post(() -> {
+                pendingSave = content;
+                Intent i = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+                i.addCategory(Intent.CATEGORY_OPENABLE);
+                i.setType("application/json");
+                i.putExtra(Intent.EXTRA_TITLE, name);
+                try { startActivityForResult(i, SAVE_REQUEST); }
+                catch (Exception e) { pendingSave = null; js("window.__nativeSaved&&window.__nativeSaved(false)"); }
             });
         }
 
