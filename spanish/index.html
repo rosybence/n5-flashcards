@@ -523,7 +523,8 @@ function render(){
     $('grades').innerHTML=['Again','Hard','Good','Easy'].map((n,i)=>`<button data-g="${i}">${n}<small>${fmt(schedule(s,i,now).due-now)}</small></button>`).join('')}
 }
 function resetCard(){revealed=false;feedback=null;suggest=null;showAlts=false;showFix=false;fixText='';lastHeard=''}
-function show(){cur=nextCard();resetCard();render();
+let triedWrong=false;
+function show(){triedWrong=false;cur=nextCard();resetCard();render();
   const pr=cur&&promptOf(cur);if(pr&&+S.set.auto&&!walking&&userActed)speak(pr[0],pr[1])}
 function doReveal(){revealed=true;render();const [t,l]=answerOf(cur);return speak(t,l)}
 function answerGrade(g){if(!cur)return;grade(cur,g);lastId=cur.id;show()}
@@ -543,19 +544,25 @@ const cardClick=e=>{
 const fixInput=e=>{if(e.target.id==='fixText'){fixText=e.target.value;const a=$('fixSend');if(a)a.href=fixUrl()}};
 ['card','fixArea'].forEach(id=>{$(id).addEventListener('click',cardClick);$(id).addEventListener('input',fixInput)});
 $('play').onclick=()=>{if(!cur)return;const x=revealed?answerOf(cur):promptOf(cur);speak(x[0],x[1])};
-$('reveal').onclick=()=>{if(cur&&!revealed){suggest=null;doReveal()}};
+$('reveal').onclick=()=>{if(cur&&!revealed){if(triedWrong)suggest=0;else suggest=null;abortListening();doReveal()}};
 $('grades').onclick=e=>{const b=e.target.closest('button');if(b)answerGrade(+b.dataset.g)};
 $('next').onclick=()=>answerGrade(suggest===0?0:2);
 $('flip').onclick=()=>{suggest=suggest===0?2:0;render()};
 $('mic').onclick=async()=>{
   if(!cur||revealed||micBlocked)return;
-  const b=$('mic');b.classList.add('listening');b.lastChild.textContent='Listening…';
+  const b=$('mic');
+  if(b.classList.contains('listening')){abortListening();return}   // tap again to stop
+  b.classList.add('listening');b.lastChild.textContent='Listening…';
+  feedback={cls:'info',text:'Listening… say your answer'};render();b.classList.add('listening');
   const [,lang]=answerOf(cur);
-  const heard=await listen(lang,6000,h=>{if(h){feedback={cls:'info',text:'Heard: '+h};render();b.classList.add('listening')}});
+  const heard=await listen(lang,7000,h=>{if(h){feedback={cls:'info',text:'Heard: '+h};render();b.classList.add('listening')}});
   b.classList.remove('listening');b.lastChild.textContent='Speak';
-  if(heard===null)return render();
-  const ok=judge(cur,heard);tone(ok);heardFeedback(ok,heard);
-  suggest=ok?2:0;doReveal();
+  if(heard===null){feedback=null;return render()}
+  if(!heard.length||!heard.some(x=>x&&x.trim())){feedback={cls:'no',text:'Didn’t catch that. Tap Speak to try again.'};return render()}
+  const ok=judge(cur,heard);tone(ok);lastHeard=heard[0];
+  if(!ok){triedWrong=true;feedback={cls:'no',text:'Not quite — heard “'+heard[0]+'”. Try again, or tap Show answer.'};return render()}
+  feedback={cls:'ok',text:(triedWrong?'Got it on another try — heard “':'Correct — heard “')+heard[0]+'”'+(casualHit(cur,heard)?' · casual form':'')};
+  suggest=triedWrong?0:2;doReveal();
 };
 function setDir(d){if(walking)stopWalk();S.set.dir=d;save();lastId=null;show()}
 document.querySelector('.decks').onclick=e=>{const b=e.target.closest('[data-deck]');if(!b)return;const d=b.dataset.deck;
