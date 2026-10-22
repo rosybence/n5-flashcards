@@ -21,16 +21,16 @@
 /* Layout: one-column phone study app — header, direction switch, the card, controls pinned under it. Indigo ink on cool washi paper. */
 :root{
   --bg:#EDF0F4; --surface:#FFFFFF; --ink:#152036; --muted:#5B6679; --line:#D5DBE5;
-  --accent:#28418F; --accent-soft:#E2E8F7; --good:#23775A; --good-soft:#DDF0E7; --bad:#B0402C; --bad-soft:#F7E1DC; --hard:#9A6A12;
+  --accent:#28418F; --accent-soft:#E2E8F7; --good:#23775A; --good-soft:#DDF0E7; --bad:#B0402C; --bad-soft:#F7E1DC; --hard:#9A6A12; --casual:#8A5300; --casual-soft:#FBEBCB;
   --jp:"Shippori Mincho B1","Hiragino Mincho ProN","Yu Mincho",serif;
   --ui:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#0E1320; --surface:#172034; --ink:#E6EAF2; --muted:#9AA4B7; --line:#2A3550;
-  --accent:#93A9F2; --accent-soft:#222E4D; --good:#5CC79C; --good-soft:#163328; --bad:#EB8A76; --bad-soft:#3A1E1A; --hard:#E2B357; color-scheme:dark}}
+  --accent:#93A9F2; --accent-soft:#222E4D; --good:#5CC79C; --good-soft:#163328; --bad:#EB8A76; --bad-soft:#3A1E1A; --hard:#E2B357; --casual:#EDBB62; --casual-soft:#3B2C12; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0E1320; --surface:#172034; --ink:#E6EAF2; --muted:#9AA4B7; --line:#2A3550;
-  --accent:#93A9F2; --accent-soft:#222E4D; --good:#5CC79C; --good-soft:#163328; --bad:#EB8A76; --bad-soft:#3A1E1A; --hard:#E2B357; color-scheme:dark}
+  --accent:#93A9F2; --accent-soft:#222E4D; --good:#5CC79C; --good-soft:#163328; --bad:#EB8A76; --bad-soft:#3A1E1A; --hard:#E2B357; --casual:#EDBB62; --casual-soft:#3B2C12; color-scheme:dark}
 html,body{height:100%}
 body{background:var(--bg);color:var(--ink);font-family:var(--ui);font-size:15px;line-height:1.45}
 .app{max-width:520px;margin:0 auto;padding-block:14px 28px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:14px}
@@ -77,6 +77,8 @@ button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outlin
 .alts .grp{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px}
 .alts .lbl{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);width:100%}
 .chip{font-size:14px;padding:4px 10px;border-radius:8px;background:var(--accent-soft);color:var(--ink)}
+.chip.casual{background:var(--casual-soft);color:var(--casual);display:inline-flex;align-items:center;gap:6px}
+.chip small{font-family:var(--ui);font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:1px 5px;border-radius:4px;border:1px solid currentColor}
 .chip.jpc{font-family:var(--jp);font-size:16px}
 .feedback{font-size:14px;padding:7px 12px;border-radius:10px;text-align:center;max-width:100%;overflow-wrap:anywhere}
 .feedback.ok{background:var(--good-soft);color:var(--good)}
@@ -170,17 +172,17 @@ button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outlin
 
 <script>
 // kanji | kana | romaji | English (alternatives split by ;) | extra accepted answers
-const RAW=`私|わたし|watashi|I; me|僕,ぼく,あたし,myself
+const RAW=`私|わたし|watashi|I; me|僕,ぼく,~あたし,myself
 人|ひと|hito|person|people,human
 男|おとこ|otoko|man|男の人,男性,male
 女|おんな|onna|woman|女の人,女性,female,lady
-子供|こども|kodomo|child|子ども,kid,kids,children
-友達|ともだち|tomodachi|friend|友人,friends,mate
+子供|こども|kodomo|child|子ども,~kid,~kids,children
+友達|ともだち|tomodachi|friend|友人,friends,~mate
 先生|せんせい|sensei|teacher
 学生|がくせい|gakusei|student|生徒,pupil
 医者|いしゃ|isha|doctor|お医者さん
-父|ちち|chichi|(my) father; dad|お父さん,パパ,daddy,father
-母|はは|haha|(my) mother; mum|お母さん,ママ,mom,mother
+父|ちち|chichi|(my) father; dad|お父さん,~パパ,~daddy,father
+母|はは|haha|(my) mother; mum|お母さん,~ママ,mom,mother
 兄|あに|ani|(my) older brother; big brother|お兄さん,brother
 姉|あね|ane|(my) older sister; big sister|お姉さん,sister
 弟|おとうと|otōto|(my) younger brother; little brother|弟さん,brother
@@ -228,7 +230,7 @@ const RAW=`私|わたし|watashi|I; me|僕,ぼく,あたし,myself
 土曜日|どようび|doyōbi|Saturday
 日曜日|にちようび|nichiyōbi|Sunday
 学校|がっこう|gakkō|school
-大学|だいがく|daigaku|university|college,uni
+大学|だいがく|daigaku|university|college,~uni
 会社|かいしゃ|kaisha|company|business,office,firm
 駅|えき|eki|station|train station
 店|みせ|mise|shop|お店,store
@@ -314,7 +316,7 @@ const RAW=`私|わたし|watashi|I; me|僕,ぼく,あたし,myself
 小さい|ちいさい|chiisai|small; little|小さな,tiny
 新しい|あたらしい|atarashii|new
 古い|ふるい|furui|old (things)
-高い|たかい|takai|expensive; tall; high|pricey
+高い|たかい|takai|expensive; tall; high|~pricey
 安い|やすい|yasui|cheap|inexpensive
 長い|ながい|nagai|long
 白い|しろい|shiroi|white
@@ -332,78 +334,78 @@ const RAW=`私|わたし|watashi|I; me|僕,ぼく,あたし,myself
 好き|すき|suki|like; liked
 有名|ゆうめい|yūmei|famous|well known
 静か|しずか|shizuka|quiet|calm,peaceful`;
-const RAW_P=`おはようございます|おはようございます|ohayō gozaimasu|good morning|おはよう,morning|🌅
+const RAW_P=`おはようございます|おはようございます|ohayō gozaimasu|good morning|~おはよう,morning|🌅
 こんにちは|こんにちは|konnichiwa|hello; good afternoon|こんにちわ,hi,good day|👋
 こんばんは|こんばんは|konbanwa|good evening|こんばんわ|🌆
-さようなら|さようなら|sayōnara|goodbye|さよなら,bye|👋
-おやすみなさい|おやすみなさい|oyasuminasai|good night|おやすみ|🌙
+さようなら|さようなら|sayōnara|goodbye|さよなら,~bye|👋
+おやすみなさい|おやすみなさい|oyasuminasai|good night|~おやすみ|🌙
 はじめまして|はじめまして|hajimemashite|nice to meet you|初めまして,pleased to meet you|🤝
-よろしくお願いします|よろしくおねがいします|yoroshiku onegai shimasu|nice to meet you; please treat me well|よろしく,よろしくお願いいたします,pleased to meet you|🙇
-ありがとうございます|ありがとうございます|arigatō gozaimasu|thank you|どうも,ありがとう,どうもありがとう,thanks,thank you very much|🙏
-どういたしまして|どういたしまして|dō itashimashite|you're welcome|you are welcome,no problem|😊
-すみません|すみません|sumimasen|excuse me; sorry|すいません,ごめんなさい,ごめん,pardon,i am sorry|🙇
-ごめんなさい|ごめんなさい|gomen nasai|I'm sorry|ごめん,すみません,sorry,i am sorry|🙇
-お願いします|おねがいします|onegai shimasu|please|おねがい,お願い|🙏
-はい|はい|hai|yes|ええ|⭕
-いいえ|いいえ|iie|no|いや|❌
-大丈夫です|だいじょうぶです|daijōbu desu|it's OK; I'm fine|大丈夫,okay,ok,all right,alright,no problem|👌
+よろしくお願いします|よろしくおねがいします|yoroshiku onegai shimasu|nice to meet you; please treat me well|~よろしく,よろしくお願いいたします,pleased to meet you|🙇
+ありがとうございます|ありがとうございます|arigatō gozaimasu|thank you|~どうも,~ありがとう,~どうもありがとう,~thanks,thank you very much|🙏
+どういたしまして|どういたしまして|dō itashimashite|you're welcome|you are welcome,~no problem|😊
+すみません|すみません|sumimasen|excuse me; sorry|~すいません,ごめんなさい,~ごめん,pardon,i am sorry|🙇
+ごめんなさい|ごめんなさい|gomen nasai|I'm sorry|~ごめん,すみません,sorry,i am sorry|🙇
+お願いします|おねがいします|onegai shimasu|please|~おねがい,~お願い|🙏
+はい|はい|hai|yes|ええ,~うん|⭕
+いいえ|いいえ|iie|no|~いや,~ううん|❌
+大丈夫です|だいじょうぶです|daijōbu desu|it's OK; I'm fine|~大丈夫,~okay,~ok,all right,alright,~no problem|👌
 お元気ですか|おげんきですか|o-genki desu ka|how are you?|元気ですか,how are you doing|🙂
-元気です|げんきです|genki desu|I'm fine; I'm well|元気,i'm good,i am fine|💪
+元気です|げんきです|genki desu|I'm fine; I'm well|~元気,i'm good,i am fine|💪
 いただきます|いただきます|itadakimasu|let's eat; thanks for the food|thank you for the food|🍚
-ごちそうさまでした|ごちそうさまでした|gochisōsama deshita|thanks for the meal|ごちそうさま,thank you for the meal|😋
+ごちそうさまでした|ごちそうさまでした|gochisōsama deshita|thanks for the meal|~ごちそうさま,thank you for the meal|😋
 いってきます|いってきます|ittekimasu|I'm off; see you later|行ってきます,i'm leaving,i'll be back|🚪
 ただいま|ただいま|tadaima|I'm home|i'm back|🏠
-またね|またね|mata ne|see you; see you later|じゃあね,じゃあまた,bye|👋
-また明日|またあした|mata ashita|see you tomorrow|じゃあまた明日,また明日ね|📅
-気をつけて|きをつけて|ki o tsukete|take care; be careful|気をつけてね,気をつけてください|⚠️
-頑張ってください|がんばってください|ganbatte kudasai|good luck; do your best|頑張って,がんばって|💪
-お疲れさまでした|おつかれさまでした|otsukaresama deshita|thanks for your hard work|お疲れさま,お疲れさまです,お疲れ様です,good work,well done|🍻
-誕生日おめでとうございます|たんじょうびおめでとうございます|tanjōbi omedetō gozaimasu|happy birthday|誕生日おめでとう,お誕生日おめでとうございます,お誕生日おめでとう|🎂
-ちょっと待ってください|ちょっとまってください|chotto matte kudasai|please wait a moment|待ってください,ちょっと待って,just a moment please,wait a moment please,please wait|✋
+またね|またね|mata ne|see you; see you later|~じゃあね,~じゃあまた,~bye|👋
+また明日|またあした|mata ashita|see you tomorrow|じゃあまた明日,~また明日ね|📅
+気をつけて|きをつけて|ki o tsukete|take care; be careful|~気をつけてね,気をつけてください|⚠️
+頑張ってください|がんばってください|ganbatte kudasai|good luck; do your best|~頑張って,~がんばって|💪
+お疲れさまでした|おつかれさまでした|otsukaresama deshita|thanks for your hard work|~お疲れさま,お疲れさまです,お疲れ様です,good work,well done|🍻
+誕生日おめでとうございます|たんじょうびおめでとうございます|tanjōbi omedetō gozaimasu|happy birthday|~誕生日おめでとう,お誕生日おめでとうございます,~お誕生日おめでとう|🎂
+ちょっと待ってください|ちょっとまってください|chotto matte kudasai|please wait a moment|待ってください,~ちょっと待って,just a moment please,wait a moment please,please wait|✋
 もう一度お願いします|もういちどおねがいします|mō ichido onegai shimasu|once more, please|もう一度言ってください,one more time please,again please|🔁
 ゆっくり話してください|ゆっくりはなしてください|yukkuri hanashite kudasai|please speak slowly|ゆっくりお願いします,speak slowly please|🐢
-分かりません|わかりません|wakarimasen|I don't understand|分からない,わからない,i do not understand,i don't know|🤷
-分かりました|わかりました|wakarimashita|I understand; understood|はい分かりました,okay,got it,i see|💡
+分かりません|わかりません|wakarimasen|I don't understand|~分からない,~わからない,i do not understand,i don't know|🤷
+分かりました|わかりました|wakarimashita|I understand; understood|はい分かりました,~okay,got it,i see|💡
 日本語が少し分かります|にほんごがすこしわかります|nihongo ga sukoshi wakarimasu|I understand a little Japanese|少し分かります,i know a little japanese,i understand japanese a little|🇯🇵
-英語を話せますか|えいごをはなせますか|eigo o hanasemasu ka|can you speak English?|英語できますか,英語話せますか,do you speak english|🇬🇧
-日本語を勉強しています|にほんごをべんきょうしています|nihongo o benkyō shite imasu|I'm studying Japanese|日本語を勉強してます,i am learning japanese,i'm learning japanese,i am studying japanese|📚
+英語を話せますか|えいごをはなせますか|eigo o hanasemasu ka|can you speak English?|~英語できますか,~英語話せますか,do you speak english|🇬🇧
+日本語を勉強しています|にほんごをべんきょうしています|nihongo o benkyō shite imasu|I'm studying Japanese|~日本語を勉強してます,i am learning japanese,i'm learning japanese,i am studying japanese|📚
 お名前は何ですか|おなまえはなんですか|o-namae wa nan desu ka|what is your name?|お名前は,名前は何ですか,what's your name|📛
 私はイギリス人です|わたしはイギリスじんです|watashi wa igirisu-jin desu|I'm British|イギリス人です,i am british,i'm english,i am english|🇬🇧
-どこから来ましたか|どこからきましたか|doko kara kimashita ka|where are you from?|どこから来たの,where did you come from|🌍
-これは何ですか|これはなんですか|kore wa nan desu ka|what is this?|これは何,これなに,これ何ですか,what's this|❓
-これをください|これをください|kore o kudasai|this one, please; please give me this|これください,this please,i'll have this,can i have this|👉
-水をください|みずをください|mizu o kudasai|water, please; please give me water|お水ください,水ください,お水をください,can i have water,can i have some water|💧
-コーヒーをお願いします|コーヒーをおねがいします|kōhī o onegai shimasu|coffee, please|コーヒーください,コーヒーお願いします,コーヒーをください,a coffee please|☕
+どこから来ましたか|どこからきましたか|doko kara kimashita ka|where are you from?|~どこから来たの,where did you come from|🌍
+これは何ですか|これはなんですか|kore wa nan desu ka|what is this?|~これは何,~これなに,これ何ですか,what's this|❓
+これをください|これをください|kore o kudasai|this one, please; please give me this|~これください,this please,i'll have this,can i have this|👉
+水をください|みずをください|mizu o kudasai|water, please; please give me water|~お水ください,~水ください,お水をください,can i have water,can i have some water|💧
+コーヒーをお願いします|コーヒーをおねがいします|kōhī o onegai shimasu|coffee, please|コーヒーください,~コーヒーお願いします,コーヒーをください,a coffee please|☕
 いくらですか|いくらですか|ikura desu ka|how much is it?|これはいくらですか,how much|💴
-ちょっと高いです|ちょっとたかいです|chotto takai desu|it's a bit expensive|ちょっと高い,it's a little expensive,a bit expensive|💸
-トイレはどこですか|トイレはどこですか|toire wa doko desu ka|where is the toilet?|お手洗いはどこですか,トイレどこですか,where's the toilet,where is the bathroom|🚻
-駅はどこですか|えきはどこですか|eki wa doko desu ka|where is the station?|駅どこですか,where's the station|🚉
+ちょっと高いです|ちょっとたかいです|chotto takai desu|it's a bit expensive|~ちょっと高い,it's a little expensive,a bit expensive|💸
+トイレはどこですか|トイレはどこですか|toire wa doko desu ka|where is the toilet?|お手洗いはどこですか,~トイレどこですか,where's the toilet,where is the bathroom|🚻
+駅はどこですか|えきはどこですか|eki wa doko desu ka|where is the station?|~駅どこですか,where's the station|🚉
 あそこにあります|あそこにあります|asoko ni arimasu|it's over there|あそこです,over there|👉
 右に曲がってください|みぎにまがってください|migi ni magatte kudasai|please turn right|右に曲がって,右へ曲がってください,turn right please,turn right|↪️
 ここで降ります|ここでおります|koko de orimasu|I'll get off here|i get off here|🚏
 今何時ですか|いまなんじですか|ima nan-ji desu ka|what time is it now?|何時ですか,what time is it|🕒
-何時に起きますか|なんじにおきますか|nan-ji ni okimasu ka|what time do you get up?|何時に起きる,what time do you wake up|⏰
-毎朝コーヒーを飲みます|まいあさコーヒーをのみます|maiasa kōhī o nomimasu|I drink coffee every morning|毎朝コーヒー飲みます,every morning i drink coffee|☕
+何時に起きますか|なんじにおきますか|nan-ji ni okimasu ka|what time do you get up?|~何時に起きる,what time do you wake up|⏰
+毎朝コーヒーを飲みます|まいあさコーヒーをのみます|maiasa kōhī o nomimasu|I drink coffee every morning|~毎朝コーヒー飲みます,every morning i drink coffee|☕
 駅まで歩きます|えきまであるきます|eki made arukimasu|I walk to the station|駅まで歩いて行きます,i'll walk to the station,i will walk to the station|🚶
 明日学校に行きます|あしたがっこうにいきます|ashita gakkō ni ikimasu|I'm going to school tomorrow|明日学校へ行きます,tomorrow i'll go to school,i will go to school tomorrow,tomorrow i'm going to school|🏫
 電車で会社に行きます|でんしゃでかいしゃにいきます|densha de kaisha ni ikimasu|I go to work by train|電車で会社へ行きます,i go to the office by train,i take the train to work|🚃
-週末に映画を見ました|しゅうまつにえいがをみました|shūmatsu ni eiga o mimashita|I watched a film at the weekend|週末映画を見ました,i saw a film at the weekend,i watched a movie at the weekend,i watched a movie on the weekend|🎬
-友達と話しました|ともだちとはなしました|tomodachi to hanashimashita|I talked with a friend|友達と話した,i spoke with my friend,i talked with my friend,i spoke with a friend|🗣️
+週末に映画を見ました|しゅうまつにえいがをみました|shūmatsu ni eiga o mimashita|I watched a film at the weekend|~週末映画を見ました,i saw a film at the weekend,i watched a movie at the weekend,i watched a movie on the weekend|🎬
+友達と話しました|ともだちとはなしました|tomodachi to hanashimashita|I talked with a friend|~友達と話した,i spoke with my friend,i talked with my friend,i spoke with a friend|🗣️
 本を読むのが好きです|ほんをよむのがすきです|hon o yomu no ga suki desu|I like reading books|読書が好きです,i like to read,i like reading,i like to read books|📖
-猫が好きです|ねこがすきです|neko ga suki desu|I like cats|猫好きです,i love cats|🐈
-これは私の本です|これはわたしのほんです|kore wa watashi no hon desu|this is my book|これ私の本です,this book is mine|📖
-おいしいです|おいしいです|oishii desu|it's delicious|おいしい,美味しい,美味しいです,delicious,tasty,it's tasty|😋
-いいですね|いいですね|ii desu ne|that's nice; sounds good|いいね,that's good,nice|👍
-大好きです|だいすきです|daisuki desu|I love it|大好き,i really like it|❤️
-いい天気ですね|いいてんきですね|ii tenki desu ne|nice weather, isn't it?|いい天気,nice weather,it's nice weather|🌤️
-今日は暑いですね|きょうはあついですね|kyō wa atsui desu ne|it's hot today, isn't it?|今日は暑い,暑いですね,it's hot today|🥵
-寒いですね|さむいですね|samui desu ne|it's cold, isn't it?|寒い,it's cold|🥶
-お腹がすきました|おなかがすきました|onaka ga sukimashita|I'm hungry|お腹すいた,お腹が空きました,おなかすいた,i am hungry|🍽️
-喉が渇きました|のどがかわきました|nodo ga kawakimashita|I'm thirsty|喉渇いた,のどかわいた,i am thirsty|🥤
-疲れました|つかれました|tsukaremashita|I'm tired|疲れた,つかれた,i am tired|😮‍💨`;
+猫が好きです|ねこがすきです|neko ga suki desu|I like cats|~猫好きです,i love cats|🐈
+これは私の本です|これはわたしのほんです|kore wa watashi no hon desu|this is my book|~これ私の本です,this book is mine|📖
+おいしいです|おいしいです|oishii desu|it's delicious|~おいしい,~美味しい,美味しいです,delicious,tasty,it's tasty|😋
+いいですね|いいですね|ii desu ne|that's nice; sounds good|~いいね,that's good,nice|👍
+大好きです|だいすきです|daisuki desu|I love it|~大好き,i really like it|❤️
+いい天気ですね|いいてんきですね|ii tenki desu ne|nice weather, isn't it?|~いい天気,nice weather,it's nice weather|🌤️
+今日は暑いですね|きょうはあついですね|kyō wa atsui desu ne|it's hot today, isn't it?|~今日は暑い,暑いですね,it's hot today|🥵
+寒いですね|さむいですね|samui desu ne|it's cold, isn't it?|~寒い,it's cold|🥶
+お腹がすきました|おなかがすきました|onaka ga sukimashita|I'm hungry|~お腹すいた,お腹が空きました,~おなかすいた,i am hungry|🍽️
+喉が渇きました|のどがかわきました|nodo ga kawakimashita|I'm thirsty|~喉渇いた,~のどかわいた,i am thirsty|🥤
+疲れました|つかれました|tsukaremashita|I'm tired|~疲れた,~つかれた,i am tired|😮‍💨`;
 
 const PICS={"おはようございます": "🌅", "こんにちは": "👋", "こんばんは": "🌆", "ありがとうございます": "🙏", "すみません": "🙇", "お願いします": "🙏", "大丈夫です": "👌", "私": "🙋", "人": "🧍", "男": "👨", "女": "👩", "子供": "🧒", "友達": "🧑‍🤝‍🧑", "先生": "🧑‍🏫", "学生": "🧑‍🎓", "医者": "🧑‍⚕️", "父": "👨", "母": "👩", "兄": "👦⬆️", "姉": "👧⬆️", "弟": "👦⬇️", "妹": "👧⬇️", "名前": "📛", "一": "1️⃣", "二": "2️⃣", "三": "3️⃣", "四": "4️⃣", "五": "5️⃣", "六": "6️⃣", "七": "7️⃣", "八": "8️⃣", "九": "9️⃣", "十": "🔟", "百": "💯", "千": "1000", "万": "10,000", "円": "💴", "日": "☀️", "月": "🌙", "今": "⏱️", "今日": "📅", "明日": "📅➡️", "昨日": "⬅️📅", "毎日": "🔁", "朝": "🌅", "昼": "🕛", "夜": "🌃", "午前": "🌤️", "午後": "🌇", "時間": "⏳", "半": "🕧", "今週": "🗓️", "来週": "🗓️➡️", "先週": "⬅️🗓️", "今年": "📆", "去年": "⬅️📆", "来年": "📆➡️", "月曜日": "🌙", "火曜日": "🔥", "水曜日": "💧", "木曜日": "🌳", "金曜日": "🪙", "土曜日": "⛰️", "日曜日": "☀️", "学校": "🏫", "大学": "🎓", "会社": "🏢", "駅": "🚉", "店": "🏪", "銀行": "🏦", "病院": "🏥", "図書館": "📚", "家": "🏠", "部屋": "🛏️", "国": "🗾", "外国": "🌍", "道": "🛣️", "山": "⛰️", "川": "🏞️", "空": "🌤️", "天気": "🌦️", "雨": "🌧️", "雪": "❄️", "花": "🌸", "木": "🌳", "水": "💧", "魚": "🐟", "肉": "🥩", "牛乳": "🥛", "お茶": "🍵", "食べ物": "🍱", "飲み物": "🥤", "電車": "🚃", "車": "🚗", "自転車": "🚲", "本": "📖", "新聞": "📰", "電話": "☎️", "手紙": "✉️", "写真": "📷", "映画": "🎬", "音楽": "🎵", "日本語": "🇯🇵", "英語": "🇬🇧", "仕事": "💼", "宿題": "📝", "東": "➡️", "西": "⬅️", "南": "⬇️", "北": "⬆️", "右": "👉", "左": "👈", "上": "⬆️", "下": "⬇️", "前": "⏩", "後ろ": "🔙", "中": "📦", "外": "🌳", "目": "👁️", "耳": "👂", "口": "👄", "手": "✋", "足": "🦶", "体": "🧍", "行く": "🚶➡️", "来る": "🚶⬅️", "帰る": "🏠", "食べる": "🍚", "飲む": "🥤", "見る": "👀", "聞く": "👂", "読む": "📖", "書く": "✍️", "話す": "🗣️", "言う": "💬", "買う": "🛒", "会う": "🤝", "待つ": "⏳", "起きる": "⏰", "寝る": "😴", "休む": "🛋️", "歩く": "🚶", "入る": "🚪", "出る": "🏃", "立つ": "🧍", "分かる": "💡", "教える": "🧑‍🏫", "大きい": "🐘", "小さい": "🐭", "新しい": "✨", "古い": "🏚️", "高い": "💰", "安い": "🏷️", "長い": "📏", "白い": "⚪", "赤い": "🔴", "青い": "🔵", "黒い": "⚫", "暑い": "🥵", "寒い": "🥶", "多い": "🍡🍡🍡", "少ない": "🍡", "早い": "🐓", "近い": "📍", "遠い": "🔭", "元気": "💪", "好き": "❤️", "有名": "⭐", "静か": "🤫"};
-const parse=(raw,type)=>raw.trim().split('\n').map(l=>{const [k,kana,r,en,alts,pic]=l.split('|');return{id:k+'/'+kana,k,kana,r,en,type,pic:pic||PICS[k]||'',alts:alts?alts.split(','):[]}});
+const parse=(raw,type)=>raw.trim().split('\n').map(l=>{const [k,kana,r,en,alts,pic]=l.split('|');const al=alts?alts.split(',').filter(Boolean):[];return{id:k+'/'+kana,k,kana,r,en,type,pic:pic||PICS[k]||'',alts:al.map(a=>a.replace(/^~/,'')),casual:new Set(al.filter(a=>a[0]==='~').map(a=>a.slice(1)))}});
 const WORDS=parse(RAW,'w'),PHRASES=parse(RAW_P,'p');
 // introduce one phrase after every three words
 const CARDS=[];{let p=0;WORDS.forEach((w,i)=>{if(i%3===0&&p<PHRASES.length)CARDS.push(PHRASES[p++]);CARDS.push(w)});while(p<PHRASES.length)CARDS.push(PHRASES[p++])}
@@ -514,6 +516,11 @@ const NUM={one:'1',two:'2',three:'3',four:'4',five:'5',six:'6',seven:'7',eight:'
 function normEn(s){s=s.toLowerCase().replace(/\(.*?\)/g,' ').replace(/[^a-z0-9' ]+/g,' ').replace(/\s+/g,' ').trim();
   s=s.replace(/^(to|the|a|an|my|it's|its|it is)\s+/,'');return s.split(' ').map(w=>NUM[w]||w).join(' ')}
 function normJa(s){return s.replace(/下さい/g,'ください').replace(/頂きます/g,'いただきます').replace(/有難う/g,'ありがとう').replace(/御願い/g,'お願い').replace(/分か/g,'わか').replace(/[ァ-ヶ]/g,ch=>String.fromCharCode(ch.charCodeAt(0)-0x60)).replace(/[\s。、，．！？!?.,「」]/g,'')}
+function casualHit(c,heard){
+  if(!c.casual.size)return false;
+  const n=S.set.dir==='je'?normEn:normJa;const cas=[...c.casual].map(n);
+  return heard.some(h=>{h=n(h);return cas.includes(h)})&&!heard.some(h=>{h=n(h);return h===n(c.k)||h===n(c.kana)||c.en.split(';').some(e=>normEn(e)===h)});
+}
 function judge(c,heard){
   if(!heard||!heard.length)return false;
   if(S.set.dir==='je'){
@@ -548,7 +555,7 @@ function altsHtml(){
   const a=cur.alts;if(!a.length)return '';
   if(!showAlts)return `<button class="alts-btn" id="altsBtn" aria-expanded="false">Other answers · ${a.length}</button>`;
   const ja=a.filter(x=>/[^\x00-\x7F]/.test(x)),en=a.filter(x=>!/[^\x00-\x7F]/.test(x)).map(x=>x.replace(/\bi\b/g,'I'));
-  const grp=(l,xs,cls)=>xs.length?`<div class="grp"><span class="lbl">${l}</span>${xs.map(x=>`<span class="chip ${cls}">${escH(x)}</span>`).join('')}</div>`:'';
+  const grp=(l,xs,cls)=>xs.length?`<div class="grp"><span class="lbl">${l}</span>${xs.map(x=>{const c=cur.casual.has(x)||cur.casual.has(x.replace(/\bI\b/g,'i'));return `<span class="chip ${cls}${c?' casual':''}">${escH(x)}${c?'<small>casual</small>':''}</span>`}).join('')}</div>`:'';
   return `<button class="alts-btn" id="altsBtn" aria-expanded="true">Hide other answers</button><div class="alts">${grp('Japanese',ja,'jpc')}${grp('English',en,'')}</div>`;
 }
 function ruby(c){
@@ -610,7 +617,7 @@ $('mic').onclick=async()=>{
   b.classList.remove('listening');b.lastChild.textContent='Speak';
   if(heard===null)return render();
   const ok=judge(cur,heard);tone(ok);
-  lastHeard=heard[0]||'';feedback=heard.length?{cls:ok?'ok':'no',text:(ok?'Correct — heard “':'Not quite — heard “')+heard[0]+'”'}:{cls:'no',text:'Didn’t catch anything'};
+  lastHeard=heard[0]||'';feedback=heard.length?{cls:ok?'ok':'no',text:(ok?'Correct — heard “':'Not quite — heard “')+heard[0]+'”'+(ok&&casualHit(cur,heard)?' · casual form':'')}:{cls:'no',text:'Didn’t catch anything'};
   suggest=ok?2:0;doReveal();
 };
 function setDir(d){if(walking)stopWalk();S.set.dir=d;save();lastId=null;show()}
@@ -646,7 +653,7 @@ async function walkLoop(){
       if(!walking)break;
       if(heard!==null){
         ok=judge(cur,heard);tone(ok);
-        lastHeard=heard[0]||'';feedback=heard.length?{cls:ok?'ok':'no',text:(ok?'Correct — heard “':'Not quite — heard “')+heard[0]+'”'}:{cls:'no',text:'Didn’t catch anything'};
+        lastHeard=heard[0]||'';feedback=heard.length?{cls:ok?'ok':'no',text:(ok?'Correct — heard “':'Not quite — heard “')+heard[0]+'”'+(ok&&casualHit(cur,heard)?' · casual form':'')}:{cls:'no',text:'Didn’t catch anything'};
         status(ok?'Correct':'Here’s the answer');await doReveal();if(!walking)break;
         if(!ok){await wait(500);const [rt,rl]=answerOf(cur);await speak(rt,rl);if(!walking)break;
           status('Marked wrong — tap if you were right');if(await grace('✓ I was right',3000))ok=true}
