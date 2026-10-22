@@ -1,5 +1,5 @@
 // Network first so updates arrive; cached copy when offline (e.g. on a walk with no signal).
-const CACHE = 'es-v1';
+const CACHE = 'es-v2';
 const FILES = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES))); self.skipWaiting(); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k.startsWith(CACHE.split('-')[0] + '-') && k !== CACHE).map(k => caches.delete(k))))); self.clients.claim(); });
