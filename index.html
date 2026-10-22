@@ -53,7 +53,9 @@ button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outlin
 .tag.new{color:var(--accent)}
 .front{flex:1;display:flex;align-items:center;justify-content:center;text-align:center;width:100%;min-width:0;padding-top:18px}
 .jp{font-family:var(--jp);font-weight:700;font-size:clamp(40px,13vw,64px);line-height:1.15;overflow-wrap:anywhere}
-.jp.long{font-size:clamp(28px,8vw,40px)}
+.jp.long{font-size:clamp(24px,7vw,34px)}
+.stack{display:inline-flex;flex-direction:column;align-items:center;gap:2px}
+.stack .rt{font-family:var(--ui);font-weight:500;font-size:.42em;color:var(--accent);letter-spacing:.02em}
 .jp rt{font-family:var(--ui);font-weight:500;font-size:.3em;color:var(--accent);letter-spacing:.03em;padding-bottom:4px}
 .en-front{font-size:clamp(26px,8vw,36px);font-weight:500;text-wrap:balance}
 .answer{width:100%;border-top:1px dashed var(--line);padding-top:14px;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center}
@@ -112,6 +114,7 @@ button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outlin
 
   <div class="settings" id="settings" hidden>
     <label>Reading above kanji <select id="sRuby"><option value="romaji">Romaji</option><option value="kana">Hiragana</option><option value="none">None</option></select></label>
+    <label>Study <select id="sTypes"><option value="both">Words and phrases</option><option value="words">Words only</option><option value="phrases">Phrases only</option></select></label>
     <label>New cards per day <select id="sNew"><option>5</option><option>10</option><option>15</option><option>20</option><option>30</option></select></label>
     <label>Time to answer (walk mode) <select id="sGap"><option value="4">4 s</option><option value="6">6 s</option><option value="8">8 s</option><option value="10">10 s</option></select></label>
     <label>Japanese voice speed <select id="sRate"><option value="0.7">Slow</option><option value="0.85">Relaxed</option><option value="1">Natural</option></select></label>
@@ -152,14 +155,7 @@ button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outlin
 
 <script>
 // kanji | kana | romaji | English (alternatives split by ;) | extra accepted answers
-const RAW=`おはようございます|おはようございます|ohayō gozaimasu|good morning
-こんにちは|こんにちは|konnichiwa|hello; good afternoon|こんにちわ,hi,good day
-こんばんは|こんばんは|konbanwa|good evening|こんばんわ
-ありがとうございます|ありがとうございます|arigatō gozaimasu|thank you|どうも,ありがとう,どうもありがとう,thanks,thank you very much
-すみません|すみません|sumimasen|excuse me; sorry|すいません,ごめんなさい,ごめん,pardon,i am sorry,sorry
-お願いします|おねがいします|onegai shimasu|please|おねがい,お願い
-大丈夫です|だいじょうぶです|daijōbu desu|it's OK; I'm fine|大丈夫,okay,ok,all right,alright,no problem
-私|わたし|watashi|I; me|僕,ぼく,あたし,myself
+const RAW=`私|わたし|watashi|I; me|僕,ぼく,あたし,myself
 人|ひと|hito|person|people,human
 男|おとこ|otoko|man|男の人,男性,male
 女|おんな|onna|woman|女の人,女性,female,lady
@@ -321,13 +317,86 @@ const RAW=`おはようございます|おはようございます|ohayō gozaim
 好き|すき|suki|like; liked
 有名|ゆうめい|yūmei|famous|well known
 静か|しずか|shizuka|quiet|calm,peaceful`;
+const RAW_P=`おはようございます|おはようございます|ohayō gozaimasu|good morning|おはよう,morning|🌅
+こんにちは|こんにちは|konnichiwa|hello; good afternoon|こんにちわ,hi,good day|👋
+こんばんは|こんばんは|konbanwa|good evening|こんばんわ|🌆
+さようなら|さようなら|sayōnara|goodbye|さよなら,bye|👋
+おやすみなさい|おやすみなさい|oyasuminasai|good night|おやすみ|🌙
+はじめまして|はじめまして|hajimemashite|nice to meet you|初めまして,pleased to meet you|🤝
+よろしくお願いします|よろしくおねがいします|yoroshiku onegai shimasu|nice to meet you; please treat me well|よろしく,よろしくお願いいたします,pleased to meet you|🙇
+ありがとうございます|ありがとうございます|arigatō gozaimasu|thank you|どうも,ありがとう,どうもありがとう,thanks,thank you very much|🙏
+どういたしまして|どういたしまして|dō itashimashite|you're welcome|you are welcome,no problem|😊
+すみません|すみません|sumimasen|excuse me; sorry|すいません,ごめんなさい,ごめん,pardon,i am sorry|🙇
+ごめんなさい|ごめんなさい|gomen nasai|I'm sorry|ごめん,すみません,sorry,i am sorry|🙇
+お願いします|おねがいします|onegai shimasu|please|おねがい,お願い|🙏
+はい|はい|hai|yes|ええ|⭕
+いいえ|いいえ|iie|no|いや|❌
+大丈夫です|だいじょうぶです|daijōbu desu|it's OK; I'm fine|大丈夫,okay,ok,all right,alright,no problem|👌
+お元気ですか|おげんきですか|o-genki desu ka|how are you?|元気ですか,how are you doing|🙂
+元気です|げんきです|genki desu|I'm fine; I'm well|元気,i'm good,i am fine|💪
+いただきます|いただきます|itadakimasu|let's eat; thanks for the food|thank you for the food|🍚
+ごちそうさまでした|ごちそうさまでした|gochisōsama deshita|thanks for the meal|ごちそうさま,thank you for the meal|😋
+いってきます|いってきます|ittekimasu|I'm off; see you later|行ってきます,i'm leaving,i'll be back|🚪
+ただいま|ただいま|tadaima|I'm home|i'm back|🏠
+またね|またね|mata ne|see you; see you later|じゃあね,じゃあまた,bye|👋
+また明日|またあした|mata ashita|see you tomorrow|じゃあまた明日,また明日ね|📅
+気をつけて|きをつけて|ki o tsukete|take care; be careful|気をつけてね,気をつけてください|⚠️
+頑張ってください|がんばってください|ganbatte kudasai|good luck; do your best|頑張って,がんばって|💪
+お疲れさまでした|おつかれさまでした|otsukaresama deshita|thanks for your hard work|お疲れさま,お疲れさまです,お疲れ様です,good work,well done|🍻
+誕生日おめでとうございます|たんじょうびおめでとうございます|tanjōbi omedetō gozaimasu|happy birthday|誕生日おめでとう,お誕生日おめでとうございます,お誕生日おめでとう|🎂
+ちょっと待ってください|ちょっとまってください|chotto matte kudasai|please wait a moment|待ってください,ちょっと待って,just a moment please,wait a moment please,please wait|✋
+もう一度お願いします|もういちどおねがいします|mō ichido onegai shimasu|once more, please|もう一度言ってください,one more time please,again please|🔁
+ゆっくり話してください|ゆっくりはなしてください|yukkuri hanashite kudasai|please speak slowly|ゆっくりお願いします,speak slowly please|🐢
+分かりません|わかりません|wakarimasen|I don't understand|分からない,わからない,i do not understand,i don't know|🤷
+分かりました|わかりました|wakarimashita|I understand; understood|はい分かりました,okay,got it,i see|💡
+日本語が少し分かります|にほんごがすこしわかります|nihongo ga sukoshi wakarimasu|I understand a little Japanese|少し分かります,i know a little japanese,i understand japanese a little|🇯🇵
+英語を話せますか|えいごをはなせますか|eigo o hanasemasu ka|can you speak English?|英語できますか,英語話せますか,do you speak english|🇬🇧
+日本語を勉強しています|にほんごをべんきょうしています|nihongo o benkyō shite imasu|I'm studying Japanese|日本語を勉強してます,i am learning japanese,i'm learning japanese,i am studying japanese|📚
+お名前は何ですか|おなまえはなんですか|o-namae wa nan desu ka|what is your name?|お名前は,名前は何ですか,what's your name|📛
+私はイギリス人です|わたしはイギリスじんです|watashi wa igirisu-jin desu|I'm British|イギリス人です,i am british,i'm english,i am english|🇬🇧
+どこから来ましたか|どこからきましたか|doko kara kimashita ka|where are you from?|どこから来たの,where did you come from|🌍
+これは何ですか|これはなんですか|kore wa nan desu ka|what is this?|これは何,これなに,これ何ですか,what's this|❓
+これをください|これをください|kore o kudasai|this one, please; please give me this|これください,this please,i'll have this,can i have this|👉
+水をください|みずをください|mizu o kudasai|water, please; please give me water|お水ください,水ください,お水をください,can i have water,can i have some water|💧
+コーヒーをお願いします|コーヒーをおねがいします|kōhī o onegai shimasu|coffee, please|コーヒーください,コーヒーお願いします,コーヒーをください,a coffee please|☕
+いくらですか|いくらですか|ikura desu ka|how much is it?|これはいくらですか,how much|💴
+ちょっと高いです|ちょっとたかいです|chotto takai desu|it's a bit expensive|ちょっと高い,it's a little expensive,a bit expensive|💸
+トイレはどこですか|トイレはどこですか|toire wa doko desu ka|where is the toilet?|お手洗いはどこですか,トイレどこですか,where's the toilet,where is the bathroom|🚻
+駅はどこですか|えきはどこですか|eki wa doko desu ka|where is the station?|駅どこですか,where's the station|🚉
+あそこにあります|あそこにあります|asoko ni arimasu|it's over there|あそこです,over there|👉
+右に曲がってください|みぎにまがってください|migi ni magatte kudasai|please turn right|右に曲がって,右へ曲がってください,turn right please,turn right|↪️
+ここで降ります|ここでおります|koko de orimasu|I'll get off here|i get off here|🚏
+今何時ですか|いまなんじですか|ima nan-ji desu ka|what time is it now?|何時ですか,what time is it|🕒
+何時に起きますか|なんじにおきますか|nan-ji ni okimasu ka|what time do you get up?|何時に起きる,what time do you wake up|⏰
+毎朝コーヒーを飲みます|まいあさコーヒーをのみます|maiasa kōhī o nomimasu|I drink coffee every morning|毎朝コーヒー飲みます,every morning i drink coffee|☕
+駅まで歩きます|えきまであるきます|eki made arukimasu|I walk to the station|駅まで歩いて行きます,i'll walk to the station,i will walk to the station|🚶
+明日学校に行きます|あしたがっこうにいきます|ashita gakkō ni ikimasu|I'm going to school tomorrow|明日学校へ行きます,tomorrow i'll go to school,i will go to school tomorrow,tomorrow i'm going to school|🏫
+電車で会社に行きます|でんしゃでかいしゃにいきます|densha de kaisha ni ikimasu|I go to work by train|電車で会社へ行きます,i go to the office by train,i take the train to work|🚃
+週末に映画を見ました|しゅうまつにえいがをみました|shūmatsu ni eiga o mimashita|I watched a film at the weekend|週末映画を見ました,i saw a film at the weekend,i watched a movie at the weekend,i watched a movie on the weekend|🎬
+友達と話しました|ともだちとはなしました|tomodachi to hanashimashita|I talked with a friend|友達と話した,i spoke with my friend,i talked with my friend,i spoke with a friend|🗣️
+本を読むのが好きです|ほんをよむのがすきです|hon o yomu no ga suki desu|I like reading books|読書が好きです,i like to read,i like reading,i like to read books|📖
+猫が好きです|ねこがすきです|neko ga suki desu|I like cats|猫好きです,i love cats|🐈
+これは私の本です|これはわたしのほんです|kore wa watashi no hon desu|this is my book|これ私の本です,this book is mine|📖
+おいしいです|おいしいです|oishii desu|it's delicious|おいしい,美味しい,美味しいです,delicious,tasty,it's tasty|😋
+いいですね|いいですね|ii desu ne|that's nice; sounds good|いいね,that's good,nice|👍
+大好きです|だいすきです|daisuki desu|I love it|大好き,i really like it|❤️
+いい天気ですね|いいてんきですね|ii tenki desu ne|nice weather, isn't it?|いい天気,nice weather,it's nice weather|🌤️
+今日は暑いですね|きょうはあついですね|kyō wa atsui desu ne|it's hot today, isn't it?|今日は暑い,暑いですね,it's hot today|🥵
+寒いですね|さむいですね|samui desu ne|it's cold, isn't it?|寒い,it's cold|🥶
+お腹がすきました|おなかがすきました|onaka ga sukimashita|I'm hungry|お腹すいた,お腹が空きました,おなかすいた,i am hungry|🍽️
+喉が渇きました|のどがかわきました|nodo ga kawakimashita|I'm thirsty|喉渇いた,のどかわいた,i am thirsty|🥤
+疲れました|つかれました|tsukaremashita|I'm tired|疲れた,つかれた,i am tired|😮‍💨`;
 
 const PICS={"おはようございます": "🌅", "こんにちは": "👋", "こんばんは": "🌆", "ありがとうございます": "🙏", "すみません": "🙇", "お願いします": "🙏", "大丈夫です": "👌", "私": "🙋", "人": "🧍", "男": "👨", "女": "👩", "子供": "🧒", "友達": "🧑‍🤝‍🧑", "先生": "🧑‍🏫", "学生": "🧑‍🎓", "医者": "🧑‍⚕️", "父": "👨", "母": "👩", "兄": "👦⬆️", "姉": "👧⬆️", "弟": "👦⬇️", "妹": "👧⬇️", "名前": "📛", "一": "1️⃣", "二": "2️⃣", "三": "3️⃣", "四": "4️⃣", "五": "5️⃣", "六": "6️⃣", "七": "7️⃣", "八": "8️⃣", "九": "9️⃣", "十": "🔟", "百": "💯", "千": "1000", "万": "10,000", "円": "💴", "日": "☀️", "月": "🌙", "今": "⏱️", "今日": "📅", "明日": "📅➡️", "昨日": "⬅️📅", "毎日": "🔁", "朝": "🌅", "昼": "🕛", "夜": "🌃", "午前": "🌤️", "午後": "🌇", "時間": "⏳", "半": "🕧", "今週": "🗓️", "来週": "🗓️➡️", "先週": "⬅️🗓️", "今年": "📆", "去年": "⬅️📆", "来年": "📆➡️", "月曜日": "🌙", "火曜日": "🔥", "水曜日": "💧", "木曜日": "🌳", "金曜日": "🪙", "土曜日": "⛰️", "日曜日": "☀️", "学校": "🏫", "大学": "🎓", "会社": "🏢", "駅": "🚉", "店": "🏪", "銀行": "🏦", "病院": "🏥", "図書館": "📚", "家": "🏠", "部屋": "🛏️", "国": "🗾", "外国": "🌍", "道": "🛣️", "山": "⛰️", "川": "🏞️", "空": "🌤️", "天気": "🌦️", "雨": "🌧️", "雪": "❄️", "花": "🌸", "木": "🌳", "水": "💧", "魚": "🐟", "肉": "🥩", "牛乳": "🥛", "お茶": "🍵", "食べ物": "🍱", "飲み物": "🥤", "電車": "🚃", "車": "🚗", "自転車": "🚲", "本": "📖", "新聞": "📰", "電話": "☎️", "手紙": "✉️", "写真": "📷", "映画": "🎬", "音楽": "🎵", "日本語": "🇯🇵", "英語": "🇬🇧", "仕事": "💼", "宿題": "📝", "東": "➡️", "西": "⬅️", "南": "⬇️", "北": "⬆️", "右": "👉", "左": "👈", "上": "⬆️", "下": "⬇️", "前": "⏩", "後ろ": "🔙", "中": "📦", "外": "🌳", "目": "👁️", "耳": "👂", "口": "👄", "手": "✋", "足": "🦶", "体": "🧍", "行く": "🚶➡️", "来る": "🚶⬅️", "帰る": "🏠", "食べる": "🍚", "飲む": "🥤", "見る": "👀", "聞く": "👂", "読む": "📖", "書く": "✍️", "話す": "🗣️", "言う": "💬", "買う": "🛒", "会う": "🤝", "待つ": "⏳", "起きる": "⏰", "寝る": "😴", "休む": "🛋️", "歩く": "🚶", "入る": "🚪", "出る": "🏃", "立つ": "🧍", "分かる": "💡", "教える": "🧑‍🏫", "大きい": "🐘", "小さい": "🐭", "新しい": "✨", "古い": "🏚️", "高い": "💰", "安い": "🏷️", "長い": "📏", "白い": "⚪", "赤い": "🔴", "青い": "🔵", "黒い": "⚫", "暑い": "🥵", "寒い": "🥶", "多い": "🍡🍡🍡", "少ない": "🍡", "早い": "🐓", "近い": "📍", "遠い": "🔭", "元気": "💪", "好き": "❤️", "有名": "⭐", "静か": "🤫"};
-const CARDS=RAW.trim().split('\n').map((l,i)=>{const [k,kana,r,en,alts]=l.split('|');return{id:k+'/'+kana,k,kana,r,en,pic:PICS[k]||'',alts:alts?alts.split(','):[]}});
+const parse=(raw,type)=>raw.trim().split('\n').map(l=>{const [k,kana,r,en,alts,pic]=l.split('|');return{id:k+'/'+kana,k,kana,r,en,type,pic:pic||PICS[k]||'',alts:alts?alts.split(','):[]}});
+const WORDS=parse(RAW,'w'),PHRASES=parse(RAW_P,'p');
+// introduce one phrase after every three words
+const CARDS=[];{let p=0;WORDS.forEach((w,i)=>{if(i%3===0&&p<PHRASES.length)CARDS.push(PHRASES[p++]);CARDS.push(w)});while(p<PHRASES.length)CARDS.push(PHRASES[p++])}
+const pool=()=>S.set.types==='words'?WORDS:S.set.types==='phrases'?PHRASES:CARDS;
 
 /* ---------- storage ---------- */
 const KEY='n5-speaking-v1';
-let S={cards:{},day:'',newDone:{je:0,ej:0},set:{dir:'je',ruby:'romaji',newPerDay:10,gap:6,rate:0.85,auto:1}};
+let S={cards:{},day:'',newDone:{je:0,ej:0},set:{dir:'je',ruby:'romaji',newPerDay:10,gap:6,rate:0.85,auto:1,types:'both'}};
 try{const s=JSON.parse(localStorage.getItem(KEY));if(s){S={...S,...s,set:{...S.set,...(s.set||{})}}}}catch(e){}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 function today(){const d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()}
@@ -365,18 +434,18 @@ function grade(c,g){
 }
 function counts(){
   rollDay();const now=Date.now();let due=0,fresh=0;
-  for(const c of CARDS){const s=st(c);if(!s)fresh++;else if(s.due<=now)due++}
+  for(const c of pool()){const s=st(c);if(!s)fresh++;else if(s.due<=now)due++}
   return{due,fresh:Math.min(fresh,Math.max(0,S.set.newPerDay-S.newDone[S.set.dir]))};
 }
 let lastId=null;
 function nextCard(){
   rollDay();const now=Date.now();
   const pick=list=>{list.sort((a,b)=>st(a).due-st(b).due);const f=list.find(c=>c.id!==lastId);return f||list[0]};
-  const due=CARDS.filter(c=>{const s=st(c);return s&&s.due<=now});
+  const due=pool().filter(c=>{const s=st(c);return s&&s.due<=now});
   if(due.length>1||(due.length===1&&due[0].id!==lastId))return pick(due);
-  if(S.newDone[S.set.dir]<S.set.newPerDay){const n=CARDS.find(c=>!st(c)&&c.id!==lastId);if(n)return n}
+  if(S.newDone[S.set.dir]<S.set.newPerDay){const n=pool().find(c=>!st(c)&&c.id!==lastId);if(n)return n}
   if(due.length)return due[0];
-  const ahead=CARDS.filter(c=>{const s=st(c);return s&&s.learning&&s.due<=now+20*MIN});
+  const ahead=pool().filter(c=>{const s=st(c);return s&&s.learning&&s.due<=now+20*MIN});
   if(ahead.length)return pick(ahead);
   return null;
 }
@@ -424,19 +493,20 @@ function listen(lang,ms,onHeard){return new Promise(res=>{
 /* ---------- answer checking ---------- */
 function lev(a,b){const m=a.length,n=b.length;if(!m||!n)return Math.max(m,n);let p=Array.from({length:n+1},(_,j)=>j);
   for(let i=1;i<=m;i++){const q=[i];for(let j=1;j<=n;j++)q[j]=Math.min(p[j]+1,q[j-1]+1,p[j-1]+(a[i-1]===b[j-1]?0:1));p=q}return p[n]}
+const overlap=(h,t)=>{const tw=t.split(' ');if(tw.length<3)return 0;const hw=new Set(h.split(' '));return tw.filter(w=>hw.has(w)).length/tw.length};
 const sim=(a,b)=>1-lev(a,b)/Math.max(a.length,b.length,1);
 const NUM={one:'1',two:'2',three:'3',four:'4',five:'5',six:'6',seven:'7',eight:'8',nine:'9',ten:'10'};
 function normEn(s){s=s.toLowerCase().replace(/\(.*?\)/g,' ').replace(/[^a-z0-9' ]+/g,' ').replace(/\s+/g,' ').trim();
   s=s.replace(/^(to|the|a|an|my|it's|its|it is)\s+/,'');return s.split(' ').map(w=>NUM[w]||w).join(' ')}
-function normJa(s){return s.replace(/[ァ-ヶ]/g,ch=>String.fromCharCode(ch.charCodeAt(0)-0x60)).replace(/[\s。、，．！？!?.,「」]/g,'')}
+function normJa(s){return s.replace(/下さい/g,'ください').replace(/頂きます/g,'いただきます').replace(/有難う/g,'ありがとう').replace(/御願い/g,'お願い').replace(/分か/g,'わか').replace(/[ァ-ヶ]/g,ch=>String.fromCharCode(ch.charCodeAt(0)-0x60)).replace(/[\s。、，．！？!?.,「」]/g,'')}
 function judge(c,heard){
   if(!heard||!heard.length)return false;
   if(S.set.dir==='je'){
     const T=[...c.en.split(';'),c.en,...c.alts].map(normEn).filter(Boolean);
-    return heard.some(h=>{h=normEn(h);return T.some(t=>h===t||(' '+h+' ').includes(' '+t+' ')||sim(h,t)>=.8)});
+    return heard.some(h=>{h=normEn(h);return T.some(t=>h===t||(' '+h+' ').includes(' '+t+' ')||sim(h,t)>=.8||overlap(h,t)>=.75)});
   }
   const T=[c.k,c.kana,...c.alts].map(normJa);
-  return heard.some(h=>{h=normJa(h);return T.some(t=>h===t||(t.length>1&&h.includes(t))||sim(h,t)>=.75)});
+  return heard.some(h=>{h=normJa(h);return T.some(t=>h===t||(t.length>1&&h.includes(t))||sim(h,t)>=(t.length>8?.7:.75))});
 }
 
 /* ---------- rendering ---------- */
@@ -445,7 +515,7 @@ let cur=null,revealed=false,feedback=null,suggest=null;
 function ruby(c){
   const mode=S.set.ruby;const rt=mode==='romaji'?c.r:mode==='kana'&&c.k!==c.kana?c.kana:'';
   const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
-  return rt?`<ruby>${esc(c.k)}<rt>${esc(rt)}</rt></ruby>`:esc(c.k);
+  return rt?(c.k.length>6?`<span class="stack"><span class="rt">${esc(rt)}</span><span>${esc(c.k)}</span></span>`:`<ruby>${esc(c.k)}<rt>${esc(rt)}</rt></ruby>`):esc(c.k);
 }
 function render(){
   const k=counts();$('cDue').textContent=k.due;$('cNew').textContent=k.fresh;
@@ -456,7 +526,7 @@ function render(){
   $('actions').hidden=false;
   const isNew=!st(cur);const long=cur.k.length>5;
   const front=S.set.dir==='je'?`<div class="jp${long?' long':''}">${ruby(cur)}</div>`:`<div class="en-front">${cur.en}</div>`;
-  let html=`<span class="tag${isNew?' new':''}">${isNew?'New card':'Review'}</span><div class="front">${front}</div>`;
+  let html=`<span class="tag${isNew?' new':''}">${isNew?'New card':'Review'}${cur.type==='p'?' · Phrase':''}</span><div class="front">${front}</div>`;
   if(feedback)html+=`<div class="feedback ${feedback.cls}">${feedback.text}</div>`;
   if(revealed){
     html+=`<div class="answer">${cur.pic?`<div class="pic" aria-hidden="true">${cur.pic}</div>`:''}${S.set.dir==='je'?`<div class="en">${cur.en}</div><div class="kana">${cur.kana} · ${cur.r}</div>`:
@@ -501,7 +571,7 @@ $('dJE').onclick=()=>setDir('je');$('dEJ').onclick=()=>setDir('ej');
 
 /* ---------- settings ---------- */
 const bind=(id,key,num)=>{const el=$(id);el.value=String(S.set[key]);el.onchange=()=>{S.set[key]=num?+el.value:el.value;save();render()}};
-bind('sRuby','ruby');bind('sNew','newPerDay',1);bind('sGap','gap',1);bind('sRate','rate',1);bind('sAuto','auto',1);
+bind('sRuby','ruby');$('sTypes').value=S.set.types;$('sTypes').onchange=()=>{S.set.types=$('sTypes').value;save();if(walking)stopWalk();lastId=null;show()};bind('sNew','newPerDay',1);bind('sGap','gap',1);bind('sRate','rate',1);bind('sAuto','auto',1);
 $('setBtn').onclick=()=>{const s=$('settings');s.hidden=!s.hidden;$('setBtn').setAttribute('aria-expanded',!s.hidden)};
 let resetArmed=false;
 $('reset').onclick=()=>{if(!resetArmed){resetArmed=true;$('reset').textContent='Tap again to erase all progress';setTimeout(()=>{resetArmed=false;$('reset').textContent='Reset all progress'},4000);return}
