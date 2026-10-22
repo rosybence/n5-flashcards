@@ -118,7 +118,9 @@ button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outlin
 .walk{border-radius:16px;padding:14px;background:var(--accent-soft);display:flex;flex-direction:column;gap:10px}
 .walk p{margin:0;font-size:13.5px;color:var(--muted)}
 .walk .status{font-size:17px;font-weight:600;color:var(--ink);min-height:1.45em}
-.grace{display:flex;gap:10px}
+.grace{display:flex;gap:8px}
+.grace .btn{padding:14px 6px;font-size:14px}
+.walkseg{background:var(--surface)}
 .notice{font-size:13px;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
 .notice strong{color:var(--ink)}
 .settings{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px;display:grid;gap:12px}
@@ -177,7 +179,11 @@ button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outlin
 
   <div class="walk">
     <div class="status" id="wStatus">Walk mode</div>
-    <p id="wHelp">Hands-free: it says the prompt, you answer out loud, it marks you and schedules the card. Keep the screen on.</p>
+    <div class="seg walkseg" id="walkModes" role="group" aria-label="Walk mode type">
+      <button id="wmSpeak" aria-pressed="true">Speak answers</button>
+      <button id="wmListen" aria-pressed="false">Listen only</button>
+    </div>
+    <p id="wHelp"></p>
     <div class="grace" id="grace" hidden></div>
     <button class="btn primary" id="walkBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="4" r="1.6"/><path d="M10 21l2-6-2.5-2.5L11 8l4 3 3 1M9.5 12.5L7 14M12 15l3 2 1 4"/></svg><span>Start walk mode</span></button>
   </div>
@@ -1839,7 +1845,7 @@ const isKana=c=>c.type==='k';
 
 /* ---------- storage ---------- */
 const KEY='n5-speaking-v1';
-let S={cards:{},day:'',newDone:{je:0,ej:0},set:{dir:'je',ruby:'romaji',newPerDay:10,gap:6,rate:0.85,auto:1,types:'both',decks:['n5']}};
+let S={cards:{},day:'',newDone:{je:0,ej:0},set:{dir:'je',ruby:'romaji',newPerDay:10,gap:6,rate:0.85,auto:1,types:'both',decks:['n5'],walkMode:'speak'}};
 try{const s=JSON.parse(localStorage.getItem(KEY));if(s){S={...S,...s,set:{...S.set,...(s.set||{})}}}}catch(e){}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 function today(){const d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()}
@@ -2083,39 +2089,63 @@ function grace(label,ms){return new Promise(res=>{
   let done=false;const fin=v=>{if(done)return;done=true;box.hidden=true;graceRes=null;res(v)};
   graceRes=fin;$('gBtn').onclick=()=>fin(true);setTimeout(()=>fin(false),ms);
 })}
+function parseCmd(t){t=t.toLowerCase();
+  if(/repeat|again|one more|say it|pardon|もう一回|もう一度|リピート/.test(t))return 'repeat';
+  if(/wrong|missed|incorrect|didn.?t know|違う|ちがう/.test(t))return 'wrong';
+  if(/right|correct|got it|yes/.test(t))return 'right';
+  if(/next|skip|carry on|continue|go on/.test(t))return 'next';
+  return null}
+// after each answer: buttons + spoken commands ("repeat", "wrong", "right", "next")
+function commandWindow(flipLabel,ms){return new Promise(res=>{
+  const box=$('grace');box.hidden=false;
+  box.innerHTML=`<button class="btn" data-c="repeat">↻ Repeat</button><button class="btn" data-c="flip">${flipLabel}</button><button class="btn primary" data-c="next">Next →</button>`;
+  let done=false,t;const fin=v=>{if(done)return;done=true;clearTimeout(t);box.hidden=true;graceRes=null;try{curRec&&curRec.abort()}catch(e){}res(v)};
+  graceRes=fin;box.onclick=e=>{const b=e.target.closest('[data-c]');if(b)fin(b.dataset.c)};
+  t=setTimeout(()=>fin(null),ms);
+  if(!micBlocked)listen('en-GB',ms-300).then(h=>{if(h&&h.length){const c=parseCmd(h.join(' '));if(c)fin(c)}});
+})}
+async function replay(){const pr=promptOf(cur),an=answerOf(cur);if(pr){await speak(pr[0],pr[1]);await wait(700)}if(walking)await speak(an[0],an[1])}
+async function afterAnswer(ok){
+  for(let i=0;i<6&&walking;i++){
+    status((ok?'Marked right':'Marked wrong')+' — say “repeat”, “'+(ok?'wrong':'right')+'” or “next”');
+    const c=await commandWindow(ok?'✗ I got it wrong':'✓ I was right',micBlocked?3500:4500);
+    if(!walking)return ok;
+    if(c==='repeat'){status('Repeating…');await replay();continue}
+    if(c==='flip')ok=!ok;else if(c==='wrong')ok=false;else if(c==='right')ok=true;
+    return ok;
+  }
+  return ok;
+}
 async function walkLoop(){
   while(walking){
     cur=nextCard();revealed=false;feedback=null;suggest=null;showAlts=false;showFix=false;fixText='';lastHeard='';render();
     if(!cur){status('All done for now');await speak('All done for now. Great work.','en-GB');stopWalk();break}
     const pr=promptOf(cur);const [,al]=answerOf(cur);
     if(pr){status('Listen…');await speak(pr[0],pr[1])}else{status('Read the card…');await wait(700)}if(!walking)break;
-    let ok;
-    if(!micBlocked){
+    let ok=true;
+    if(S.set.walkMode==='listen'||micBlocked){
+      // listen-only: think of the answer, then hear it
+      for(let s=S.set.gap;s>0&&walking;s--){status('Think of the answer… '+s);await wait(1000)}
+      if(!walking)break;
+      status('Answer');await doReveal();if(!walking)break;
+    }else{
       status('Your turn — say it '+(al.startsWith('ja')?'in Japanese':'in English'));
       const heard=await listen(al,S.set.gap*1000,h=>{if(h){feedback={cls:'info',text:'Heard: '+h};render()}});
       if(!walking)break;
-      if(heard!==null){
-        ok=judge(cur,heard);tone(ok);
-        lastHeard=heard[0]||'';feedback=heard.length?{cls:ok?'ok':'no',text:(ok?'Correct — heard “':'Not quite — heard “')+heard[0]+'”'+(ok&&casualHit(cur,heard)?' · casual form':'')}:{cls:'no',text:'Didn’t catch anything'};
-        status(ok?'Correct':'Here’s the answer');await doReveal();if(!walking)break;
-        if(!ok){await wait(500);const [rt,rl]=answerOf(cur);await speak(rt,rl);if(!walking)break;
-          status('Marked wrong — tap if you were right');if(await grace('✓ I was right',3000))ok=true}
-        else{status('Marked right — tap if it was wrong');if(await grace('✗ I got it wrong',2500))ok=false}
-        grade(cur,ok?2:0);lastId=cur.id;await wait(500);continue;
-      }
+      ok=heard!==null&&judge(cur,heard);tone(ok);
+      lastHeard=heard&&heard[0]||'';feedback=heard&&heard.length?{cls:ok?'ok':'no',text:(ok?'Correct — heard “':'Not quite — heard “')+heard[0]+'”'+(ok&&casualHit(cur,heard)?' · casual form':'')}:{cls:'no',text:'Didn’t catch anything'};
+      status(ok?'Correct':'Here’s the answer');await doReveal();if(!walking)break;
+      if(!ok){await wait(500);const [rt,rl]=answerOf(cur);await speak(rt,rl);if(!walking)break}
     }
-    // no microphone here: timed pause, then the answer
-    for(let s=S.set.gap;s>0&&walking;s--){status('Say it out loud… '+s);await wait(1000)}
-    if(!walking)break;
-    status('Answer');await doReveal();if(!walking)break;
-    status('Tap if you missed it');const missed=await grace('✗ I got it wrong',3500);
-    grade(cur,missed?0:2);lastId=cur.id;await wait(400);
+    ok=await afterAnswer(ok);if(!walking)break;
+    grade(cur,ok?2:0);lastId=cur.id;await wait(400);
   }
 }
 async function startWalk(){
   walking=true;userActed=true;
   $('walkBtn').lastChild.textContent='Stop walk mode';$('walkBtn').classList.remove('primary');
-  $('wHelp').textContent=micBlocked?'Speaking back isn’t available here, so you get a pause to answer, then the answer. Tap “I missed it” if you got it wrong.':'Answer out loud after each prompt. Keep this screen on and open.';
+  $('walkModes').hidden=true;
+  $('wHelp').textContent=walkHelp(true);
   try{wake=await navigator.wakeLock.request('screen')}catch(e){wake=null}
   try{actx=actx||new (window.AudioContext||window.webkitAudioContext)()}catch(e){}
   walkLoop();
@@ -2124,9 +2154,15 @@ function stopWalk(){
   walking=false;try{speechSynthesis.cancel()}catch(e){}try{curRec&&curRec.abort()}catch(e){}graceRes&&graceRes(false);
   try{wake&&wake.release()}catch(e){}wake=null;
   $('walkBtn').lastChild.textContent='Start walk mode';$('walkBtn').classList.add('primary');status('Walk mode');
-  $('wHelp').textContent='Hands-free: it says the prompt, you answer out loud, it marks you and schedules the card. Keep the screen on.';
+  $('walkModes').hidden=false;$('wHelp').textContent=walkHelp(false);
   revealed=false;feedback=null;cur=nextCard();render();
 }
+function walkHelp(on){const L=S.set.walkMode==='listen'||micBlocked;
+  if(on)return L?'Think of the answer in the pause, then listen. Say “repeat” to hear it again, “wrong” if you missed it, or “next”.':'Answer out loud after each prompt. Then say “repeat”, “wrong”, “right” or “next”. Keep this screen on.';
+  return L?'Listen only: it says the prompt, pauses for you to think, then reads the translation. No need to speak, but you can say “repeat”.':'Speak answers: it says the prompt, you answer out loud, it marks you and schedules the card.'}
+function setWalkMode(m){S.set.walkMode=m;save();$('wmSpeak').setAttribute('aria-pressed',m==='speak');$('wmListen').setAttribute('aria-pressed',m==='listen');$('wHelp').textContent=walkHelp(false)}
+$('wmSpeak').onclick=()=>setWalkMode('speak');$('wmListen').onclick=()=>setWalkMode('listen');
+setWalkMode(S.set.walkMode);
 $('walkBtn').onclick=()=>walking?stopWalk():startWalk();
 document.addEventListener('visibilitychange',async()=>{if(walking&&document.visibilityState==='visible'&&!wake){try{wake=await navigator.wakeLock.request('screen')}catch(e){}}});
 
