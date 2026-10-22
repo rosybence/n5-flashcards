@@ -110,6 +110,12 @@ button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outlin
 .settings{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px;display:grid;gap:12px}
 .settings label{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:14px}
 .settings select{font:inherit;padding:6px 8px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.voicerow{display:grid;gap:6px;font-size:14px}
+.vr{display:flex;gap:8px}
+.vr select{flex:1;min-width:0}
+.test{padding:6px 12px;border-radius:8px;border:1px solid var(--line);background:var(--bg);font-weight:500;white-space:nowrap}
+.vnote{margin:0;font-size:12.5px;color:var(--muted)}
+.vnote b{color:var(--ink);font-weight:600}
 .danger{color:var(--bad);font-weight:500;justify-self:start;padding:4px 0}
 .done{text-align:center;color:var(--muted)}
 .done b{display:block;font-family:var(--word);font-size:30px;color:var(--ink);margin-bottom:6px}
@@ -130,6 +136,9 @@ button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outlin
     <label>Time to answer (walk mode) <select id="sGap"><option value="4">4 s</option><option value="6">6 s</option><option value="8">8 s</option><option value="10">10 s</option></select></label>
     <label>Spanish voice speed <select id="sRate"><option value="0.7">Slow</option><option value="0.85">Relaxed</option><option value="1">Natural</option></select></label>
     <label>Play audio when a card appears <select id="sAuto"><option value="1">On</option><option value="0">Off</option></select></label>
+    <div class="voicerow"><label for="sVoiceT">Spanish voice</label><div class="vr"><select id="sVoiceT"></select><button class="test" data-test="t">▶ Test</button></div></div>
+    <div class="voicerow"><label for="sVoiceE">English voice</label><div class="vr"><select id="sVoiceE"></select><button class="test" data-test="e">▶ Test</button></div></div>
+    <p class="vnote" id="vNote"></p>
     <button class="danger" id="reset">Reset all progress</button>
   </div>
 
@@ -249,13 +258,30 @@ function nextCard(){
   return null;
 }
 
+/* ---------- native Android app bridge (used only inside the installed Android app) ---------- */
+const NAT=window.NativeApp||null;
+let _nid=0;const _ntts={},_nsr={};
+window.__nativeTtsDone=id=>{const f=_ntts[id];if(f){delete _ntts[id];f()}};
+window.__nativeSr=(id,kind,data)=>{const h=_nsr[id];if(h)h[kind](data)};
+function speakNative(text,lang){return new Promise(res=>{const id='t'+(++_nid);_ntts[id]=res;
+  NAT.speak(text,lang,lang.startsWith('en')?1:+S.set.rate,id,(S.set.voice||{})[lang.slice(0,2).toLowerCase()]||'');setTimeout(()=>window.__nativeTtsDone(id),4000+text.length*300)})}
+function listenNative(lang,ms,onHeard){return new Promise(res=>{
+  const id='r'+(++_nid);let interim='',done=false,t;
+  const fin=v=>{if(done)return;done=true;clearTimeout(t);delete _nsr[id];curRec=null;res(v)};
+  _nsr[id]={partial:x=>{if(x){interim=x;onHeard&&onHeard(x)}},result:a=>fin(a&&a.length?a:interim?[interim]:[]),
+    error:c=>{if(c==='not-allowed'){micBlocked=true;showMicNote();fin(null)}else fin(interim?[interim]:[])}};
+  curRec={abort(){try{NAT.abortListening()}catch(e){}fin(interim?[interim]:[])}};
+  t=setTimeout(()=>{try{NAT.stopListening()}catch(e){}t=setTimeout(()=>fin(interim?[interim]:[]),2000)},ms);
+  NAT.listen(lang,id)})}
 /* ---------- speech out ---------- */
 let voices=[];
 function loadVoices(){try{voices=speechSynthesis.getVoices()}catch(e){}}
 if('speechSynthesis' in window){loadVoices();speechSynthesis.onvoiceschanged=loadVoices}
-function pickVoice(lang){const L=lang.toLowerCase();const n=v=>v.lang.replace('_','-').toLowerCase();
+function pickVoice(lang){const want=(S.set.voice||{})[lang.slice(0,2).toLowerCase()];if(want){const w=voices.find(v=>v.name===want);if(w)return w}
+  const L=lang.toLowerCase();const n=v=>v.lang.replace('_','-').toLowerCase();
   return voices.find(v=>n(v)===L&&/google|siri|enhanced|premium|natural/i.test(v.name))||voices.find(v=>n(v)===L)||voices.find(v=>n(v).startsWith(L.slice(0,2)))}
-function speak(text,lang){return new Promise(res=>{
+function speak(text,lang){return NAT?speakNative(text,lang):speakWeb(text,lang)}
+function speakWeb(text,lang){return new Promise(res=>{
   if(!('speechSynthesis' in window))return res();
   const u=new SpeechSynthesisUtterance(text);u.lang=lang;const v=pickVoice(lang);if(v)u.voice=v;
   u.rate=lang.startsWith('es')?+S.set.rate:1;
@@ -278,8 +304,9 @@ function tone(ok){try{actx=actx||new (window.AudioContext||window.webkitAudioCon
 
 /* ---------- speech in ---------- */
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-let micBlocked=!SR,curRec=null;
-function listen(lang,ms,onHeard){return new Promise(res=>{
+let micBlocked=NAT?!NAT.srAvailable():!SR,curRec=null;
+function listen(lang,ms,onHeard){return NAT?listenNative(lang,ms,onHeard):listenWeb(lang,ms,onHeard)}
+function listenWeb(lang,ms,onHeard){return new Promise(res=>{
   let rec,t,finished=false,alts=[],interim='';
   const finish=v=>{if(finished)return;finished=true;clearTimeout(t);curRec=null;try{rec&&rec.abort()}catch(e){}res(v)};
   try{rec=new SR()}catch(e){return finish(null)}
@@ -420,7 +447,7 @@ $('dJE').onclick=()=>setDir('je');$('dEJ').onclick=()=>setDir('ej');
 const bind=(id,key,num)=>{const el=$(id);el.value=String(S.set[key]);el.onchange=()=>{S.set[key]=num?+el.value:el.value;save();render()}};
 bind('sNew','newPerDay',1);bind('sGap','gap',1);bind('sRate','rate',1);bind('sAuto','auto',1);
 $('sTypes').value=S.set.types;$('sTypes').onchange=()=>{S.set.types=$('sTypes').value;save();if(walking)stopWalk();lastId=null;show()};
-$('setBtn').onclick=()=>{const s=$('settings');s.hidden=!s.hidden;$('setBtn').setAttribute('aria-expanded',!s.hidden)};
+$('setBtn').onclick=()=>{const s=$('settings');s.hidden=!s.hidden;if(!s.hidden)fillVoices();$('setBtn').setAttribute('aria-expanded',!s.hidden)};
 let resetArmed=false;
 $('reset').onclick=()=>{if(!resetArmed){resetArmed=true;$('reset').textContent='Tap again to erase all progress';setTimeout(()=>{resetArmed=false;$('reset').textContent='Reset all progress'},4000);return}
   S.cards={};S.newDone={je:0,ej:0};save();resetArmed=false;$('reset').textContent='Progress reset';lastId=null;show()};
@@ -430,8 +457,8 @@ let walking=false,wake=null,graceRes=null;
 const wait=ms=>new Promise(r=>setTimeout(r,ms));
 function status(t){$('wStatus').textContent=t;const p=$('pocketStatus');if(p)p.textContent=t}
 // pocket mode: black screen that ignores touches; hold 2 s to exit
-function pocketOn(){$('pocket').hidden=false;try{document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen().catch(()=>{})}catch(e){}}
-function pocketOff(){$('pocket').hidden=true;try{document.fullscreenElement&&document.exitFullscreen()}catch(e){}}
+function pocketOn(){try{NAT&&NAT.immersive(true)}catch(e){}$('pocket').hidden=false;try{document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen().catch(()=>{})}catch(e){}}
+function pocketOff(){try{NAT&&NAT.immersive(false)}catch(e){}$('pocket').hidden=true;try{document.fullscreenElement&&document.exitFullscreen()}catch(e){}}
 {let ht;const pk=()=>$('pocket');
  document.addEventListener('pointerdown',e=>{if(pk().hidden||!pk().contains(e.target))return;e.preventDefault();clearTimeout(ht);ht=setTimeout(pocketOff,2000)},true);
  ['pointerup','pointercancel','pointerleave'].forEach(t=>document.addEventListener(t,()=>clearTimeout(ht),true));
@@ -504,7 +531,7 @@ function walkHelp(on){const L=S.set.walkMode==='listen'||micBlocked;
 function setWalkMode(m){S.set.walkMode=m;save();$('wmSpeak').setAttribute('aria-pressed',m==='speak');$('wmListen').setAttribute('aria-pressed',m==='listen');$('wHelp').innerHTML=walkHelp(false)}
 $('wmSpeak').onclick=()=>setWalkMode('speak');$('wmListen').onclick=()=>setWalkMode('listen');
 async function startWalk(){
-  walking=true;userActed=true;
+  walking=true;userActed=true;try{NAT&&NAT.keepAwake(true)}catch(e){}
   $('walkBtn').lastChild.textContent='Stop walk mode';$('walkBtn').classList.remove('primary');
   $('walkModes').hidden=true;$('pocketBtn').hidden=false;$('wHelp').innerHTML=walkHelp(true);
   try{wake=await navigator.wakeLock.request('screen')}catch(e){wake=null}
@@ -512,7 +539,7 @@ async function startWalk(){
   walkLoop();
 }
 function stopWalk(){
-  walking=false;try{speechSynthesis.cancel()}catch(e){}try{curRec&&curRec.abort()}catch(e){}graceRes&&graceRes(null);
+  walking=false;try{NAT?(NAT.stopSpeaking(),NAT.keepAwake(false)):speechSynthesis.cancel()}catch(e){}try{curRec&&curRec.abort()}catch(e){}graceRes&&graceRes(null);
   try{wake&&wake.release()}catch(e){}wake=null;
   $('walkBtn').lastChild.textContent='Start walk mode';$('walkBtn').classList.add('primary');status('Walk mode');
   $('walkModes').hidden=false;$('pocketBtn').hidden=true;pocketOff();$('wHelp').innerHTML=walkHelp(false);
@@ -530,4 +557,27 @@ function showMicNote(){const n=$('micNote');n.hidden=false;
 if(micBlocked)showMicNote();
 setWalkMode(S.set.walkMode);
 show();
+
+/* ---------- voice picker ---------- */
+const TL='es',TTAG='es-ES',TSAMPLE='Hola, ¿qué tal? Vamos a practicar español juntos.',ESAMPLE='Hello! Let’s practise together.';
+function voiceList(pre){
+  if(NAT){try{return JSON.parse(NAT.voices(pre))}catch(e){return[]}}
+  const L=v=>v.lang.replace('_','-').toLowerCase();
+  return voices.filter(v=>L(v).startsWith(pre)).sort((a,b)=>(b.localService===false)-(a.localService===false)||a.name.localeCompare(b.name))
+    .map(v=>({name:v.name,label:v.name.replace(/^(Microsoft|Google)\s+/,'')+' ('+v.lang+')'+(v.localService===false?' · online':'')}))}
+function fillVoices(){
+  S.set.voice=S.set.voice||{};
+  for(const [id,pre] of [['sVoiceT',TL],['sVoiceE','en']]){
+    const el=$(id),list=voiceList(pre),cur=S.set.voice[pre]||'';
+    el.innerHTML='<option value="">Automatic</option>'+list.map(v=>`<option value="${escH(v.name).replace(/"/g,'&quot;')}">${escH(v.label)}</option>`).join('');
+    el.value=list.some(v=>v.name===cur)?cur:'';
+    el.onchange=()=>{S.set.voice[pre]=el.value;save();speak(pre==='en'?ESAMPLE:TSAMPLE,pre==='en'?'en-GB':TTAG)};
+  }
+  const n=voiceList(TL).length;
+  $('vNote').innerHTML=(n?'':'No Spanish voices found on this phone. ')+'Voices sound robotic? Install <b>Speech Services by Google</b>, then in phone Settings → General management → Language and input → Text-to-speech output, choose it and download the Spanish and English voices.';
+}
+document.querySelectorAll('[data-test]').forEach(b=>b.onclick=()=>{userActed=true;const t=b.dataset.test==='t';speak(t?TSAMPLE:ESAMPLE,t?TTAG:'en-GB')});
+window.__nativeTtsReady=()=>{try{fillVoices()}catch(e){}};
+if('speechSynthesis' in window)speechSynthesis.addEventListener('voiceschanged',()=>{try{fillVoices()}catch(e){}});
+fillVoices();
 </script>
