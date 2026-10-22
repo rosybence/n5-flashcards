@@ -2003,7 +2003,7 @@ function altsHtml(){
   if(!showAlts)return `<button class="alts-btn" id="altsBtn" aria-expanded="false">Other answers · ${total}</button>`;
   const ja=a.filter(x=>/[^\x00-\x7F]/.test(x)),en=a.filter(x=>!/[^\x00-\x7F]/.test(x)).map(x=>x.replace(/\bi\b/g,'I'));
     const grp=(l,xs,cls)=>xs.length?`<div class="grp"><span class="lbl">${l}</span>${xs.map(x=>{const c=cls!=='jlpt'&&(cur.casual.has(x)||cur.casual.has(x.replace(/\bI\b/g,'i')));const r=cls==='jpc'?rdOf(x):'';return `<span class="chip ${cls}${c?' casual':''}"><span class="cw">${r}<span>${escH(x)}</span></span>${c?'<small>casual</small>':''}</span>`}).join('')}</div>`:'';
-  return `<button class="alts-btn" id="altsBtn" aria-expanded="true">Hide other answers</button><div class="alts">${grp('JLPT list · preferred',jl,'jlpt')}${grp('Japanese',ja,'jpc')}${grp(jl.length?'Other English':'English',en,'')}</div>`;
+  return `<button class="alts-btn" id="altsBtn" aria-expanded="true">Hide other answers</button><div class="alts">${grp(S.set.dir==='ej'?'Also means · JLPT list':'JLPT list · preferred',jl,'jlpt')}${grp('Japanese',ja,'jpc')}${grp(jl.length?'Other English':'English',en,'')}</div>`;
 }
 function ruby(c){
   if(c.type==='k')return escH(c.k);
