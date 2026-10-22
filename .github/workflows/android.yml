@@ -12,6 +12,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
 
@@ -26,7 +27,21 @@ jobs:
 
       - name: Build both apps
         working-directory: android
-        run: gradle assembleRelease --no-daemon --stacktrace
+        timeout-minutes: 20
+        run: |
+          set -o pipefail
+          gradle assembleRelease --no-daemon --console=plain --stacktrace 2>&1 | tee ../build.log
+
+      - name: Save build log for debugging
+        if: always()
+        run: |
+          git config user.name "build-bot"
+          git config user.email "build-bot@users.noreply.github.com"
+          mkdir -p /tmp/logs && cp build.log /tmp/logs/ 2>/dev/null || echo "no gradle log (failed before build)" > /tmp/logs/build.log
+          echo "run ${{ github.run_number }} at $(date -u)" >> /tmp/logs/build.log
+          git checkout --orphan build-logs
+          git rm -rfq . && cp /tmp/logs/build.log . && git add build.log
+          git commit -qm "Build log for run ${{ github.run_number }}" && git push -f origin build-logs
 
       - name: Collect APKs
         run: |
