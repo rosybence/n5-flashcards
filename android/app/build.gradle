@@ -1,0 +1,62 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.rosybence.flashcards'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId 'com.rosybence.flashcards'
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName '1.0'
+    }
+
+    buildFeatures { buildConfig true }
+
+    signingConfigs {
+        release {
+            storeFile file('../release.keystore')
+            storePassword 'flashcards'
+            keyAlias 'flashcards'
+            keyPassword 'flashcards'
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+        }
+    }
+
+    flavorDimensions 'lang'
+    productFlavors {
+        jp {
+            dimension 'lang'
+            applicationIdSuffix '.jp'
+            resValue 'string', 'app_name', '日本語'
+            buildConfigField 'String', 'START_URL', '"https://rosybence.github.io/n5-flashcards/jp/"'
+            buildConfigField 'String', 'SCOPE', '"/n5-flashcards/jp/"'
+        }
+        es {
+            dimension 'lang'
+            applicationIdSuffix '.es'
+            resValue 'string', 'app_name', 'Español'
+            buildConfigField 'String', 'START_URL', '"https://rosybence.github.io/n5-flashcards/spanish/"'
+            buildConfigField 'String', 'SCOPE', '"/n5-flashcards/spanish/"'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    lint {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+}
