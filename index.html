@@ -68,6 +68,8 @@ button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outlin
 .answer .jp{font-size:34px}
 .answer .kana{color:var(--muted);font-family:var(--jp);font-size:16px}
 .answer .en{font-size:20px;font-weight:600;text-wrap:balance}
+.fixarea{display:flex;flex-direction:column;align-items:center}
+#fbBar{align-self:center}
 .fix-btn{margin-top:4px;font-size:12.5px;color:var(--muted);text-decoration:underline;text-underline-offset:3px;padding:6px}
 .fix{width:100%;display:flex;flex-direction:column;gap:8px;margin-top:10px;padding:12px;border-radius:12px;background:var(--bg);text-align:left}
 .fix-kinds{display:flex;flex-wrap:wrap;gap:6px}
@@ -170,6 +172,7 @@ button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outlin
   </div>
 
   <div class="card" id="card"></div>
+  <div class="feedback" id="fbBar" hidden></div>
 
   <div class="row" id="actions">
     <button class="btn" id="play"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>Play</button>
@@ -183,6 +186,7 @@ button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outlin
     </div>
     <div class="mark" id="mark"></div>
     <details class="more"><summary>Rate it yourself</summary><div class="grades" id="grades"></div></details>
+    <div id="fixArea" class="fixarea"></div>
   </div>
 
   <div class="walk">
@@ -2031,13 +2035,14 @@ function render(){
   $('actions').hidden=false;
   const isNew=!st(cur);const long=cur.k.length>5;
   const front=S.set.dir==='je'?`<div class="jp${long?' long':''}">${ruby(cur)}</div>`:`<div class="en-front">${cur.en}</div>`;
-  let html=`<span class="tag${isNew?' new':''}">${isNew?'New card':'Review'}${cur.type==='p'?' · Phrase':''} · ${DECKS[cur.deck]}</span><div class="front">${front}</div>`;
-  if(feedback)html+=`<div class="feedback ${feedback.cls}">${feedback.text}</div>`;
+  let html=`<span class="tag${isNew?' new':''}">${isNew?'New card':'Review'}${cur.type==='p'?' · Phrase':''} · ${cur.type==='k'?DECKS[cur.deck]:(JW[cur.k]||JW[cur.kana])?'JLPT '+(JW[cur.k]||JW[cur.kana]):'Extra'}</span><div class="front">${front}</div>`;
   if(revealed){
-    html+=`<div class="answer">${cur.pic?`<div class="pic" aria-hidden="true">${cur.pic}</div>`:''}${S.set.dir==='je'?`<div class="en">${cur.en}</div><div class="kana">${cur.kana} · ${cur.r}</div>`:
-      `<div class="jp">${ruby(cur)}</div><div class="kana">${cur.kana} · ${cur.r}${cur.type!=='k'&&(JW[cur.k]||JW[cur.kana])?` <span class="jbadge">JLPT ${JW[cur.k]||JW[cur.kana]}</span>`:''}</div>`}${altsHtml()}${fixHtml()}</div>`;
+    html+=`<div class="answer">${cur.pic?`<div class="pic" aria-hidden="true">${cur.pic}</div>`:''}${S.set.dir==='je'?`<div class="en">${cur.en}</div>`:
+      `<div class="jp">${ruby(cur)}</div>${cur.type==='k'&&S.set.ruby==='romaji'?`<div class="kana">${cur.r}</div>`:''}`}${altsHtml()}</div>`;
   }
   card.innerHTML=html;
+  const fb=$('fbBar');fb.hidden=!feedback;if(feedback){fb.className='feedback '+feedback.cls;fb.textContent=feedback.text}
+  $('fixArea').innerHTML=revealed?fixHtml():'';
   $('actions').hidden=revealed;
   $('mic').disabled=micBlocked;
   $('after').hidden=!revealed||walking;
@@ -2055,14 +2060,15 @@ function answerGrade(g){if(!cur)return;grade(cur,g);lastId=cur.id;show()}
 /* ---------- manual controls ---------- */
 let userActed=false;
 document.addEventListener('pointerdown',()=>{userActed=true},{once:true,capture:true});
-$('card').addEventListener('click',e=>{
+const cardClick=e=>{
   if(e.target.closest('#altsBtn')){showAlts=!showAlts;render()}
   else if(e.target.closest('#fixBtn')){showFix=true;render();setTimeout(()=>{const i=$('fixText');i&&i.focus()},50)}
   else if(e.target.closest('#fixCancel')){showFix=false;fixText='';render()}
   else if(e.target.closest('[data-kind]')){fixKind=e.target.closest('[data-kind]').dataset.kind;render()}
   else if(e.target.closest('#fixSend')){setTimeout(()=>{showFix=false;fixText='';feedback={cls:'info',text:'Thanks — suggestion opened on GitHub. Tap Submit there to send it.'};render()},400)}
-});
-$('card').addEventListener('input',e=>{if(e.target.id==='fixText'){fixText=e.target.value;const a=$('fixSend');if(a)a.href=fixUrl()}});
+};
+const fixInput=e=>{if(e.target.id==='fixText'){fixText=e.target.value;const a=$('fixSend');if(a)a.href=fixUrl()}};
+['card','fixArea'].forEach(id=>{$(id).addEventListener('click',cardClick);$(id).addEventListener('input',fixInput)});
 $('play').onclick=()=>{if(!cur)return;const x=revealed?answerOf(cur):promptOf(cur);if(x)speak(x[0],x[1])};
 $('reveal').onclick=()=>{if(cur&&!revealed){suggest=null;doReveal()}};
 $('grades').onclick=e=>{const b=e.target.closest('button');if(b)answerGrade(+b.dataset.g)};
