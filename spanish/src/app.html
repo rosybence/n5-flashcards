@@ -233,7 +233,8 @@ button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outlin
     <label id="srModeRow" hidden>Speech recognition <select id="sSrMode"><option value="chrome">Like Chrome</option><option value="search">Short words (voice search)</option></select></label>
     <label>Scheduling <select id="sAlgo"><option value="fsrs">FSRS (recommended)</option><option value="sm2">Classic (SM-2)</option></select></label>
     <label>Target memory <select id="sRet"><option value="0.85">85% · fewer reviews</option><option value="0.9">90%</option><option value="0.95">95% · more reviews</option></select></label>
-    <label>New cards per day <select id="sNew"><option>5</option><option>10</option><option>15</option><option>20</option><option>30</option></select></label>
+    <label>New cards per day <select id="sNew"><option>5</option><option>10</option><option>15</option><option>20</option><option>30</option><option>50</option><option>100</option><option value="100000">No limit</option></select></label>
+    <p class="vnote" style="margin:-4px 0 4px">Words you already know (<b>Know it</b>, or right first time in walk mode) don’t count towards this.</p>
     <label>Time to answer (walk mode) <select id="sGap"><option value="4">4 s</option><option value="6">6 s</option><option value="8">8 s</option><option value="10">10 s</option></select></label>
     <label>Spanish voice speed <select id="sRate"><option value="0.7">Slow</option><option value="0.85">Relaxed</option><option value="1">Natural</option></select></label>
     <label>Play audio when a card appears <select id="sAuto"><option value="1">On</option><option value="0">Off</option></select></label>
@@ -406,7 +407,7 @@ function scheduleSM2(cs,g,now){
 }
 function fmt(ms){const m=ms/MIN;if(m<60)return Math.max(1,Math.round(m))+'m';const h=m/60;if(h<24)return Math.round(h)+'h';const d=h/24;if(d<30)return Math.round(d)+'d';return (d/30).toFixed(1).replace('.0','')+'mo'}
 function grade(c,g){const isNew=!st(c);gradeBase(c,g);logReview(g,isNew);(S.revlog=S.revlog||[]).push([ck(c),Date.now(),g]);if(S.revlog.length>20000)S.revlog.splice(0,S.revlog.length-20000);save()}
-function gradeBase(c,g){rollDay();const now=Date.now();if(!st(c))S.newDone[S.set.dir]++;S.cards[ck(c)]=schedule(st(c),g,now);save()}
+function gradeBase(c,g){rollDay();const now=Date.now();if(!st(c)&&g<3)S.newDone[S.set.dir]++;S.cards[ck(c)]=schedule(st(c),g,now);save()}
 function counts(){
   rollDay();const now=Date.now();let due=0,fresh=0;
   for(const c of pool()){const s=st(c);if(!s)fresh++;else if(s.due<=now)due++}
@@ -646,7 +647,7 @@ function render(){
     const wrong=suggest===0;
     const f=$('flip');f.className='btn '+(wrong?'right':'wrong');f.textContent=wrong?'✓ I was right':'✗ I got it wrong';
     $('mark').innerHTML=wrong?`Marked <b class="no">wrong</b> · back in ${fmt(schedule(s,0,now).due-now)}`:`Marked <b class="ok">right</b> · next in ${fmt(schedule(s,2,now).due-now)}`;
-    $('grades').innerHTML=['Again','Hard','Good','Easy'].map((n,i)=>`<button data-g="${i}">${n}<small>${fmt(schedule(s,i,now).due-now)}</small></button>`).join('')}
+    $('grades').innerHTML=['Again','Hard','Good',s?'Easy':'Know it'].map((n,i)=>`<button data-g="${i}">${n}<small>${fmt(schedule(s,i,now).due-now)}</small></button>`).join('')}
 }
 function resetCard(){altShown=null;revealed=false;feedback=null;suggest=null;showAlts=false;showFix=false;fixText='';lastHeard=''}
 let triedWrong=false;
@@ -767,7 +768,7 @@ async function walkLoop(){
     if(!cur){status('All done for now');await speak('All done for now. Great work.','en-GB');stopWalk();break}
     const pr=promptOf(cur);const [,al]=answerOf(cur);
     status('Listen…');await speak(pr[0],pr[1]);if(!walking)break;
-    let ok=true;
+    let ok=true,knewIt=false;
     if(S.set.walkMode==='listen'||micBlocked){
       for(let s=S.set.gap;s>0&&walking;s--){status('Think of the answer… '+s);await wait(1000)}
       if(!walking)break;
@@ -777,7 +778,7 @@ async function walkLoop(){
       const heard=await listen(al,S.set.gap*1000,h=>{if(h){feedback={cls:'info',text:'Heard: '+h};render()}});
       if(!walking)break;
       if(heard===null){for(let t=S.set.gap;t>0&&walking;t--){status('Think of the answer… '+t);await wait(1000)}if(!walking)break}
-      ok=heard!==null&&judgeShow(cur,heard);
+      ok=heard!==null&&judgeShow(cur,heard);knewIt=ok&&!st(cur);
       if(!ok&&heard!==null&&canSwitch(cur)){
         setPhrase(cur,true);render();status('Let’s try it in a phrase');
         await speak('Try it in a phrase.','en-GB');if(!walking)break;
@@ -793,7 +794,7 @@ async function walkLoop(){
       if(!ok){await wait(500);const [rt,rl]=answerOf(cur);await speak(rt,rl);if(!walking)break;await sayItBack(al);if(!walking)break}
     }
     ok=await afterAnswer(ok);if(!walking)break;
-    grade(cur,ok?2:0);lastId=cur.id;await wait(400);
+    grade(cur,ok?(knewIt?3:2):0);lastId=cur.id;await wait(400);
   }
 }
 function walkHelp(on){const L=S.set.walkMode==='listen'||micBlocked;
