@@ -186,9 +186,11 @@ public class MainActivity extends Activity {
         return r == null || r.isEmpty() ? "" : r.get(0);
     }
 
-    private void startListening(String lang, String id) {
+    private String pendingMode = "chrome";
+
+    private void startListening(String lang, String id, String mode) {
         if (checkSelfPermission(Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-            pendingLang = lang; pendingId = id;
+            pendingLang = lang; pendingId = id; pendingMode = mode;
             requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO}, MIC_REQUEST);
             return;
         }
@@ -219,16 +221,14 @@ public class MainActivity extends Activity {
                 srCallback(rid, "error", JSONObject.quote(code));
             }
         });
+        // Same request Chrome makes on Android (language + partial results only), plus extra guesses.
+        // "search" mode asks for Google's short voice-search model instead, tuned for one or two words.
         Intent i = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        i.putExtra("android.speech.extra.DICTATION_MODE", false);
         i.putExtra(RecognizerIntent.EXTRA_LANGUAGE, lang);
-        i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, lang);
         i.putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true);
         i.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 5);
-        i.putExtra(RecognizerIntent.EXTRA_PREFER_OFFLINE, false);
-        i.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_COMPLETE_SILENCE_LENGTH_MILLIS, 1500L);
-        i.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_POSSIBLY_COMPLETE_SILENCE_LENGTH_MILLIS, 1200L);
-        i.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, getPackageName());
+        if ("search".equals(mode)) i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH);
         recognizer.startListening(i);
     }
 
@@ -265,7 +265,7 @@ public class MainActivity extends Activity {
         if (pendingId == null) return;
         String lang = pendingLang, id = pendingId;
         pendingLang = null; pendingId = null;
-        if (results.length > 0 && results[0] == PackageManager.PERMISSION_GRANTED) startListening(lang, id);
+        if (results.length > 0 && results[0] == PackageManager.PERMISSION_GRANTED) startListening(lang, id, pendingMode);
         else srCallback(id, "error", "\"not-allowed\"");
     }
 
@@ -352,7 +352,13 @@ public class MainActivity extends Activity {
 
         @JavascriptInterface public void listen(String lang, String id) {
             if (!trusted) return;
-            main.post(() -> startListening(lang, id));
+            main.post(() -> startListening(lang, id, "chrome"));
+        }
+
+        /** mode: "chrome" (ask exactly like Chrome) or "search" (Google's short voice-search model) */
+        @JavascriptInterface public void listenWith(String lang, String id, String mode) {
+            if (!trusted) return;
+            main.post(() -> startListening(lang, id, mode == null ? "chrome" : mode));
         }
 
         @JavascriptInterface public void stopListening() {

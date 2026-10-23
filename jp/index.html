@@ -202,6 +202,11 @@ button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outlin
 .voicerow,.vr,.backup{min-width:0}
 .vr select{width:100%;min-width:0}
 .app{overflow-x:clip}
+
+.rc{display:flex;gap:8px}
+.rc .btn{padding:11px 8px;font-size:14px}
+.rc #rcBtn{flex:1.6}
+.rc #rcBtn.recording{background:var(--bad);border-color:var(--bad);color:var(--surface)}
 </style>
 
 <div class="app">
@@ -245,6 +250,7 @@ button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outlin
   <div class="settings" id="settings" hidden>
     <label>Reading above kanji <select id="sRuby"><option value="romaji">Romaji</option><option value="kana">Hiragana</option><option value="none">None</option></select></label>
     <label>N5 cards <select id="sTypes"><option value="both">Words and phrases</option><option value="words">Words only</option><option value="phrases">Phrases only</option></select></label>
+    <label id="srModeRow" hidden>Speech recognition <select id="sSrMode"><option value="chrome">Like Chrome</option><option value="search">Short words (voice search)</option></select></label>
     <label>New cards per day <select id="sNew"><option>5</option><option>10</option><option>15</option><option>20</option><option>30</option></select></label>
     <label>Time to answer (walk mode) <select id="sGap"><option value="4">4 s</option><option value="6">6 s</option><option value="8">8 s</option><option value="10">10 s</option></select></label>
     <label>Japanese voice speed <select id="sRate"><option value="0.7">Slow</option><option value="0.85">Relaxed</option><option value="1">Natural</option></select></label>
@@ -287,6 +293,11 @@ button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outlin
       <button class="btn primary next" id="next">Next<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
     </div>
     <div class="mark" id="mark"></div>
+    <div class="rc" id="rcRow">
+      <button class="btn" id="rcBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg><span>Record &amp; compare</span></button>
+      <button class="btn" id="rcMine" hidden>▶ Mine</button>
+      <button class="btn" id="rcNative" hidden>▶ Native</button>
+    </div>
     <details class="more"><summary>Rate it yourself</summary><div class="grades" id="grades"></div></details>
     <div id="fixArea" class="fixarea"></div>
   </div>
@@ -2037,7 +2048,7 @@ function listenNative(lang,ms,onHeard){return new Promise(res=>{
     error:c=>{if(c==='not-allowed'||c==='unavailable'){micBlocked=true;showMicNote();fin(null)}else fin(interim?[interim]:[])}};
   curRec={abort(){try{NAT.abortListening()}catch(e){}fin(interim?[interim]:[])}};
   t=setTimeout(()=>{try{NAT.stopListening()}catch(e){}t=setTimeout(()=>fin(interim?[interim]:[]),2000)},ms);
-  NAT.listen(lang,id)})}
+  if(NAT.listenWith)NAT.listenWith(lang,id,S.set.srMode==='search'?'search':'chrome');else NAT.listen(lang,id)})}
 /* ---------- speech out ---------- */
 let voices=[];
 function loadVoices(){try{voices=speechSynthesis.getVoices()}catch(e){}}
@@ -2178,6 +2189,7 @@ function ruby(c){
   return rt?(c.k.length>6?`<span class="stack"><span class="rt">${esc(rt)}</span><span>${esc(c.k)}</span></span>`:`<ruby>${esc(c.k)}<rt>${esc(rt)}</rt></ruby>`):esc(c.k);
 }
 function render(){
+  if(window.__rcReady&&(cur&&cur.id)!==rcCard)rcReset();
   const k=counts();$('cDue').textContent=k.due;$('cNew').textContent=k.fresh;
   document.querySelectorAll('[data-deck]').forEach(b=>b.setAttribute('aria-pressed',S.set.decks.includes(b.dataset.deck)));
   $('brandSub').textContent=['hira','kata','n5','n4'].filter(d=>S.set.decks.includes(d)).map(d=>({hira:'あ',kata:'ア',n5:'N5',n4:'N4'})[d]).join(' · ');
@@ -2253,6 +2265,7 @@ $('dJE').onclick=()=>setDir('je');$('dEJ').onclick=()=>setDir('ej');
 /* ---------- settings ---------- */
 const bind=(id,key,num)=>{const el=$(id);el.value=String(S.set[key]);el.onchange=()=>{S.set[key]=num?+el.value:el.value;save();render()}};
 bind('sRuby','ruby');$('sTypes').value=S.set.types;$('sTypes').onchange=()=>{S.set.types=$('sTypes').value;save();if(walking)stopWalk();lastId=null;show()};bind('sNew','newPerDay',1);bind('sGap','gap',1);bind('sRate','rate',1);bind('sAuto','auto',1);
+$('srModeRow').hidden=!(NAT&&NAT.listenWith);$('sSrMode').value=S.set.srMode==='search'?'search':'chrome';$('sSrMode').onchange=()=>{S.set.srMode=$('sSrMode').value;save()};
 $('setBtn').onclick=()=>{const s=$('settings');s.hidden=!s.hidden;if(!s.hidden)fillVoices();$('setBtn').setAttribute('aria-expanded',!s.hidden)};
 let resetArmed=false;
 $('reset').onclick=()=>{if(!resetArmed){resetArmed=true;$('reset').textContent='Tap again to erase all progress';setTimeout(()=>{resetArmed=false;$('reset').textContent='Reset all progress'},4000);return}
@@ -2493,6 +2506,43 @@ $('bkFile').onchange=()=>{
   rd.onerror=()=>bkNote('Couldn’t read that file.');rd.readAsText(f);
 };
 $('bkConfirm').onclick=()=>{if(!bkPending)return;S={...S,...bkPending,set:{...S.set,...(bkPending.set||{})}};save();bkNote('Progress restored.');setTimeout(()=>location.reload(),600)};
+
+/* ---------- record & compare: hear yourself next to the native audio ---------- */
+let rcUrl=null,rcBusy=false,rcCard=null,rcStop=null;
+function rcReset(){if(rcUrl){URL.revokeObjectURL(rcUrl);rcUrl=null}rcCard=cur&&cur.id;$('rcMine').hidden=true;$('rcNative').hidden=true;
+  $('rcBtn').classList.remove('recording');$('rcBtn').lastChild.textContent='Record & compare'}
+function rcPlay(url){return new Promise(res=>{const a=new Audio(url);a.onended=res;a.onerror=res;a.play().catch(res)})}
+async function rcNativePlay(){const [t,l]=answerOf(cur);await speak(t,l)}
+async function rcRecord(){
+  if(rcStop){rcStop();return}
+  if(rcBusy||!cur)return;
+  if(!(navigator.mediaDevices&&window.MediaRecorder)){feedback={cls:'no',text:'Recording isn’t supported in this browser.'};return render()}
+  rcBusy=true;const b=$('rcBtn');
+  try{
+    try{speechSynthesis.cancel()}catch(e){}try{NAT&&NAT.stopSpeaking()}catch(e){}
+    const stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}});
+    const mr=new MediaRecorder(stream),chunks=[];
+    mr.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};
+    const stopped=new Promise(r=>mr.onstop=r);
+    mr.start();b.classList.add('recording');b.lastChild.textContent='Recording… tap to stop';
+    const auto=setTimeout(()=>rcStop&&rcStop(),5000);
+    rcStop=()=>{clearTimeout(auto);rcStop=null;if(mr.state!=='inactive')mr.stop()};
+    await stopped;stream.getTracks().forEach(t=>t.stop());b.classList.remove('recording');
+    if(rcUrl)URL.revokeObjectURL(rcUrl);
+    rcUrl=URL.createObjectURL(new Blob(chunks,{type:mr.mimeType||'audio/webm'}));
+    b.lastChild.textContent='Playing yours…';await rcPlay(rcUrl);
+    await new Promise(r=>setTimeout(r,350));
+    b.lastChild.textContent='Playing native…';await rcNativePlay();
+    $('rcMine').hidden=false;$('rcNative').hidden=false;b.lastChild.textContent='Record again';
+  }catch(e){
+    b.classList.remove('recording');b.lastChild.textContent='Record & compare';
+    feedback={cls:'no',text:'Couldn’t record: the microphone isn’t available. Check the app’s microphone permission.'};render();
+  }finally{rcBusy=false;rcStop=null}
+}
+$('rcBtn').onclick=rcRecord;
+$('rcMine').onclick=()=>{if(rcUrl)rcPlay(rcUrl)};
+$('rcNative').onclick=rcNativePlay;
+window.__rcReady=true;rcReset();
 </script>
 
 <script>if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))</script>
