@@ -1,0 +1,105 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.7/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preEsReleaseBuild UP-TO-DATE
+> Task :app:mergeEsReleaseJniLibFolders
+> Task :app:mergeEsReleaseNativeLibs NO-SOURCE
+> Task :app:stripEsReleaseDebugSymbols NO-SOURCE
+> Task :app:extractEsReleaseNativeSymbolTables NO-SOURCE
+> Task :app:mergeEsReleaseNativeDebugMetadata NO-SOURCE
+> Task :app:checkEsReleaseDuplicateClasses
+> Task :app:generateEsReleaseBuildConfig UP-TO-DATE
+> Task :app:javaPreCompileEsRelease UP-TO-DATE
+> Task :app:checkEsReleaseAarMetadata UP-TO-DATE
+> Task :app:generateEsReleaseResValues UP-TO-DATE
+> Task :app:mapEsReleaseSourceSetPaths UP-TO-DATE
+> Task :app:generateEsReleaseResources UP-TO-DATE
+> Task :app:mergeEsReleaseResources UP-TO-DATE
+> Task :app:packageEsReleaseResources UP-TO-DATE
+> Task :app:parseEsReleaseLocalResources UP-TO-DATE
+> Task :app:createEsReleaseCompatibleScreenManifests UP-TO-DATE
+> Task :app:extractDeepLinksEsRelease UP-TO-DATE
+> Task :app:processEsReleaseMainManifest UP-TO-DATE
+> Task :app:processEsReleaseManifest UP-TO-DATE
+> Task :app:processEsReleaseManifestForPackage UP-TO-DATE
+> Task :app:processEsReleaseResources UP-TO-DATE
+> Task :app:compileEsReleaseJavaWithJavac UP-TO-DATE
+> Task :app:dexBuilderEsRelease
+> Task :app:mergeEsReleaseStartupProfile
+> Task :app:desugarEsReleaseFileDependencies
+> Task :app:mergeEsReleaseArtProfile
+> Task :app:mergeExtDexEsRelease
+> Task :app:mergeEsReleaseGlobalSynthetics
+> Task :app:mergeEsReleaseShaders
+> Task :app:compileEsReleaseShaders NO-SOURCE
+> Task :app:generateEsReleaseAssets UP-TO-DATE
+> Task :app:mergeEsReleaseAssets
+> Task :app:compressEsReleaseAssets
+> Task :app:extractEsReleaseVersionControlInfo
+> Task :app:processEsReleaseJavaRes NO-SOURCE
+> Task :app:mergeDexEsRelease
+> Task :app:mergeEsReleaseJavaResource
+> Task :app:compileEsReleaseArtProfile
+> Task :app:collectEsReleaseDependencies
+> Task :app:sdkEsReleaseDependencyData
+> Task :app:validateSigningEsRelease
+> Task :app:writeEsReleaseAppMetadata
+> Task :app:optimizeEsReleaseResources
+> Task :app:writeEsReleaseSigningConfigVersions
+> Task :app:preJpReleaseBuild UP-TO-DATE
+> Task :app:mergeJpReleaseJniLibFolders
+> Task :app:mergeJpReleaseNativeLibs NO-SOURCE
+> Task :app:stripJpReleaseDebugSymbols NO-SOURCE
+> Task :app:extractJpReleaseNativeSymbolTables NO-SOURCE
+> Task :app:mergeJpReleaseNativeDebugMetadata NO-SOURCE
+> Task :app:checkJpReleaseDuplicateClasses
+> Task :app:generateJpReleaseBuildConfig UP-TO-DATE
+> Task :app:javaPreCompileJpRelease UP-TO-DATE
+> Task :app:checkJpReleaseAarMetadata UP-TO-DATE
+> Task :app:generateJpReleaseResValues UP-TO-DATE
+> Task :app:mapJpReleaseSourceSetPaths UP-TO-DATE
+> Task :app:generateJpReleaseResources UP-TO-DATE
+> Task :app:mergeJpReleaseResources UP-TO-DATE
+> Task :app:packageJpReleaseResources UP-TO-DATE
+> Task :app:parseJpReleaseLocalResources UP-TO-DATE
+> Task :app:createJpReleaseCompatibleScreenManifests UP-TO-DATE
+> Task :app:extractDeepLinksJpRelease UP-TO-DATE
+> Task :app:processJpReleaseMainManifest UP-TO-DATE
+> Task :app:processJpReleaseManifest UP-TO-DATE
+> Task :app:processJpReleaseManifestForPackage UP-TO-DATE
+> Task :app:processJpReleaseResources UP-TO-DATE
+> Task :app:compileJpReleaseJavaWithJavac UP-TO-DATE
+> Task :app:dexBuilderJpRelease
+> Task :app:desugarJpReleaseFileDependencies
+> Task :app:mergeJpReleaseStartupProfile
+> Task :app:mergeExtDexJpRelease
+> Task :app:mergeJpReleaseArtProfile
+> Task :app:mergeJpReleaseGlobalSynthetics
+> Task :app:mergeJpReleaseShaders
+> Task :app:compileJpReleaseShaders NO-SOURCE
+> Task :app:generateJpReleaseAssets UP-TO-DATE
+> Task :app:mergeJpReleaseAssets
+> Task :app:compressJpReleaseAssets
+> Task :app:extractJpReleaseVersionControlInfo
+> Task :app:processJpReleaseJavaRes NO-SOURCE
+> Task :app:mergeJpReleaseJavaResource
+> Task :app:collectJpReleaseDependencies
+> Task :app:mergeDexJpRelease
+> Task :app:sdkJpReleaseDependencyData
+> Task :app:compileJpReleaseArtProfile
+> Task :app:packageEsRelease
+> Task :app:createEsReleaseApkListingFileRedirect
+> Task :app:assembleEsRelease
+> Task :app:validateSigningJpRelease
+> Task :app:writeJpReleaseAppMetadata
+> Task :app:writeJpReleaseSigningConfigVersions
+> Task :app:optimizeJpReleaseResources
+> Task :app:packageJpRelease
+> Task :app:createJpReleaseApkListingFileRedirect
+> Task :app:assembleJpRelease
+> Task :app:assembleRelease
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_3-1792757544971.json
+
+BUILD SUCCESSFUL in 11s
+78 actionable tasks: 46 executed, 32 up-to-date
+run 10 at Fri Oct 23 12:12:33 UTC 2026
