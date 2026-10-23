@@ -610,7 +610,7 @@ function judge(c,heard){
   if(phraseOn(c)){lastMatch=null;return judgePhrase(c,heard)}
   if(S.set.dir==='je'){const T=enTargets(c);const disp=[...c.en.split(';').map(x=>x.trim()),c.en,...c.enA];
     for(const exact of [true,false])for(let i=0;i<heard.length;i++){const h=normEn(heard[i]);
-      for(let j=0;j<T.length;j++){const t=T[j];if(exact?(h===t||(' '+h+' ').includes(' '+t+' ')):(sim(h,t)>=.8||overlap(h,t)>=.75)){lastHit={i,said:heard[i],ans:disp[j]||c.en,exact};return true}}}
+      for(let j=0;j<T.length;j++){const t=T[j];if(exact?h===t:((' '+h+' ').includes(' '+t+' ')||sim(h,t)>=.8||overlap(h,t)>=.75)){lastHit={i,said:heard[i],ans:disp[j]||c.en,exact};return true}}}
     return false}
   // find which answer you gave: exact matches first, then close ones; the card's own answer wins ties
   // Spanish usually drops the subject pronoun, so 'él no puede…' = 'no puede…'
@@ -619,7 +619,7 @@ function judge(c,heard){
   const H=heard.map(normEs).map(dp);lastMatch=null;
   const close=(h,t)=>phonMatch(h,t)||h===t||(t.length>=2&&(' '+h+' ').includes(' '+t+' '))||(t.length>6&&sim(h,t)>=(t.length>12?.75:.8))||overlap(h,t)>=.8;
   // same sound, different spelling (b/v, ll/y…) still counts as exact
-  const same=(h,t)=>h===t||phonEs(h)===phonEs(t)||(t.length>=2&&(' '+h+' ').includes(' '+t+' '));
+  const same=(h,t)=>h===t||phonEs(h)===phonEs(t);
   for(const [exact,pass] of [[true,same],[false,close]])for(const [l,ts] of P)for(let i=0;i<H.length;i++)if(ts.some(t=>pass(H[i],t))){
     lastMatch=l===c.es?null:l;lastHit={i,said:heard[i],ans:l,exact:exact&&!lastLenient};return true}
   return false;
