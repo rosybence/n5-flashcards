@@ -215,6 +215,7 @@ button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outlin
 
   <div class="settings" id="settings" hidden>
     <label>Cards <select id="sTypes"><option value="both">Words and phrases</option><option value="words">Words only</option><option value="phrases">Phrases only</option></select></label>
+    <label>Answer checking <select id="sCheck"><option value="lenient">Forgiving</option><option value="strict">Strict</option></select></label>
     <label>New cards per day <select id="sNew"><option>5</option><option>10</option><option>15</option><option>20</option><option>30</option></select></label>
     <label>Time to answer (walk mode) <select id="sGap"><option value="4">4 s</option><option value="6">6 s</option><option value="8">8 s</option><option value="10">10 s</option></select></label>
     <label>Spanish voice speed <select id="sRate"><option value="0.7">Slow</option><option value="0.85">Relaxed</option><option value="1">Natural</option></select></label>
@@ -442,8 +443,19 @@ function judgeShow(c,heard){const ok=judge(c,heard);altShown=ok&&S.set.dir==='ej
 // Spanish sounds phones often mix up: b/v, ll/y, z/c/s, silent h, qu/k, g/j
 function phonEs(s){return s.replace(/\s+/g,'').replace(/ch/g,'§').replace(/h/g,'').replace(/§/g,'ch').replace(/v/g,'b').replace(/ll/g,'y').replace(/y$/,'i')
   .replace(/z/g,'s').replace(/c([ei])/g,'s$1').replace(/qu/g,'k').replace(/c/g,'k').replace(/g([ei])/g,'j$1').replace(/gu([ei])/g,'g$1').replace(/([^r])\1+/g,'$1')}
-function phonMatch(h,t){const a=phonEs(h),b=phonEs(t);return a===b||(b.length>=5&&sim(a,b)>=.82)}
+// Forgiving mode: Spanish consonants between vowels are soft, so phones often swap b/d/g/l/r/y or drop a d
+let lastLenient=false;
+const SOFT='bdglry';
+function softNear(a,b){
+  if(b.length<4)return false;
+  if(a.length===b.length){let d=0,ok=true;for(let i=0;i<a.length;i++)if(a[i]!==b[i]){d++;if(!(SOFT.includes(a[i])&&SOFT.includes(b[i])))ok=false}return d===1&&ok}
+  if(Math.abs(a.length-b.length)===1){const [l,sh]=a.length>b.length?[a,b]:[b,a];
+    for(let i=0;i<l.length;i++)if('dbg'.includes(l[i])&&l.slice(0,i)+l.slice(i+1)===sh)return true}
+  return false}
+function phonMatch(h,t){const a=phonEs(h),b=phonEs(t);if(a===b||(b.length>=5&&sim(a,b)>=.82))return true;
+  if(S.set.check!=='strict'&&softNear(a,b)){lastLenient=true;return true}return false}
 function judge(c,heard){
+  lastLenient=false;
   if(!heard||!heard.length)return false;
   if(S.set.dir==='je'){const T=enTargets(c);return heard.some(h=>{h=normEn(h);return T.some(t=>h===t||(' '+h+' ').includes(' '+t+' ')||sim(h,t)>=.8||overlap(h,t)>=.75)})}
   // find which answer you gave: exact matches first, then close ones; the card's own answer wins ties
@@ -524,7 +536,7 @@ function show(){triedWrong=false;cur=nextCard();resetCard();render();
 function doReveal(){revealed=true;render();const [t,l]=answerOf(cur);return speak(t,l)}
 function answerGrade(g){if(!cur)return;grade(cur,g);lastId=cur.id;show()}
 function heardFeedback(ok,heard){lastHeard=heard&&heard[0]||'';
-  feedback=heard&&heard.length?{cls:ok?'ok':'no',text:(ok?'Correct — heard “':'Not quite — heard “')+heard[0]+'”'+(ok&&casualHit(cur,heard)?' · casual form':'')}:{cls:'no',text:'Didn’t catch anything'}}
+  feedback=heard&&heard.length?{cls:ok?'ok':'no',text:(ok?'Correct — heard “':'Not quite — heard “')+heard[0]+'”'+(ok&&casualHit(cur,heard)?' · casual form':'')+(ok&&lastLenient?' · close enough':'')}:{cls:'no',text:'Didn’t catch anything'}}
 
 /* ---------- manual controls ---------- */
 let userActed=false;
@@ -556,7 +568,7 @@ $('mic').onclick=async()=>{
   if(!heard.length||!heard.some(x=>x&&x.trim())){feedback={cls:'no',text:'Didn’t catch that. Tap Speak to try again.'};return render()}
   const ok=judgeShow(cur,heard);tone(ok);lastHeard=heard[0];
   if(!ok){triedWrong=true;feedback={cls:'no',text:'Not quite — heard “'+heard[0]+'”. Try again, or tap Show answer.'};return render()}
-  feedback={cls:'ok',text:'Correct — heard “'+heard[0]+'”'+(casualHit(cur,heard)?' · casual form':'')};
+  feedback={cls:'ok',text:'Correct — heard “'+heard[0]+'”'+(casualHit(cur,heard)?' · casual form':'')+(lastLenient?' · close enough':'')};
   suggest=2;doReveal();
 };
 function setDir(d){if(walking)stopWalk();S.set.dir=d;save();lastId=null;show()}
@@ -568,6 +580,7 @@ $('dJE').onclick=()=>setDir('je');$('dEJ').onclick=()=>setDir('ej');
 /* ---------- settings ---------- */
 const bind=(id,key,num)=>{const el=$(id);el.value=String(S.set[key]);el.onchange=()=>{S.set[key]=num?+el.value:el.value;save();render()}};
 bind('sNew','newPerDay',1);bind('sGap','gap',1);bind('sRate','rate',1);bind('sAuto','auto',1);
+$('sCheck').value=S.set.check||'lenient';$('sCheck').onchange=()=>{S.set.check=$('sCheck').value;save()};
 $('sTypes').value=S.set.types;$('sTypes').onchange=()=>{S.set.types=$('sTypes').value;save();if(walking)stopWalk();lastId=null;show()};
 $('setBtn').onclick=()=>{const s=$('settings');s.hidden=!s.hidden;if(!s.hidden)fillVoices();$('setBtn').setAttribute('aria-expanded',!s.hidden)};
 let resetArmed=false;
