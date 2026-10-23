@@ -483,7 +483,14 @@ function speakWeb(text,lang){return new Promise(res=>{
   speechSynthesis.speak(u);
 })}
 const sayable=s=>s.replace(/\(.*?\)/g,'').replace(/…/g,'').split(';').map(x=>x.trim()).filter(Boolean);
-const enSay=c=>sayable(c.en).join(', or ');
+// spoken English prompt: keep the hints (formal, polite, male, weather…) so walk mode is unambiguous by ear
+const HINT_INLINE=/^(my|your|someone's|someone else's|one|one's|way|ok|a|the|to|to be)$/i;
+function enSay(c){return c.en.split(';').map(seg=>{const hints=[];
+  const base=seg.replace(/\(([^)]*)\)/g,(m,x)=>{x=x.trim();if(HINT_INLINE.test(x))return ' '+x+' ';
+    if(/^[ -~]+$/.test(x)&&!/^(me gusta|me duele|hay|ok)$/i.test(x))hints.push(x);return ' '})
+    .replace(/…/g,'').replace(/\s+/g,' ').trim();
+  const h=hints.join(', ').replace(/\be\.g\.,?/g,'for example').replace(/\babbr\./g,'short form').replace(/\betc\./g,'and so on');
+  return base?(h?base+', '+h:base):''}).filter(Boolean).join('. Or, ')}
 const esSay=c=>c.es.replace(/…/g,'');
 const promptOf=c=>S.set.dir==='je'?[esSay(c),'es-ES']:phraseOn(c)?[plainPh(c.ph[1]),'en-GB']:[enSay(c),'en-GB'];
 const answerOf=c=>S.set.dir==='je'?[enSay(c),'en-GB']:phraseOn(c)?[plainPh(c.ph[0]),'es-ES']:[altShown&&c===cur?altShown.replace(/…/g,''):esSay(c),'es-ES'];
