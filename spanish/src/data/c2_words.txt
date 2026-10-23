@@ -1,7 +1,7 @@
 # Spanish | English | other Spanish answers | other English answers | picture
 # --- formal and literary nouns ---
 el acervo|heritage; body of knowledge|el patrimonio,la herencia|store|🏺
-el albedrío|free will|el libre albedrío|will|🕊️
+el albedrío|free will|el libre albedrío,la libre voluntad|will|🕊️
 el atisbo|glimmer; hint|el indicio|trace|✨
 el ahínco|zeal; determination|el empeño|eagerness|🔥
 el arraigo|roots; attachment; deep-rootedness|||🌳
@@ -85,10 +85,10 @@ huraño|unsociable; shy|huraña,arisco|reclusive|🦔
 arisco|surly; unfriendly|arisca,huraño|gruff|🌵
 pulcro|neat; immaculate|pulcra,impecable|tidy|✨
 soez|crude; vulgar|grosero|coarse|🤬
-cutre|tacky; shabby; naff|cochambroso|cheap|🪣
-chungo|dodgy; rough; bad|chunga|dicey|😬
-majo|nice; lovely (person)|maja,simpático|friendly|😊
-guay|cool; great|chulo,genial|awesome|😎
+cutre|tacky; shabby; naff|cochambroso,barato,de mala calidad,hortera|cheap,shabby|🪣
+chungo|dodgy; rough; bad|chunga,malo,peligroso,complicado,difícil|dicey,bad,dangerous|😬
+majo|nice; lovely (person)|maja,simpático,agradable,encantador|friendly,nice,kind|😊
+guay|cool; great|chulo,genial,estupendo|awesome,great,cool|😎
 # --- verbs ---
 acaparar|to hoard; to monopolise|||🛒
 achacar|to blame; to attribute|atribuir|to put down to|👉
@@ -122,24 +122,24 @@ sopesar|to weigh up|ponderar,valorar|to consider|⚖️
 subyugar|to subjugate; to captivate|dominar|to enthral|⛓️
 vilipendiar|to vilify; to revile|denostar|to disparage|🗯️
 zanjar|to settle; to resolve|resolver,solucionar|to put an end to|✂️
-apechugar|to put up with; to face up to|apechugar con|to grin and bear it|🎒
-escaquearse|to skive; to shirk|librarse|to get out of it|🏃
-chafar|to ruin; to squash|aplastar,estropear|to spoil|🥞
+apechugar|to put up with; to face up to|apechugar con,aguantar,asumir,cargar con|to grin and bear it,to deal with it|🎒
+escaquearse|to skive; to shirk|librarse,escabullirse,zafarse|to get out of it,to avoid work|🏃
+chafar|to ruin; to squash|aplastar,estropear,arruinar|to spoil,to ruin|🥞
 currar|to work (slang)|trabajar|to graft|🛠️
-flipar|to be amazed; to freak out|alucinar|to be gobsmacked|🤯
+flipar|to be amazed; to freak out|alucinar,sorprenderse|to be gobsmacked,to be shocked|🤯
 mangar|to nick; to pinch|robar|to steal|🧤
-pringar|to get stuck with the dirty work; to get messy|||🫠
-rajar|to slag off; to badmouth|criticar|to talk trash|🗯️
-molar|to be cool; to like (slang)|gustar|to rock|😎
-pirarse|to clear off; to leave|largarse,irse|to split|💨
-liarla|to mess it up; to cause trouble|liarla parda|to stir it up|💣
+pringar|to get stuck with the dirty work; to get messy|cargar con el trabajo,mancharse|to do the dirty work|🫠
+rajar|to slag off; to badmouth|criticar,hablar mal|to talk trash,to criticise|🗯️
+molar|to be cool; to like (slang)|gustar,encantar|to rock,to like|😎
+pirarse|to clear off; to leave|largarse,irse,marcharse|to split,to go,to leave|💨
+liarla|to mess it up; to cause trouble|liarla parda,fastidiarla,meter la pata|to stir it up,to make a mess of it|💣
 # --- colloquial nouns ---
-el chollo|bargain; cushy number|la ganga|steal|🏷️
-el marrón|nasty job; mess|el lío|pain in the neck|💩
-el tostón|bore; drag|el rollo,la lata|bore|🥱
-el pringado|loser; mug|la pringada|sucker|🫠
-el enchufismo|string-pulling; nepotism|el enchufe|jobs for the boys|🔌
-el pelotazo|quick buck; get-rich-quick deal|||💰
+el chollo|bargain; cushy number|la ganga,la oferta|steal,a deal|🏷️
+el marrón|nasty job; mess|el lío,el problema,el follón|pain in the neck,a problem|💩
+el tostón|bore; drag|el rollo,la lata,el aburrimiento|bore,a bore,boring|🥱
+el pringado|loser; mug|la pringada,el tonto,el desgraciado,el primo|sucker,a loser|🫠
+el enchufismo|string-pulling; nepotism|el enchufe,el amiguismo,el favoritismo|jobs for the boys,favouritism|🔌
+el pelotazo|quick buck; get-rich-quick deal|el negocio rápido|a quick profit|💰
 el chiringuito|beach bar; dodgy little set-up|||🍹
 el rollo|thing; scene; bore|el tostón|vibe|🌀
 la movida|scene; hassle; fuss|el lío|business|🎉
@@ -147,21 +147,21 @@ la peña|people; mates; crowd|la gente,los amigos|gang|👯
 el sarao|do; party; fuss|la fiesta,el jaleo|bash|🎉
 el finde|weekend|el fin de semana||📅
 el madrugón|early start|||🌅
-el bajón|slump; low|el bajonazo|downer|📉
+el bajón|slump; low|el bajonazo,la depresión|downer,feeling down,a slump|📉
 # --- expressions ---
-a bote pronto|off the top of my head; offhand|así a bote pronto|at first glance|💭
-a ciencia cierta|for certain; for sure|con certeza|definitely|✔️
-a diestro y siniestro|left, right and centre|a diestra y siniestra|all over the place|↔️
-a la postre|in the end; ultimately|al final|eventually|🏁
-a todas luces|clearly; by any standards|claramente,evidentemente|obviously|💡
-a vuelapluma|off the cuff; hastily|a vuela pluma|quickly|🪶
-al tuntún|at random; any old how|a lo loco|haphazardly|🎲
-de cabo a rabo|from start to finish|de principio a fin|from beginning to end|🐒
-de rondón|uninvited; unannounced|sin avisar|without warning|🚪
-en un santiamén|in no time at all|en un abrir y cerrar de ojos|in a flash|⚡
-erre que erre|stubbornly; over and over|||🔁
-ni por asomo|not in the slightest; by no means|ni de lejos|not remotely|🙅
-por ende|therefore; hence|por lo tanto|consequently|➡️
-sin ambages|without beating about the bush|sin rodeos|plainly|🎯
-so pena de|on pain of; under penalty of|||⚠️
-la guita|money; dosh|la pasta,la pela|cash|💶
+a bote pronto|off the top of my head; offhand|así a bote pronto,así de primeras,sin pensarlo mucho,sin pensar|at first glance,without thinking about it|💭
+a ciencia cierta|for certain; for sure|con certeza,con seguridad,seguro|definitely,for sure|✔️
+a diestro y siniestro|left, right and centre|a diestra y siniestra,por todas partes,a todo el mundo,sin control|all over the place,everywhere|↔️
+a la postre|in the end; ultimately|al final,finalmente,al fin y al cabo|eventually,in the end|🏁
+a todas luces|clearly; by any standards|claramente,evidentemente,sin duda|obviously,clearly|💡
+a vuelapluma|off the cuff; hastily|a vuela pluma,deprisa,rápidamente,sin pensarlo mucho|quickly|🪶
+al tuntún|at random; any old how|a lo loco,al azar,sin pensar|haphazardly,randomly|🎲
+de cabo a rabo|from start to finish|de principio a fin,entero,completamente|from beginning to end,completely|🐒
+de rondón|uninvited; unannounced|sin avisar,sin permiso,sin ser invitado|without warning|🚪
+en un santiamén|in no time at all|en un abrir y cerrar de ojos,en un momento,enseguida,rapidísimo|in a flash,in a moment,very quickly|⚡
+erre que erre|stubbornly; over and over|insistiendo,sin parar|insisting,again and again|🔁
+ni por asomo|not in the slightest; by no means|ni de lejos,para nada,en absoluto,de ninguna manera|not remotely,not at all|🙅
+por ende|therefore; hence|por lo tanto,por eso,así que|consequently,so|➡️
+sin ambages|without beating about the bush|sin rodeos,claramente,directamente|plainly,directly,clearly|🎯
+so pena de|on pain of; under penalty of|bajo pena de,con riesgo de|at the risk of|⚠️
+la guita|money; dosh|la pasta,la pela,el dinero|cash,money|💶

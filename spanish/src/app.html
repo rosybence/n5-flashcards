@@ -581,8 +581,10 @@ function judge(c,heard){
   if(phraseOn(c)){lastMatch=null;return judgePhrase(c,heard)}
   if(S.set.dir==='je'){const T=enTargets(c);return heard.some(h=>{h=normEn(h);return T.some(t=>h===t||(' '+h+' ').includes(' '+t+' ')||sim(h,t)>=.8||overlap(h,t)>=.75)})}
   // find which answer you gave: exact matches first, then close ones; the card's own answer wins ties
-  const P=[[c.es,[c.es,...c.enA.filter(x=>/^\d+$/.test(x))]],...c.esA.map(a=>[a,[a]])].map(([l,ts])=>[l,ts.map(normEs).filter(Boolean)]);
-  const H=heard.map(normEs);lastMatch=null;
+  // Spanish usually drops the subject pronoun, so 'él no puede…' = 'no puede…'
+  const dp=x=>x.replace(/^(yo|tu|el|ella|usted|nosotros|nosotras|vosotros|vosotras|ellos|ellas|ustedes) (?=\S+ )/,'');
+  const P=[[c.es,[c.es,...c.enA.filter(x=>/^\d+$/.test(x))]],...c.esA.map(a=>[a,[a]])].map(([l,ts])=>[l,ts.map(normEs).map(dp).filter(Boolean)]);
+  const H=heard.map(normEs).map(dp);lastMatch=null;
   const close=(h,t)=>phonMatch(h,t)||h===t||(t.length>=2&&(' '+h+' ').includes(' '+t+' '))||(t.length>6&&sim(h,t)>=(t.length>12?.75:.8))||overlap(h,t)>=.8;
   for(const pass of [(h,t)=>h===t,close])for(const [l,ts] of P)if(H.some(h=>ts.some(t=>pass(h,t)))){lastMatch=l===c.es?null:l;return true}
   return false;

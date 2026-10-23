@@ -65,12 +65,12 @@ el portavoz|spokesperson|la portavoz|spokesman|🎤
 el afectado|person affected; victim|la afectada||🩹
 el implicado|person involved|la implicada|those involved|🔗
 el entendido|expert; connoisseur|la entendida||🧐
-el pelota|crawler; suck-up|la pelota,el pelotillero|teacher's pet|🍎
-el aguafiestas|party pooper; killjoy|la aguafiestas|spoilsport|🌧️
+el pelota|crawler; suck-up|la pelota,el pelotillero,el lameculos,el adulador|teacher's pet,a flatterer|🍎
+el aguafiestas|party pooper; killjoy|la aguafiestas|spoilsport,a killjoy|🌧️
 el chivato|snitch; telltale|la chivata|grass|🐀
-el caradura|cheeky so-and-so; shameless person|la caradura,el sinvergüenza|nerve|😏
+el caradura|cheeky so-and-so; shameless person|la caradura,el sinvergüenza,el descarado,el jeta|nerve,a shameless person|😏
 el tacaño|tightwad; skinflint|la tacaña,el agarrado|miser|🪙
-el cotilla|gossip; busybody|la cotilla|nosy parker|👂
+el cotilla|gossip; busybody|la cotilla,el chismoso|nosy parker,a gossip|👂
 el pesado|bore; pain|la pesada,el plasta|nuisance|🥱
 quisquilloso|fussy; touchy|quisquillosa,tiquismiquis|nit-picking|🔬
 susceptible|touchy; sensitive|||🌵
@@ -149,35 +149,35 @@ conformarse|to make do; to settle for|resignarse|to be satisfied|🤷
 arriesgarse|to take a risk|||🎲
 implicarse|to get involved|involucrarse|to commit|🤝
 desentenderse|to wash one's hands of; to ignore|||🙈
-vacilar|to hesitate; to tease|dudar,tomar el pelo|to joke|😜
+vacilar|to hesitate; to tease|dudar,tomar el pelo,bromear|to joke,to tease|😜
 tutear|to address as tú|||👋
 madurar|to mature; to ripen|||🍐
 amortizar|to pay off; to get your money's worth|||💰
 # --- connectors and expressions ---
-cabe destacar|it is worth noting|cabe señalar,hay que destacar|it should be pointed out|⭐
+cabe destacar|it is worth noting|cabe señalar,hay que destacar,es importante destacar,conviene destacar|it should be pointed out|⭐
 en lo que respecta a|as regards; with respect to|en cuanto a,respecto a|concerning|📌
 a raíz de|as a result of; following|como consecuencia de|in the wake of|🌱
 en vista de|in view of; given|dado|considering|👁️
-de ahí que|hence; which is why|por eso|that's why|➡️
+de ahí que|hence; which is why|por eso,por esa razón|that's why,so|➡️
 así pues|so; therefore|por lo tanto|thus|➡️
-con todo|even so; nevertheless|aun así,no obstante|all the same|↩️
+con todo|even so; nevertheless|aun así,no obstante,sin embargo|all the same,however|↩️
 aun así|even so|con todo|still|↩️
 si bien|although; while|aunque|even though|⚖️
 por consiguiente|consequently; therefore|en consecuencia,por lo tanto||➡️
-a grandes rasgos|broadly speaking; in broad terms|en líneas generales|roughly|✏️
-en definitiva|in short; ultimately|en resumen|all in all|🏁
-dicho sea de paso|incidentally; by the way|por cierto|in passing|💬
+a grandes rasgos|broadly speaking; in broad terms|en líneas generales,en general,más o menos|roughly,in general|✏️
+en definitiva|in short; ultimately|en resumen,al fin y al cabo,total|all in all,in summary|🏁
+dicho sea de paso|incidentally; by the way|por cierto,por cierto que|in passing|💬
 a la hora de|when it comes to|||⏰
-en su defecto|failing that|si no|otherwise|🔁
-a efectos de|for the purposes of|||📑
-de antemano|in advance; beforehand|con antelación|ahead of time|⏪
-a sabiendas|knowingly|||🧠
-a regañadientes|reluctantly; grudgingly|de mala gana|unwillingly|😒
-a trancas y barrancas|with great difficulty; by fits and starts|||🚧
-de buenas a primeras|all of a sudden; out of the blue|de repente|just like that|💥
-a la ligera|lightly; carelessly|||🪶
-sin ton ni son|for no reason; without rhyme or reason|||🎲
-a duras penas|barely; only just|apenas|with great difficulty|😮‍💨
-de sobra|more than enough; perfectly well|de sobras|plenty|➕
-a la par|at the same time; on a par|a la vez|equally|🤝
-en balde|in vain|en vano|for nothing|🕳️
+en su defecto|failing that|si no,si no es posible|otherwise,if not|🔁
+a efectos de|for the purposes of|para||📑
+de antemano|in advance; beforehand|con antelación,antes,por adelantado|ahead of time,beforehand|⏪
+a sabiendas|knowingly|sabiéndolo,conscientemente,a propósito|on purpose|🧠
+a regañadientes|reluctantly; grudgingly|de mala gana,sin ganas|unwillingly|😒
+a trancas y barrancas|with great difficulty; by fits and starts|con mucha dificultad,a duras penas,con muchas dificultades|with lots of difficulty|🚧
+de buenas a primeras|all of a sudden; out of the blue|de repente,de pronto,sin más|just like that,suddenly|💥
+a la ligera|lightly; carelessly|sin pensar,sin pensarlo|without thinking|🪶
+sin ton ni son|for no reason; without rhyme or reason|sin motivo,sin razón,sin sentido|for no reason|🎲
+a duras penas|barely; only just|apenas,con mucha dificultad|with great difficulty,hardly|😮‍💨
+de sobra|more than enough; perfectly well|de sobras,más que suficiente,perfectamente|plenty,more than enough|➕
+a la par|at the same time; on a par|a la vez,al mismo tiempo|equally,at the same time|🤝
+en balde|in vain|en vano,para nada,inútilmente|for nothing|🕳️
