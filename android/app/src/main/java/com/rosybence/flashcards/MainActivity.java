@@ -56,6 +56,7 @@ public class MainActivity extends Activity {
 
     private android.webkit.ValueCallback<Uri[]> fileCallback;
     private String pendingSave;
+    private android.webkit.PermissionRequest pendingMicRequest;
     private String pendingLang;
     private String pendingId;
 
@@ -74,6 +75,23 @@ public class MainActivity extends Activity {
 
         web.addJavascriptInterface(new Bridge(), "NativeApp");
         web.setWebChromeClient(new WebChromeClient() {
+            // lets the page use the microphone directly (on-phone speech recognition), only on the app's own pages
+            @Override
+            public void onPermissionRequest(android.webkit.PermissionRequest request) {
+                main.post(() -> {
+                    boolean wantsMic = false;
+                    for (String r : request.getResources())
+                        if (android.webkit.PermissionRequest.RESOURCE_AUDIO_CAPTURE.equals(r)) wantsMic = true;
+                    if (!wantsMic || !trusted) { request.deny(); return; }
+                    if (checkSelfPermission(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
+                        request.grant(new String[]{android.webkit.PermissionRequest.RESOURCE_AUDIO_CAPTURE});
+                    } else {
+                        pendingMicRequest = request;
+                        requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO}, MIC_REQUEST);
+                    }
+                });
+            }
+
             // lets "Restore from file" open the phone's file picker
             @Override
             public boolean onShowFileChooser(WebView view, android.webkit.ValueCallback<Uri[]> callback, FileChooserParams params) {
@@ -237,7 +255,14 @@ public class MainActivity extends Activity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] results) {
-        if (requestCode != MIC_REQUEST || pendingId == null) return;
+        if (requestCode != MIC_REQUEST) return;
+        boolean granted = results.length > 0 && results[0] == PackageManager.PERMISSION_GRANTED;
+        if (pendingMicRequest != null) {
+            if (granted) pendingMicRequest.grant(new String[]{android.webkit.PermissionRequest.RESOURCE_AUDIO_CAPTURE});
+            else pendingMicRequest.deny();
+            pendingMicRequest = null;
+        }
+        if (pendingId == null) return;
         String lang = pendingLang, id = pendingId;
         pendingLang = null; pendingId = null;
         if (results.length > 0 && results[0] == PackageManager.PERMISSION_GRANTED) startListening(lang, id);
