@@ -14,9 +14,9 @@ la niña|girl|la chica|kid|👧
 el chico|boy; young man|el muchacho|lad,guy|👦
 la chica|girl; young woman|la muchacha|lass|👧
 la persona|person|||🧍
-la gente|people|||👥
-el amigo|friend (male)|~el colega|mate,pal|🧑‍🤝‍🧑
-la amiga|friend (female)||mate|🧑‍🤝‍🧑
+la gente|people|las personas||👥
+el amigo|friend (male)|~el colega,el compañero|mate,pal|🧑‍🤝‍🧑
+la amiga|friend (female)|la compañera|mate|🧑‍🤝‍🧑
 la familia|family|||👨‍👩‍👧
 el padre|father|~el papá|dad|👨
 la madre|mother|~la mamá|mum,mom|👩
@@ -31,9 +31,9 @@ el marido|husband|el esposo||🤵
 la esposa|wife|la mujer||👰
 el novio|boyfriend|||💑
 la novia|girlfriend|||💑
-el bebé|baby|||👶
+el bebé|baby|el niño pequeño,la bebé,el crío||👶
 el nombre|name|||📛
-el apellido|surname|||📛
+el apellido|surname|los apellidos||📛
 la edad|age|||🎂
 el año|year|||📆
 el mes|month|||🗓️
@@ -49,11 +49,11 @@ hoy|today|||📅
 mañana|tomorrow|||📅➡️
 ayer|yesterday|||⬅️📅
 ahora|now|ya|right now|⏱️
-luego|later|después|afterwards,then|⏩
+luego|later|después,más tarde|afterwards,then|⏩
 siempre|always|||🔁
 nunca|never|jamás||🚫
-a veces|sometimes|||🔀
-temprano|early|||🐓
+a veces|sometimes|de vez en cuando,algunas veces||🔀
+temprano|early|pronto||🐓
 tarde|late|||🌙
 el lunes|Monday|lunes||📅
 el martes|Tuesday|martes||📅
@@ -111,11 +111,11 @@ mil|one thousand||thousand,1000|
 el primero|first|primero,la primera,primer|1st|🥇
 el segundo|second (in order)|segundo,la segunda|2nd|🥈
 la casa|house; home|el hogar||🏠
-el piso|flat; floor|el apartamento|apartment|🏢
+el piso|flat; floor|el apartamento,la planta|apartment|🏢
 la habitación|room; bedroom|el cuarto,el dormitorio||🛏️
 la cocina|kitchen|||🍳
 el baño|bathroom|el servicio,el aseo|toilet|🚻
-el salón|living room|la sala de estar|lounge,sitting room|🛋️
+el salón|living room|la sala de estar,la sala|lounge,sitting room|🛋️
 la puerta|door|||🚪
 la ventana|window|||🪟
 la mesa|table|||🍽️
@@ -123,7 +123,7 @@ la silla|chair|||🪑
 la cama|bed|||🛏️
 el sofá|sofa|||🛋️|couch
 la llave|key|||🔑
-el coche|car|~el auto|automobile|🚗
+el coche|car|~el auto,el automóvil,el carro|automobile|🚗
 el autobús|bus|el bus||🚌
 el tren|train|||🚆
 el metro|underground; metro|||🚇|tube,subway
@@ -132,10 +132,10 @@ la bicicleta|bicycle|~la bici|bike|🚲
 el taxi|taxi|||🚕|cab
 la calle|street|||🛣️|road
 la ciudad|city; town|||🏙️
-el pueblo|village; town|||🏘️
-el país|country|||🗺️
+el pueblo|village; town|la aldea||🏘️
+el país|country|la nación||🗺️
 el mundo|world|||🌍
-la tienda|shop|||🏪|store
+la tienda|shop|el comercio||🏪|store
 el supermercado|supermarket|el súper||🛒
 el mercado|market|||🧺
 el banco|bank; bench|||🏦
@@ -146,15 +146,15 @@ el aeropuerto|airport|||🛫
 el hotel|hotel|||🏨
 el restaurante|restaurant|||🍽️
 el bar|bar|||🍻
-la cafetería|café|||☕|cafe,coffee shop
-el colegio|school|la escuela||🏫
+la cafetería|café|el café||☕|cafe,coffee shop
+el colegio|school|la escuela,el instituto||🏫
 la universidad|university|~la uni||🎓|college
 la oficina|office|||🏢
-el trabajo|work; job|el empleo||💼
+el trabajo|work; job|el empleo,el curro||💼
 el parque|park|||🌳
 la playa|beach|||🏖️
 el mar|sea|||🌊
-la montaña|mountain|||⛰️
+la montaña|mountain|el monte||⛰️
 el río|river|||🏞️
 el museo|museum|||🏛️
 la iglesia|church|||⛪
@@ -187,20 +187,20 @@ la ensalada|salad|||🥗
 el azúcar|sugar|||🍬
 la sal|salt|||🧂
 el desayuno|breakfast|||🥐
-la comida|food; lunch|el almuerzo||🍱
+la comida|food; lunch|el almuerzo,el alimento,la alimentación||🍱
 la cena|dinner|||🍽️|supper,tea
 el perro|dog|||🐕
 el gato|cat|||🐈
-el pájaro|bird|||🐦
+el pájaro|bird|el ave||🐦
 el caballo|horse|||🐴
 el libro|book|||📖
 el bolígrafo|pen|~el boli||🖊️
 el lápiz|pencil|||✏️
 el papel|paper|||📄
-el ordenador|computer|||💻|laptop
+el ordenador|computer|el pc,la computadora||💻|laptop
 el móvil|mobile phone|el teléfono móvil,el celular|phone,cell phone,mobile|📱
-el teléfono|telephone|||☎️|phone
-el dinero|money|||💶
+el teléfono|telephone|el móvil||☎️|phone
+el dinero|money|la pasta,la plata||💶
 el euro|euro|||💶
 la ropa|clothes|||👕|clothing
 la camisa|shirt|||👔
@@ -209,14 +209,14 @@ los pantalones|trousers|el pantalón|pants|👖
 la falda|skirt|||👗
 el vestido|dress|||👗
 los zapatos|shoes|el zapato||👞
-el abrigo|coat|||🧥
+el abrigo|coat|el chaquetón||🧥
 la cabeza|head|||🙂
 el ojo|eye|||👁️
 la boca|mouth|||👄
 la mano|hand|||✋
 el pie|foot|||🦶
 el pelo|hair|el cabello||💇
-el tiempo|weather; time|||🌦️
+el tiempo|weather; time|el clima||🌦️
 el sol|sun|||☀️
 la lluvia|rain|||🌧️
 la nieve|snow|||❄️
@@ -230,15 +230,15 @@ amarillo|yellow|amarilla||🟡
 negro|black|negra||⚫
 blanco|white|blanca||⚪
 gris|grey|||🩶|gray
-marrón|brown|||🟤
+marrón|brown|castaño,castaña||🟤
 naranja|orange (colour)|||🟠|orange
-rosa|pink|||🩷
+rosa|pink|rosado,rosada||🩷
 grande|big; large|||🐘
 pequeño|small; little|pequeña||🐭
 bueno|good|buena,buen||👍
 malo|bad|mala,mal||👎
 nuevo|new|nueva||✨
-viejo|old|vieja||🏚️
+viejo|old|vieja,mayor,anciano,antiguo||🏚️
 joven|young|||🧒
 alto|tall; high|alta||🦒
 bajo|short (height); low|baja|short|🐜
@@ -246,17 +246,17 @@ largo|long|larga||📏
 corto|short (length)|corta|short|✂️
 caro|expensive|cara|dear|💰
 barato|cheap|barata||🏷️
-bonito|pretty; nice|bonita,~guapo,lindo|beautiful|🌸
-guapo|good-looking; handsome|guapa|beautiful,pretty|😍
+bonito|pretty; nice|bonita,~guapo,lindo,precioso,preciosa,mono,mona|beautiful|🌸
+guapo|good-looking; handsome|guapa,atractivo,atractiva|beautiful,pretty|😍
 feo|ugly|fea||👹
 fácil|easy|||✅
-difícil|difficult|||🧗|hard
+difícil|difficult|complicado,complicada,duro||🧗|hard
 caliente|hot (temperature)|||♨️|hot
 frío|cold (temperature)|fría|cold|🧊
-contento|happy; pleased|contenta,feliz|glad|😊
+contento|happy; pleased|contenta,feliz,alegre|glad|😊
 triste|sad|||😢
-cansado|tired|cansada||😮‍💨
-enfermo|ill; sick|enferma||🤒
+cansado|tired|cansada,agotado,agotada||😮‍💨
+enfermo|ill; sick|enferma,malo,mala||🤒
 ocupado|busy|ocupada||📋
 libre|free (available)|||🕊️|free
 mucho|a lot; much|mucha,muchos,muchas|lots,many|🍡
@@ -270,7 +270,7 @@ allí|there|ahí,allá|over there|👉
 cerca|near|||📍|close
 lejos|far|||🔭|far away
 bien|well; fine|||👍|good,okay
-mal|badly|||👎|bad
+mal|badly|fatal||👎|bad
 ser|to be (permanent)|||🧍|to be
 estar|to be (state or place)|||📍|to be
 tener|to have|||🤲
@@ -288,40 +288,40 @@ dormir|to sleep|||😴
 vivir|to live|||🏠
 trabajar|to work|||💼
 estudiar|to study|||📚
-hablar|to speak; to talk|||🗣️
-decir|to say; to tell|||💬
+hablar|to speak; to talk|conversar,charlar||🗣️
+decir|to say; to tell|contar||💬
 escuchar|to listen|oír|to hear|👂
 ver|to see; to watch|mirar|to look|👀
 leer|to read|||📖
 escribir|to write|||✍️
 comprar|to buy|||🛒
 pagar|to pay|||💳
-querer|to want; to love|||❤️
+querer|to want; to love|desear,amar||❤️
 gustar|to like (me gusta)|me gusta|i like|👍
 poder|to be able to; can|||💪|can
 saber|to know (a fact)|||💡|to know
 conocer|to know (a person or place)|||🤝|to know,to meet
-llamar|to call|||📞
+llamar|to call|telefonear||📞
 llamarse|to be called|||📛|my name is
 abrir|to open|||🔓
 cerrar|to close|||🔒|to shut
-empezar|to start; to begin|comenzar||▶️
-terminar|to finish; to end|acabar||🏁
+empezar|to start; to begin|comenzar,iniciar||▶️
+terminar|to finish; to end|acabar,finalizar||🏁
 tomar|to take; to have (food or drink)|coger|to have|🤲
 dar|to give|||🎁
-esperar|to wait; to hope|||⏳
+esperar|to wait; to hope|aguardar||⏳
 buscar|to look for|||🔍|to search
-encontrar|to find|||🔍
+encontrar|to find|hallar||🔍
 ayudar|to help|||🆘
 necesitar|to need|||❗
-pensar|to think|||💭
-creer|to believe; to think|||💭
+pensar|to think|creer||💭
+creer|to believe; to think|pensar||💭
 entender|to understand|comprender||💡
 aprender|to learn|||📚
-enseñar|to teach; to show|||🧑‍🏫
+enseñar|to teach; to show|mostrar||🧑‍🏫
 jugar|to play (a game or sport)|||⚽|to play
 cocinar|to cook|||🍳
-andar|to walk|caminar||🚶
+andar|to walk|caminar,pasear||🚶
 correr|to run|||🏃
 nadar|to swim|||🏊
 viajar|to travel|||✈️
@@ -343,7 +343,7 @@ cuál|which|cuáles|which one|❓
 y|and|e||➕
 o|or|u||🔀
 pero|but|||✋
-porque|because|||💡
+porque|because|ya que||💡
 con|with|||🤝
 sin|without|||🚫
 para|for; in order to|||🎯
@@ -352,8 +352,8 @@ en|in; on; at|||📦
 a|to; at|||➡️
 sí|yes|||✅
 no|no; not|||❌
-hola|hello|~buenas|hi|👋
-adiós|goodbye|~chao,~chau|bye|👋
-gracias|thank you|~muchas gracias|thanks|🙏
+hola|hello|~buenas,buenos días,buenas tardes|hi|👋
+adiós|goodbye|~chao,~chau,hasta luego,hasta pronto,nos vemos|bye|👋
+gracias|thank you|~muchas gracias,mil gracias|thanks|🙏
 por favor|please|||🙏
-perdón|sorry; excuse me|perdona,perdone,disculpe,lo siento|pardon|🙇
+perdón|sorry; excuse me|perdona,perdone,disculpe,lo siento,disculpa|pardon|🙇

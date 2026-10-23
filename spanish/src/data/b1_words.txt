@@ -1,61 +1,61 @@
 # Spanish | English | other Spanish answers | other English answers | picture
-la pareja|partner; couple|||💑
+la pareja|partner; couple|el compañero,la compañera||💑
 el matrimonio|marriage; married couple|la boda|wedding|💍
-la boda|wedding|||💒
+la boda|wedding|el casamiento||💒
 el divorcio|divorce|||💔
 la infancia|childhood|la niñez||🧸
 la juventud|youth|||🧑
-la vejez|old age|||👴
+la vejez|old age|la tercera edad,la ancianidad||👴
 el adulto|adult|la adulta||🧑
 el ciudadano|citizen|la ciudadana||🧑
-el desconocido|stranger|la desconocida||❓
+el desconocido|stranger|la desconocida,el extraño,la extraña||❓
 la relación|relationship|||💞
 la amistad|friendship|||🤝
 el carácter|personality; character|la personalidad||🎭
-el sentimiento|feeling|||💭
-la emoción|emotion; excitement|||🎢
+el sentimiento|feeling|la sensación||💭
+la emoción|emotion; excitement|la ilusión||🎢
 el miedo|fear|el temor|fright,being scared|😨
-la vergüenza|embarrassment; shame|||😳
+la vergüenza|embarrassment; shame|el bochorno,el corte||😳
 la sorpresa|surprise|||🎉
 la alegría|joy; happiness|la felicidad||😄
 la tristeza|sadness|||😢
-el enfado|anger|la rabia,la ira||😠
-la preocupación|worry|||😟
+el enfado|anger|la rabia,la ira,el cabreo,la furia||😠
+la preocupación|worry|la inquietud||😟
 la esperanza|hope|||🌈
 el sueño|dream; sleepiness|||💤
-el recuerdo|memory; souvenir|||🖼️
+el recuerdo|memory; souvenir|la memoria||🖼️
 la experiencia|experience|||🧭
-la oportunidad|opportunity; chance|||🚪
+la oportunidad|opportunity; chance|la ocasión||🚪
 la decisión|decision|||⚖️
 la opinión|opinion|||💬|view
 el consejo|piece of advice|los consejos|advice,tip|💡
 la ventaja|advantage|||➕
 la desventaja|disadvantage|el inconveniente|drawback|➖
-la razón|reason|||💡
+la razón|reason|el motivo||💡
 la verdad|truth|||✔️
-la mentira|lie|||🤥
+la mentira|lie|el engaño||🤥
 el error|mistake; error|la equivocación||❌
-el éxito|success|||🏆
+el éxito|success|el triunfo||🏆
 el fracaso|failure|||📉
-el objetivo|goal; aim|la meta|target|🎯
+el objetivo|goal; aim|la meta,el propósito,la finalidad|target|🎯
 el esfuerzo|effort|||💪
 la carrera|degree; career; race|||🎓
 la asignatura|subject (at school)|la materia|subject|📚
 el título|degree; qualification; title|||🎓
 el curso|course; school year|||📘
-el conocimiento|knowledge|||🧠
+el conocimiento|knowledge|el saber,los conocimientos||🧠
 la entrevista|interview|||🎙️|job interview
 el currículum|CV|el currículo|resume,curriculum vitae|📄
-el puesto|position; job|el puesto de trabajo|post|💼
+el puesto|position; job|el puesto de trabajo,el cargo,el empleo,el trabajo|post|💼
 el contrato|contract|||📝
 el paro|unemployment|el desempleo||📉
 el desempleado|unemployed person|la desempleada,el parado,la parada|unemployed|📉
 la jubilación|retirement|||👴
-el negocio|business|||💼
+el negocio|business|la empresa||💼
 el mercado laboral|job market|||📈|labour market
-el impuesto|tax|los impuestos|taxes|🧾
+el impuesto|tax|los impuestos,la tasa|taxes|🧾
 la factura|bill; invoice|||🧾
-el recibo|receipt|||🧾
+el recibo|receipt|el ticket,el tique,el comprobante||🧾
 la cuenta|account; bill|||🏦
 la tarjeta de crédito|credit card|la tarjeta||💳
 el préstamo|loan|||🏦
@@ -76,7 +76,7 @@ la religión|religion|||🛐
 el medio ambiente|environment|||🌍|the environment
 la contaminación|pollution|||🏭
 el reciclaje|recycling|||♻️
-la basura|rubbish|los residuos|trash,garbage,waste|🗑️
+la basura|rubbish|los residuos,los desperdicios|trash,garbage,waste|🗑️
 el cambio climático|climate change|||🌡️
 la energía|energy|||⚡
 el recurso|resource|los recursos||🛢️
@@ -86,21 +86,21 @@ el terremoto|earthquake|||🌋
 la inundación|flood|||🌊
 la noticia|piece of news|las noticias|news|📰
 el periodista|journalist|la periodista||🎙️
-el anuncio|advert; announcement|la publicidad|advertisement,ad|📢
+el anuncio|advert; announcement|la publicidad,el aviso|advertisement,ad|📢
 la prensa|press|||📰|the press
 las redes sociales|social media|||📱|social networks
 el usuario|user|la usuaria||👤
 la pantalla táctil|touchscreen|||📱
 el archivo|file|el fichero||📁
 la red|network; net|internet|the internet|🌐
-el ordenador|computer|||💻
+el ordenador|computer|el pc,la computadora||💻
 el cargador|charger|||🔌
 la batería|battery|la pila||🔋
 la cobertura|signal; coverage|||📶|reception
-el enlace|link|||🔗
+el enlace|link|el link,el vínculo||🔗
 descargar|to download|bajar||⬇️
 subir|to upload; to go up|cargar||⬆️
-guardar|to save; to keep|||💾
+guardar|to save; to keep|conservar||💾
 borrar|to delete; to rub out|eliminar|to erase|🗑️
 compartir|to share|||🔁
 la salud mental|mental health|||🧠
@@ -117,88 +117,88 @@ la vivienda|housing; dwelling|||🏘️
 el propietario|owner; landlord|la propietaria,el dueño,la dueña|landlady|🔑
 el inquilino|tenant|la inquilina||🏠
 la mudanza|house move|||📦|move
-el ruido|noise|||🔊
+el ruido|noise|el jaleo||🔊
 la obra|building work; work (of art)|las obras|roadworks|🚧
-el tráfico|traffic|||🚗
-el atasco|traffic jam|||🚗|jam
+el tráfico|traffic|la circulación||🚗
+el atasco|traffic jam|el embotellamiento,el tapón||🚗|jam
 el aparcamiento|car park|el parking|parking,parking lot|🅿️
 la gasolina|petrol|||⛽|gas,gasoline
 el carné de conducir|driving licence|el carnet de conducir|driver's license|🪪
 el vuelo|flight|||✈️
-el retraso|delay|||⏳
+el retraso|delay|la demora||⏳
 el destino|destination; fate|||📍
-el alojamiento|accommodation|||🏨|lodging
+el alojamiento|accommodation|el hospedaje||🏨|lodging
 la habitación doble|double room|||🛏️
 la recepción|reception|||🛎️
-el paisaje|landscape; scenery|||🏞️
+el paisaje|landscape; scenery|las vistas||🏞️
 la costa|coast|||🏖️
 el ambiente|atmosphere|||✨|vibe
 la exposición|exhibition|||🖼️
-el cuadro|painting; picture|la pintura||🖼️
+el cuadro|painting; picture|la pintura,el lienzo||🖼️
 el escritor|writer|la escritora,el autor,la autora|author|✍️
 la novela|novel|||📕
 el personaje|character (in a story)|||🎭|character
 el argumento|plot; argument|la trama||📖
 el concierto|concert|||🎸
-el espectáculo|show|||🎭|performance
+el espectáculo|show|la función,el show||🎭|performance
 el aficionado|fan|la aficionada,el fan||📣|supporter
 el entrenamiento|training|||🏋️
 la competición|competition|el campeonato|championship|🏆
 desarrollar|to develop|||📈
-conseguir|to get; to achieve; to manage|lograr|to obtain|🏆
-intentar|to try|tratar de||🎯|to attempt
+conseguir|to get; to achieve; to manage|lograr,obtener,alcanzar|to obtain|🏆
+intentar|to try|tratar de,probar||🎯|to attempt
 evitar|to avoid|||🚫
 mejorar|to improve|||📈
 empeorar|to get worse|||📉|to worsen
 aumentar|to increase|subir||📈|to rise
 disminuir|to decrease|bajar,reducir|to reduce,to fall|📉
-proteger|to protect|||🛡️
+proteger|to protect|defender||🛡️
 reciclar|to recycle|||♻️
 ahorrar|to save|||🐷
 gastar|to spend; to use up|||💸|to waste
 malgastar|to waste|desperdiciar||🗑️
 contaminar|to pollute|||🏭
-sufrir|to suffer|||😣
+sufrir|to suffer|padecer||😣
 preocuparse|to worry|||😟
-enfadarse|to get angry|||😠
+enfadarse|to get angry|cabrearse,enojarse||😠
 alegrarse|to be glad|||😄|to be happy
 quejarse|to complain|||😤
-disfrutar|to enjoy|||😄
+disfrutar|to enjoy|pasarlo bien,gozar||😄
 aburrirse|to get bored|||🥱
 enamorarse|to fall in love|||😍
-separarse|to separate; to split up|||💔
+separarse|to separate; to split up|romper,dejarlo||💔
 mudarse|to move house|||📦|to move
-crecer|to grow up; to grow|||🌱
+crecer|to grow up; to grow|hacerse mayor||🌱
 envejecer|to grow old; to age|||👴
 jubilarse|to retire|||👴
 contratar|to hire; to take on|||🤝
-despedir|to fire; to say goodbye to|||👋|to sack,to dismiss
-solicitar|to apply for; to request|||📝
+despedir|to fire; to say goodbye to|echar||👋|to sack,to dismiss
+solicitar|to apply for; to request|pedir||📝
 firmar|to sign|||✍️
 cobrar|to charge; to get paid|||💶|to earn
 deber|to owe; must|||💸|should
-prestar|to lend|||🤲
+prestar|to lend|dejar||🤲
 devolver|to give back; to return|||↩️
 ofrecer|to offer|||🎁
 aceptar|to accept|||✅
-rechazar|to reject; to turn down|||❌|to refuse
+rechazar|to reject; to turn down|denegar||❌|to refuse
 permitir|to allow; to let|dejar||✅|to permit
 prohibir|to forbid; to ban|||🚫|to prohibit
-obligar|to force; to oblige|||⛓️
-convencer|to convince; to persuade|||🗣️
-discutir|to argue; to discuss|||🗯️
+obligar|to force; to oblige|forzar||⛓️
+convencer|to convince; to persuade|persuadir||🗣️
+discutir|to argue; to discuss|pelearse,debatir||🗯️
 negociar|to negotiate|||🤝
-opinar|to think; to give an opinion|||💬
+opinar|to think; to give an opinion|pensar,creer||💬
 sugerir|to suggest|proponer||💡
-recomendar|to recommend|||👍
-aconsejar|to advise|||💡
+recomendar|to recommend|aconsejar||👍
+aconsejar|to advise|recomendar||💡
 quejarse de|to complain about|||😤
-darse cuenta|to realise|||💡|to notice,to realize
-fijarse|to notice; to pay attention|||👀
+darse cuenta|to realise|notar,percatarse||💡|to notice,to realize
+fijarse|to notice; to pay attention|notar,observar||👀
 imaginar|to imagine|imaginarse||💭
-suponer|to suppose; to assume|||🤔
+suponer|to suppose; to assume|imaginarse||🤔
 dudar|to doubt|||🤔
-confiar|to trust|||🤝
+confiar|to trust|fiarse||🤝
 compartir|to share|||🔁
 pertenecer|to belong|||🏷️
 depender|to depend|||🔗
@@ -206,33 +206,33 @@ parecer|to seem; to look like|||🤔
 parecerse|to look like; to resemble|||👯
 convertirse|to become|hacerse,ponerse,volverse|to turn into|🔄
 llegar a ser|to become|||🔄
-tener en cuenta|to take into account|||📝|to bear in mind
+tener en cuenta|to take into account|considerar||📝|to bear in mind
 echar de menos|to miss (someone)|extrañar|to miss|💭
 tener ganas de|to feel like; to look forward to|||🤩
-hacer falta|to be necessary; to need|||❗
+hacer falta|to be necessary; to need|necesitar||❗
 merecer la pena|to be worth it|valer la pena||👍
 seguro|sure; safe|segura||✅
 peligroso|dangerous|peligrosa||⚠️
-necesario|necessary|necesaria||❗
+necesario|necessary|necesaria,imprescindible||❗
 posible|possible|||✔️
 imposible|impossible|||🚫
 probable|likely; probable|||🎲
-suficiente|enough; sufficient|||👌
+suficiente|enough; sufficient|bastante||👌
 actual|current; present-day|||🕒
-antiguo|old; ancient; former|antigua||🏺
+antiguo|old; ancient; former|antigua,viejo,vieja||🏺
 moderno|modern|moderna||🏙️
 sano|healthy|sana,saludable||🥗
-grave|serious (illness, problem)|||⚠️|serious
+grave|serious (illness, problem)|serio,seria||⚠️|serious
 orgulloso|proud|orgullosa||🦚
 celoso|jealous|celosa||😒
-tímido|shy|tímida||🙈
-valiente|brave|||🦁
+tímido|shy|tímida,vergonzoso,vergonzosa||🙈
+valiente|brave|atrevido,atrevida||🦁
 honesto|honest|honesta,sincero,sincera||🤝
 responsable|responsible|||✅
 egoísta|selfish|||🙄
 generoso|generous|generosa||🎁
-educado|polite; well-mannered|educada||🎩
-maleducado|rude|maleducada,grosero,grosera|bad-mannered|😤
+educado|polite; well-mannered|educada,cortés||🎩
+maleducado|rude|maleducada,grosero,grosera,mal educado|bad-mannered|😤
 puntual|punctual; on time|||⏰
 agradable|pleasant; nice|||😊
 desagradable|unpleasant|||😖
@@ -241,16 +241,16 @@ incómodo|uncomfortable; awkward|incómoda||😬
 gratis|free (no cost)|gratuito,gratuita|free of charge|🆓
 sin embargo|however|no obstante||🔀
 además|also; besides; in addition|||➕|moreover
-aunque|although; even though|||🔀|even if
-por eso|that's why; so|por lo tanto,así que|therefore|➡️
+aunque|although; even though|a pesar de que,si bien||🔀|even if
+por eso|that's why; so|por lo tanto,así que,por esa razón|therefore|➡️
 mientras|while|mientras que||⏳
 en cambio|on the other hand; instead|por otro lado||🔀
 por ejemplo|for example|||💡|for instance
-de repente|suddenly|||⚡|all of a sudden
+de repente|suddenly|de pronto,de golpe||⚡|all of a sudden
 al final|in the end; at the end|finalmente,por fin|finally|🏁
 cada vez más|more and more|||📈
-sobre todo|above all; especially|especialmente||⭐
-a menudo|often|muchas veces,con frecuencia|frequently|🔁
+sobre todo|above all; especially|especialmente,principalmente||⭐
+a menudo|often|muchas veces,con frecuencia,frecuentemente|frequently|🔁
 de vez en cuando|from time to time|a veces|now and then,occasionally|🔀
-apenas|hardly; barely|||🤏
+apenas|hardly; barely|casi no||🤏
 quizás|perhaps; maybe|quizá,tal vez,a lo mejor|maybe|🤷
