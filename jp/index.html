@@ -2240,8 +2240,8 @@ $('mic').onclick=async()=>{
   if(!heard.length||!heard.some(x=>x&&x.trim())){feedback={cls:'no',text:'Didn’t catch that. Tap Speak to try again.'};return render()}
   const ok=judgeShow(cur,heard);tone(ok);lastHeard=heard[0];
   if(!ok){triedWrong=true;feedback={cls:'no',text:'Not quite — heard “'+heard[0]+'”. Try again, or tap Show answer.'};return render()}
-  feedback={cls:'ok',text:(triedWrong?'Got it on another try — heard “':'Correct — heard “')+heard[0]+'”'+(casualHit(cur,heard)?' · casual form':'')};
-  suggest=triedWrong?0:2;doReveal();
+  feedback={cls:'ok',text:'Correct — heard “'+heard[0]+'”'+(casualHit(cur,heard)?' · casual form':'')};
+  suggest=2;doReveal();
 };
 function setDir(d){if(walking)stopWalk();S.set.dir=d;save();lastId=null;show()}
 document.querySelector('.decks').onclick=e=>{const b=e.target.closest('[data-deck]');if(!b)return;const d=b.dataset.deck;

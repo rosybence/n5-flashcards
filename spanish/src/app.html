@@ -439,13 +439,17 @@ const enTargets=c=>[...c.en.split(';'),c.en,...c.enA].map(normEn).filter(Boolean
 const esTargets=c=>[c.es,...c.esA,...c.enA.filter(x=>/^\d+$/.test(x))].map(normEs).filter(Boolean);
 let lastMatch=null,altShown=null;
 function judgeShow(c,heard){const ok=judge(c,heard);altShown=ok&&S.set.dir==='ej'?lastMatch:null;return ok}
+// Spanish sounds phones often mix up: b/v, ll/y, z/c/s, silent h, qu/k, g/j
+function phonEs(s){return s.replace(/\s+/g,'').replace(/ch/g,'§').replace(/h/g,'').replace(/§/g,'ch').replace(/v/g,'b').replace(/ll/g,'y').replace(/y$/,'i')
+  .replace(/z/g,'s').replace(/c([ei])/g,'s$1').replace(/qu/g,'k').replace(/c/g,'k').replace(/g([ei])/g,'j$1').replace(/gu([ei])/g,'g$1').replace(/([^r])\1+/g,'$1')}
+function phonMatch(h,t){const a=phonEs(h),b=phonEs(t);return a===b||(b.length>=5&&sim(a,b)>=.82)}
 function judge(c,heard){
   if(!heard||!heard.length)return false;
   if(S.set.dir==='je'){const T=enTargets(c);return heard.some(h=>{h=normEn(h);return T.some(t=>h===t||(' '+h+' ').includes(' '+t+' ')||sim(h,t)>=.8||overlap(h,t)>=.75)})}
   // find which answer you gave: exact matches first, then close ones; the card's own answer wins ties
   const P=[[c.es,[c.es,...c.enA.filter(x=>/^\d+$/.test(x))]],...c.esA.map(a=>[a,[a]])].map(([l,ts])=>[l,ts.map(normEs).filter(Boolean)]);
   const H=heard.map(normEs);lastMatch=null;
-  const close=(h,t)=>h===t||(t.length>3&&(' '+h+' ').includes(' '+t+' '))||(t.length>6&&sim(h,t)>=(t.length>12?.75:.8))||overlap(h,t)>=.8;
+  const close=(h,t)=>phonMatch(h,t)||h===t||(t.length>3&&(' '+h+' ').includes(' '+t+' '))||(t.length>6&&sim(h,t)>=(t.length>12?.75:.8))||overlap(h,t)>=.8;
   for(const pass of [(h,t)=>h===t,close])for(const [l,ts] of P)if(H.some(h=>ts.some(t=>pass(h,t)))){lastMatch=l===c.es?null:l;return true}
   return false;
 }
@@ -552,8 +556,8 @@ $('mic').onclick=async()=>{
   if(!heard.length||!heard.some(x=>x&&x.trim())){feedback={cls:'no',text:'Didn’t catch that. Tap Speak to try again.'};return render()}
   const ok=judgeShow(cur,heard);tone(ok);lastHeard=heard[0];
   if(!ok){triedWrong=true;feedback={cls:'no',text:'Not quite — heard “'+heard[0]+'”. Try again, or tap Show answer.'};return render()}
-  feedback={cls:'ok',text:(triedWrong?'Got it on another try — heard “':'Correct — heard “')+heard[0]+'”'+(casualHit(cur,heard)?' · casual form':'')};
-  suggest=triedWrong?0:2;doReveal();
+  feedback={cls:'ok',text:'Correct — heard “'+heard[0]+'”'+(casualHit(cur,heard)?' · casual form':'')};
+  suggest=2;doReveal();
 };
 function setDir(d){if(walking)stopWalk();S.set.dir=d;save();lastId=null;show()}
 document.querySelector('.decks').onclick=e=>{const b=e.target.closest('[data-deck]');if(!b)return;const d=b.dataset.deck;
