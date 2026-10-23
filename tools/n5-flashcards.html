@@ -2375,11 +2375,12 @@ function grace(label,ms){return new Promise(res=>{
   let done=false;const fin=v=>{if(done)return;done=true;box.hidden=true;graceRes=null;res(v)};
   graceRes=fin;$('gBtn').onclick=()=>fin(true);setTimeout(()=>fin(false),ms);
 })}
-function parseCmd(t){t=t.toLowerCase();
-  if(/repeat|again|one more|say it|pardon|もう一回|もう一度|リピート/.test(t))return 'repeat';
-  if(/wrong|missed|incorrect|didn.?t know|違う|ちがう/.test(t))return 'wrong';
-  if(/right|correct|got it|yes/.test(t))return 'right';
-  if(/next|skip|carry on|continue|go on/.test(t))return 'next';
+function parseCmd(t){t=' '+t.toLowerCase().replace(/[^a-z' ぁ-んァ-ン一-龯]+/g,' ').replace(/\s+/g,' ')+' ';
+  // longer phrases first ("I was right", "next card"…); short words and common mishearings as backup
+  if(/ (i was|i got it|i'm|i am|that was|it was|was) (wrong|incorrect)| (i )?(didn'?t|did not) know| i (got it )?wrong| wrong | ron | rung | incorrect |違う|ちがう/.test(t))return 'wrong';
+  if(/ (i was|i got it|i'm|i am|that was|it was|was) (right|correct)| i (got it|knew it)| right | write | alright | correct /.test(t))return 'right';
+  if(/ next (card|question|one|word|please)| next | text | nest | skip | carry on| continue | go on/.test(t))return 'next';
+  if(/ repeat| say (it|that) again| (once|one) more| again | pardon |もう一回|もう一度|リピート/.test(t))return 'repeat';
   return null}
 // after each answer: buttons + spoken commands ("repeat", "wrong", "right", "next")
 function commandWindow(flipLabel,ms){return new Promise(res=>{
@@ -2393,8 +2394,8 @@ function commandWindow(flipLabel,ms){return new Promise(res=>{
 async function replay(){const pr=promptOf(cur),an=answerOf(cur);if(pr){await speak(pr[0],pr[1]);await wait(700)}if(walking)await speak(an[0],an[1])}
 async function afterAnswer(ok){
   for(let i=0;i<6&&walking;i++){
-    status((ok?'Marked right':'Marked wrong')+' — say “repeat”, “'+(ok?'wrong':'right')+'” or “next”');
-    const c=await commandWindow(ok?'✗ I got it wrong':'✓ I was right',micBlocked?3500:4500);
+    status((ok?'Marked right':'Marked wrong')+' — say “say it again”, “'+(ok?'I was wrong':'I was right')+'” or “next card”');
+    const c=await commandWindow(ok?'✗ I got it wrong':'✓ I was right',micBlocked?3500:7000);
     if(!walking)return ok;
     if(c==='repeat'){status('Repeating…');await replay();continue}
     if(c==='flip')ok=!ok;else if(c==='wrong')ok=false;else if(c==='right')ok=true;
@@ -2458,8 +2459,8 @@ function stopWalk(){
   revealed=false;feedback=null;cur=nextCard();render();
 }
 function walkHelp(on){const L=S.set.walkMode==='listen'||micBlocked;
-  const steps=L?['You hear the prompt.','Think of the answer during the pause.','You hear the translation.','Say <b>“repeat”</b> to hear it again, <b>“wrong”</b> if you missed it, or <b>“next”</b>. Say nothing and it counts as right.']
-    :['You hear the prompt.','Say the answer out loud.','If you get it wrong, it says the correct answer and waits for you to <b>say it back</b> (up to 3 tries).','Then say <b>“repeat”</b>, <b>“wrong”</b>, <b>“right”</b> or <b>“next”</b>. Say nothing and it moves on.'];
+  const steps=L?['You hear the prompt.','Think of the answer during the pause.','You hear the translation.','Say <b>“say it again”</b> to hear it again, <b>“I was wrong”</b> if you missed it, or <b>“next card”</b>. Say nothing and it counts as right.']
+    :['You hear the prompt.','Say the answer out loud.','If you get it wrong, it says the correct answer and waits for you to <b>say it back</b> (up to 3 tries).','Then say <b>“say it again”</b>, <b>“I was wrong”</b>, <b>“I was right”</b> or <b>“next card”</b>. Say nothing and it moves on.'];
   return `<ol>${steps.map(x=>`<li>${x}</li>`).join('')}</ol><p>Keep this screen on and the app open.${micBlocked&&!L?' Speaking back isn’t available here, so this works like Listen only.':''}</p>`}
 function setWalkMode(m){S.set.walkMode=m;save();$('wmSpeak').setAttribute('aria-pressed',m==='speak');$('wmListen').setAttribute('aria-pressed',m==='listen');$('wHelp').innerHTML=walkHelp(false)}
 $('wmSpeak').onclick=()=>setWalkMode('speak');$('wmListen').onclick=()=>setWalkMode('listen');
