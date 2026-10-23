@@ -16,7 +16,7 @@ def rows(fname):
     return out
 seen_es, seen = {}, set()
 DATA = {}
-for lvl in ('a1', 'a2', 'b1'):
+for lvl in ('a1', 'a2', 'b1', 'b2', 'c1', 'c2'):
     for kind in ('w', 'p'):
         keep = []
         for r in rows(f'{lvl}_{"words" if kind=="w" else "phrases"}.txt'):
@@ -27,7 +27,7 @@ for lvl in ('a1', 'a2', 'b1'):
         print(lvl, kind, len(keep))
 # example phrases for word cards (phrase mode): card|Spanish with [word]|English with [word]
 PH = {}
-for f in ('phrases_a1.txt', 'phrases_a2b1.txt'):
+for f in ('phrases_a1.txt', 'phrases_a2b1.txt', 'phrases_b2c2.txt'):
     for l in open(D + f, encoding='utf-8'):
         if l.strip() and not l.startswith('#'):
             c, es_p, en_p = l.rstrip('\n').split('|'); PH[c] = [es_p, en_p]

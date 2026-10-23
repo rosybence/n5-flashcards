@@ -1,0 +1,307 @@
+# card (Spanish exactly as on the card) | Spanish phrase with [target word] | English phrase with [target word]
+el despido|Su [despido] fue injusto.|His [dismissal] was unfair.
+el ascenso|Le han dado un [ascenso].|She's been given a [promotion].
+la huelga|Mañana hay [huelga] de metro.|There's a metro [strike] tomorrow.
+la pérdida|Es una [pérdida] de tiempo.|It's a [waste] of time.
+la hipoteca|Pagamos la [hipoteca] cada mes.|We pay the [mortgage] every month.
+el plazo|El [plazo] termina el viernes.|The [deadline] is on Friday.
+el deber|Votar es un [deber].|Voting is a [duty].
+la igualdad|Luchan por la [igualdad].|They're fighting for [equality].
+la pobreza|La [pobreza] ha aumentado.|[Poverty] has increased.
+la riqueza|La [riqueza] está mal repartida.|[Wealth] is badly distributed.
+el alcalde|El [alcalde] ha dimitido.|The [mayor] has resigned.
+el ministro|El [ministro] dio una rueda de prensa.|The [minister] gave a press conference.
+la encuesta|Según la [encuesta], ganarán.|According to the [poll], they'll win.
+la mayoría|La [mayoría] está de acuerdo.|The [majority] agree.
+la minoría|Solo una [minoría] se opone.|Only a [minority] is against it.
+los residuos|Hay que separar los [residuos].|You have to separate the [waste].
+la especie|Es una [especie] en peligro.|It's an endangered [species].
+el síntoma|La fiebre es un [síntoma] común.|Fever is a common [symptom].
+la tos|Tengo mucha [tos].|I've got a bad [cough].
+la cicatriz|Tiene una [cicatriz] en la frente.|He has a [scar] on his forehead.
+la vacuna|Me han puesto la [vacuna].|I've had the [vaccine].
+la alergia|Tengo [alergia] al polen.|I have an [allergy] to pollen.
+la ansiedad|Sufre de [ansiedad].|She suffers from [anxiety].
+el embarazo|El [embarazo] va muy bien.|The [pregnancy] is going really well.
+el titular|¿Has visto el [titular]?|Have you seen the [headline]?
+el seguidor|Tiene un millón de [seguidores].|She has a million [followers].
+la descarga|La [descarga] es gratuita.|The [download] is free.
+el bulo|Eso es un [bulo].|That's a [hoax].
+el orgullo|Lo digo con [orgullo].|I say it with [pride].
+la envidia|Me da [envidia].|It makes me [envious].
+los celos|Tiene [celos] de su hermano.|He's [jealous] of his brother.
+la culpa|No es [culpa] tuya.|It's not your [fault].
+el agobio|¡Qué [agobio]!|What a [nightmare]!
+la soledad|No soporta la [soledad].|He can't stand [loneliness].
+el rencor|No le guardo [rencor].|I don't bear him a [grudge].
+agobiado|Estoy muy [agobiado] con el trabajo.|I'm really [stressed] with work.
+harto|Estoy [harto] del ruido.|I'm [fed up] with the noise.
+terco|Es muy [terco].|He's very [stubborn].
+sensato|Es una decisión [sensata].|It's a [sensible] decision.
+ingenuo|No seas tan [ingenuo].|Don't be so [naive].
+exigente|Mi jefa es muy [exigente].|My boss is very [demanding].
+creído|Es un poco [creído].|He's a bit [big-headed].
+lograr|Al final lo [logré].|In the end I [managed] it.
+alcanzar|Queremos [alcanzar] el objetivo.|We want to [reach] the goal.
+prevenir|Más vale [prevenir] que curar.|[Prevention] is better than cure.
+proponer|Te [propongo] un plan.|I [suggest] a plan.
+exigir|[Exigen] una explicación.|They [demand] an explanation.
+reclamar|Voy a [reclamar] el dinero.|I'm going to [claim] the money back.
+apoyar|Te voy a [apoyar] siempre.|I'll always [support] you.
+asumir|[Asumo] la responsabilidad.|I [take] responsibility.
+afrontar|Hay que [afrontar] el problema.|We have to [face] the problem.
+superar|Ha [superado] el miedo.|She's [overcome] her fear.
+fomentar|Quieren [fomentar] la lectura.|They want to [encourage] reading.
+influir|El tiempo [influye] en mi humor.|The weather [affects] my mood.
+impedir|La lluvia nos [impidió] salir.|The rain [stopped] us going out.
+soportar|No [soporto] el calor.|I can't [stand] the heat.
+negar|[Niega] haberlo hecho.|He [denies] doing it.
+destacar|[Destaca] en matemáticas.|She [stands out] in maths.
+señalar|Me [señaló] el camino.|He [pointed] me the way.
+resumir|¿Puedes [resumir] el texto?|Can you [summarise] the text?
+aclarar|Quiero [aclarar] una cosa.|I want to [clarify] something.
+fingir|[Fingió] estar enfermo.|He [pretended] to be ill.
+madrugar|Mañana tengo que [madrugar].|I have to [get up early] tomorrow.
+eficaz|Es un tratamiento [eficaz].|It's an [effective] treatment.
+escaso|El agua es [escasa] aquí.|Water is [scarce] here.
+amplio|Es un piso muy [amplio].|It's a very [spacious] flat.
+complejo|Es un tema [complejo].|It's a [complex] subject.
+evidente|Es [evidente] que miente.|It's [obvious] he's lying.
+capaz|Eres [capaz] de hacerlo.|You're [capable] of doing it.
+gratuito|La entrada es [gratuita].|Entry is [free].
+ajeno|No toques las cosas [ajenas].|Don't touch [other people's] things.
+vigente|La ley sigue [vigente].|The law is still [in force].
+leve|Fue un accidente [leve].|It was a [minor] accident.
+urgente|Es un asunto [urgente].|It's an [urgent] matter.
+la beca|Le han dado una [beca].|She's been given a [scholarship].
+el máster|Estoy haciendo un [máster].|I'm doing a [master's].
+la teoría|En [teoría], funciona.|In [theory], it works.
+el invento|Es un [invento] genial.|It's a brilliant [invention].
+el dato|Es un [dato] importante.|It's an important [fact].
+la media|La [media] es de cinco.|The [average] is five.
+el delito|Es un [delito] grave.|It's a serious [crime].
+el ladrón|El [ladrón] huyó.|The [thief] ran away.
+el robo|Ha habido un [robo].|There's been a [robbery].
+la víctima|La [víctima] está bien.|The [victim] is fine.
+el testigo|No hubo ningún [testigo].|There was no [witness].
+el juez|El [juez] lo declaró inocente.|The [judge] found him innocent.
+la cárcel|Lo metieron en la [cárcel].|They put him in [prison].
+la multa|Me han puesto una [multa].|I've been given a [fine].
+la denuncia|Puse una [denuncia] en comisaría.|I made a [police report] at the station.
+el acusado|El [acusado] lo niega todo.|The [defendant] denies everything.
+culpable|Se siente [culpable].|She feels [guilty].
+inocente|Es [inocente].|He's [innocent].
+la escena|Es la mejor [escena] de la película.|It's the best [scene] in the film.
+el público|El [público] aplaudió.|The [audience] applauded.
+el estreno|El [estreno] es el viernes.|The [premiere] is on Friday.
+la crítica|Ha tenido buena [crítica].|It's had good [reviews].
+el guion|El [guion] es buenísimo.|The [script] is brilliant.
+el director|El [director] es español.|The [director] is Spanish.
+el poema|Escribió un [poema].|She wrote a [poem].
+el pintor|Es mi [pintor] favorito.|He's my favourite [painter].
+la reforma|Estamos de [reforma] en casa.|We're having [renovations] at home.
+el enchufe|No hay ningún [enchufe] libre.|There's no free [socket].
+la bombilla|Se ha fundido la [bombilla].|The [light bulb] has gone.
+el grifo|Cierra el [grifo].|Turn off the [tap].
+la avería|El coche tiene una [avería].|The car has a [fault].
+el trámite|Es solo un [trámite].|It's just a [formality].
+la cola|Hay mucha [cola].|There's a long [queue].
+el ex|Me encontré con mi [ex].|I bumped into my [ex].
+el cuñado|Mi [cuñado] es médico.|My [brother-in-law] is a doctor.
+el suegro|Mi [suegro] es muy majo.|My [father-in-law] is really nice.
+el yerno|Su [yerno] es inglés.|Her [son-in-law] is English.
+el apoyo|Gracias por tu [apoyo].|Thanks for your [support].
+el malestar|Hay mucho [malestar] en la empresa.|There's a lot of [unease] in the company.
+mantener|Hay que [mantener] la calma.|We need to [keep] calm.
+sostener|[Sostén] esto un momento.|[Hold] this a moment.
+añadir|[Añade] un poco de sal.|[Add] a little salt.
+expresar|Me cuesta [expresar] lo que siento.|I find it hard to [express] what I feel.
+valorar|[Valoro] mucho tu ayuda.|I really [value] your help.
+criticar|Siempre [critica] a todo el mundo.|He always [criticises] everyone.
+elogiar|El jefe [elogió] su trabajo.|The boss [praised] her work.
+fiarse|No me [fío] de él.|I don't [trust] him.
+# --- C1 ---
+el ámbito|En el [ámbito] laboral es distinto.|In the work [sphere] it's different.
+el enfoque|Me gusta tu [enfoque].|I like your [approach].
+el matiz|Hay un [matiz] importante.|There's an important [nuance].
+el desafío|Es un gran [desafío].|It's a big [challenge].
+la amenaza|Es una [amenaza] real.|It's a real [threat].
+la carencia|Hay una [carencia] de médicos.|There's a [shortage] of doctors.
+el auge|El turismo está en pleno [auge].|Tourism is [booming].
+el declive|La industria está en [declive].|The industry is in [decline].
+el alcance|No está a mi [alcance].|It's not within my [reach].
+el vínculo|Tienen un [vínculo] muy fuerte.|They have a very strong [bond].
+la índole|Son problemas de otra [índole].|They're problems of a different [nature].
+el rasgo|Es un [rasgo] de su carácter.|It's a [trait] of his character.
+la pauta|Sigue las [pautas] del médico.|Follow the doctor's [guidelines].
+el criterio|Usa tu propio [criterio].|Use your own [judgement].
+el hallazgo|Es un [hallazgo] increíble.|It's an incredible [discovery].
+el indicio|No hay ningún [indicio] de fraude.|There's no [sign] of fraud.
+la premisa|La [premisa] es falsa.|The [premise] is false.
+el supuesto|En el [supuesto] de que llueva, no iremos.|In the [event] that it rains, we won't go.
+el dilema|Estoy ante un [dilema].|I'm facing a [dilemma].
+la paradoja|Es una [paradoja].|It's a [paradox].
+el sesgo|El estudio tiene un [sesgo].|The study has a [bias].
+la brecha|La [brecha] salarial sigue ahí.|The pay [gap] is still there.
+la cuota|He pagado la [cuota] del gimnasio.|I've paid the gym [fee].
+la sede|La [sede] está en Madrid.|The [headquarters] are in Madrid.
+el convenio|Han firmado un [convenio].|They've signed an [agreement].
+el litigio|El [litigio] duró años.|The [lawsuit] lasted years.
+la demanda|Le han puesto una [demanda].|They've filed a [lawsuit] against him.
+el juicio|El [juicio] empieza mañana.|The [trial] starts tomorrow.
+el fallo|Ha sido un [fallo] mío.|It was my [mistake].
+el soborno|Aceptó un [soborno].|He accepted a [bribe].
+el chantaje|Eso es [chantaje].|That's [blackmail].
+la estafa|Es una [estafa].|It's a [scam].
+el portavoz|El [portavoz] lo ha negado.|The [spokesperson] has denied it.
+el afectado|Los [afectados] recibirán ayuda.|Those [affected] will receive help.
+el pelota|No seas [pelota].|Don't be a [suck-up].
+el chivato|¡Eres un [chivato]!|You're a [snitch]!
+el caradura|¡Qué [caradura]!|What a [cheek]!
+el tacaño|No seas [tacaño].|Don't be [stingy].
+el cotilla|Mi vecina es muy [cotilla].|My neighbour is a real [gossip].
+el pesado|¡Qué [pesado] eres!|You're such a [pain]!
+astuto|Es muy [astuto].|He's very [cunning].
+torpe|¡Qué [torpe] soy!|I'm so [clumsy]!
+mezquino|Fue un comentario [mezquino].|It was a [petty] comment.
+cercano|Es una persona muy [cercana].|She's a very [approachable] person.
+reacio|Es [reacio] a cambiar.|He's [reluctant] to change.
+propenso|Soy [propenso] a los resfriados.|I'm [prone] to colds.
+idóneo|Es el momento [idóneo].|It's the [ideal] moment.
+efímero|La fama es [efímera].|Fame is [short-lived].
+somero|Hizo un análisis [somero].|He did a [brief] analysis.
+rotundo|Fue un éxito [rotundo].|It was a [resounding] success.
+tajante|Fue muy [tajante].|She was very [categorical].
+sutil|Hay una diferencia [sutil].|There's a [subtle] difference.
+nítido|La imagen es muy [nítida].|The picture is very [sharp].
+difuso|Tengo un recuerdo [difuso].|I have a [vague] memory.
+ambiguo|Su respuesta fue [ambigua].|His answer was [ambiguous].
+obsoleto|Este sistema está [obsoleto].|This system is [obsolete].
+pionero|Es un proyecto [pionero].|It's a [pioneering] project.
+precario|Tiene un empleo [precario].|He has an [insecure] job.
+masivo|Hubo una protesta [masiva].|There was a [mass] protest.
+abarcar|El libro [abarca] dos siglos.|The book [covers] two centuries.
+acarrear|Eso puede [acarrear] problemas.|That could [bring] problems.
+plantear|Quiero [plantear] una pregunta.|I want to [raise] a question.
+abordar|Tenemos que [abordar] el tema.|We need to [tackle] the issue.
+subsanar|Hay que [subsanar] el error.|The error must be [rectified].
+agravar|La lluvia [agravó] la situación.|The rain [worsened] the situation.
+paliar|Quieren [paliar] los efectos de la crisis.|They want to [alleviate] the effects of the crisis.
+atenuar|Intentó [atenuar] sus palabras.|She tried to [tone down] her words.
+impulsar|Quieren [impulsar] el turismo.|They want to [boost] tourism.
+vulnerar|[Vulnera] la ley.|It [breaches] the law.
+acatar|[Acatamos] la decisión.|We [accept] the decision.
+eludir|[Eludió] la pregunta.|He [dodged] the question.
+recalcar|Quiero [recalcar] esto.|I want to [stress] this.
+matizar|Déjame [matizar] eso.|Let me [qualify] that.
+aludir|No [aludió] al tema.|He didn't [refer] to the issue.
+atribuir|Le [atribuyen] el cuadro a Goya.|The painting is [attributed] to Goya.
+deducir|[Deduzco] que no vienes.|I [take it] you're not coming.
+prever|Se [prevé] lluvia.|Rain is [forecast].
+ejercer|[Ejerce] de abogada.|She [practises] as a lawyer.
+tramitar|Estoy [tramitando] el visado.|I'm [processing] the visa.
+vacilar|¿Me estás [vacilando]?|Are you [winding me up]?
+tutear|Puedes [tutearme].|You can [call me tú].
+madurar|Ha [madurado] mucho.|He's [matured] a lot.
+# --- C2 ---
+el acervo|Forma parte del [acervo] cultural.|It's part of our cultural [heritage].
+el atisbo|No hay ni un [atisbo] de duda.|There's not a [hint] of doubt.
+el ahínco|Trabaja con [ahínco].|She works with [determination].
+el arraigo|La tradición tiene mucho [arraigo].|The tradition is deeply [rooted].
+la desidia|La [desidia] del gobierno es evidente.|The government's [negligence] is obvious.
+el desdén|Me miró con [desdén].|He looked at me with [disdain].
+el escarnio|Fue objeto de [escarnio].|He was the object of [ridicule].
+el estupor|Lo escuché con [estupor].|I listened in [astonishment].
+el fervor|Lo defendió con [fervor].|She defended it with [fervour].
+el oprobio|Fue un [oprobio] para la familia.|It was a [disgrace] for the family.
+el sosiego|Necesito un poco de [sosiego].|I need a bit of [peace].
+el talante|Tiene un [talante] dialogante.|He has an open [attitude].
+el tesón|Lo consiguió con [tesón].|She achieved it through [tenacity].
+el vaivén|Me mareo con el [vaivén] del barco.|The [swaying] of the boat makes me seasick.
+el recelo|Lo miran con [recelo].|They look at him with [suspicion].
+la cordura|Perdió la [cordura].|He lost his [sanity].
+la dicha|¡Qué [dicha] verte!|What [joy] to see you!
+la entereza|Lo afrontó con [entereza].|She faced it with [fortitude].
+la estirpe|Viene de una [estirpe] de músicos.|He comes from a [line] of musicians.
+la falacia|Es una [falacia].|It's a [fallacy].
+la mesura|Habla con [mesura].|She speaks with [restraint].
+la nimiedad|Se enfadó por una [nimiedad].|He got angry over a [trifle].
+la osadía|¡Qué [osadía]!|What [audacity]!
+la penuria|Vivieron años de [penuria].|They lived through years of [hardship].
+la quimera|Es una [quimera].|It's a [pipe dream].
+la sorna|Lo dijo con [sorna].|He said it [sarcastically].
+la tesitura|Estoy en una [tesitura] difícil.|I'm in a difficult [situation].
+la zozobra|Vivimos con [zozobra].|We live in [anxiety].
+el desaire|Fue un [desaire].|It was a [snub].
+el ocaso|Es el [ocaso] de su carrera.|It's the [twilight] of his career.
+el apogeo|Estaba en su [apogeo].|She was at her [peak].
+el baluarte|Es un [baluarte] de la democracia.|It's a [bastion] of democracy.
+el sofisma|Eso es un [sofisma].|That's a [specious argument].
+el desliz|Fue un [desliz].|It was a [slip].
+el entuerto|Tengo que deshacer el [entuerto].|I have to sort out the [mess].
+el recoveco|Conoce cada [recoveco] de la ciudad.|He knows every [nook] of the city.
+abnegado|Es una madre [abnegada].|She's a [selfless] mother.
+anodino|Fue un discurso [anodino].|It was a [bland] speech.
+avezado|Es un conductor [avezado].|He's a [seasoned] driver.
+baladí|No es un asunto [baladí].|It's not a [trivial] matter.
+contumaz|Es un mentiroso [contumaz].|He's an [incorrigible] liar.
+díscolo|Es un alumno [díscolo].|He's an [unruly] pupil.
+escueto|Fue un mensaje [escueto].|It was a [terse] message.
+espurio|Tiene intereses [espurios].|He has [ulterior] motives.
+fútil|Fue un intento [fútil].|It was a [futile] attempt.
+inefable|Es una sensación [inefable].|It's an [indescribable] feeling.
+inocuo|Es un producto [inocuo].|It's a [harmless] product.
+lúcido|Tiene noventa años y está muy [lúcido].|He's ninety and very [lucid].
+mordaz|Tiene un humor [mordaz].|She has a [biting] sense of humour.
+nimio|Es un detalle [nimio].|It's a [trivial] detail.
+obcecado|Está [obcecado] con esa idea.|He's [obsessed] with that idea.
+pedante|No seas [pedante].|Don't be [pedantic].
+sagaz|Es una periodista [sagaz].|She's a [shrewd] journalist.
+zalamero|¡Qué [zalamero] eres!|You're such a [smooth talker]!
+ufano|Iba muy [ufano].|He was very [pleased with himself].
+huraño|Mi vecino es un poco [huraño].|My neighbour is a bit [unsociable].
+arisco|El gato es muy [arisco].|The cat is very [unfriendly].
+pulcro|Siempre va muy [pulcro].|He's always very [neat].
+soez|Usó un lenguaje [soez].|He used [crude] language.
+cutre|El bar es un poco [cutre].|The bar is a bit [tacky].
+chungo|El barrio es un poco [chungo].|The area is a bit [dodgy].
+majo|Tu novio es muy [majo].|Your boyfriend is really [nice].
+guay|¡Qué [guay]!|How [cool]!
+acaparar|[Acapara] toda la atención.|She [hogs] all the attention.
+achacar|Lo [achacan] al cansancio.|They [put it down] to tiredness.
+coartar|No quiero [coartar] tu libertad.|I don't want to [restrict] your freedom.
+cohibir|Me [cohíbe] hablar en público.|Speaking in public [inhibits] me.
+denostar|Siempre [denosta] a sus rivales.|He always [reviles] his rivals.
+embaucar|Lo [embaucaron] con promesas.|They [conned] him with promises.
+esgrimir|[Esgrimió] varios argumentos.|He [put forward] several arguments.
+exhortar|Los [exhortó] a votar.|He [urged] them to vote.
+fraguar|Están [fraguando] un plan.|They're [hatching] a plan.
+increpar|El público [increpó] al árbitro.|The crowd [abused] the referee.
+mermar|Sus fuerzas han [mermado].|His strength has [diminished].
+mitigar|Para [mitigar] el dolor.|To [ease] the pain.
+socavar|Eso [socava] la confianza.|That [undermines] trust.
+soslayar|No podemos [soslayar] el problema.|We can't [sidestep] the problem.
+sopesar|Hay que [sopesar] los pros y los contras.|We need to [weigh up] the pros and cons.
+subyugar|Su voz me [subyuga].|Her voice [captivates] me.
+zanjar|Vamos a [zanjar] el tema.|Let's [settle] the matter.
+chafar|Me has [chafado] el plan.|You've [ruined] my plan.
+currar|Mañana tengo que [currar].|I have to [work] tomorrow.
+flipar|¡[Flipo] contigo!|You [amaze] me!
+mangar|Le [mangaron] la cartera.|They [nicked] his wallet.
+pringar|Siempre me toca [pringar] a mí.|I always get stuck [doing the dirty work].
+rajar|Le encanta [rajar] de todo el mundo.|She loves [slagging off] everyone.
+molar|Me [mola] tu chaqueta.|I [love] your jacket.
+pirarse|Me [piro], que es tarde.|I'm [off], it's late.
+liarla|¡La has [liado]!|You've [messed it up]!
+el chollo|¡Es un [chollo]!|It's a [bargain]!
+el marrón|Me ha tocado el [marrón].|I've been landed with the [nasty job].
+el tostón|La película es un [tostón].|The film is a [drag].
+el pringado|Soy el [pringado] de siempre.|I'm the usual [mug].
+el pelotazo|Dio un [pelotazo] con la venta.|He made a [quick buck] on the sale.
+el rollo|¡Qué [rollo]!|What a [drag]!
+la movida|¡Menuda [movida]!|What a [carry-on]!
+la peña|Ha venido toda la [peña].|The whole [crowd] came.
+el sarao|Vaya [sarao] se montó.|What a [fuss] there was.
+el finde|¿Qué haces este [finde]?|What are you doing this [weekend]?
+el bajón|Me ha dado un [bajón].|I've hit a [low].
+la guita|No tengo [guita].|I've got no [dosh].

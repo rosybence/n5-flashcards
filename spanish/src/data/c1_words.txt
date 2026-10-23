@@ -1,0 +1,183 @@
+# Spanish | English | other Spanish answers | other English answers | picture
+# --- abstract nouns ---
+el ámbito|field; sphere; area|el campo,el terreno|domain|🗺️
+el enfoque|approach; focus|el planteamiento|perspective|🔎
+el planteamiento|approach; way of framing|el enfoque|proposal|🧭
+el matiz|nuance; shade|||🎨
+el trasfondo|background; underlying context|||🖼️
+el desafío|challenge|el reto||🧗
+la amenaza|threat|||⚡
+la carencia|lack; shortage|la falta|deficiency|🫙
+el auge|boom; peak; rise|||🚀
+el declive|decline|la decadencia||📉
+el alcance|scope; reach|||📡
+el vínculo|link; bond; tie|el lazo|connection|🔗
+la índole|nature; kind|la naturaleza|sort|🧬
+el rasgo|feature; trait|la característica|characteristic|🧩
+la pauta|guideline; pattern|la directriz|norm|📏
+el criterio|criterion; judgement|||⚖️
+el hallazgo|finding; discovery|el descubrimiento||🔍
+el indicio|sign; indication; clue|la señal,la pista|hint|🕵️
+la premisa|premise|||📐
+el supuesto|assumption; supposition|la suposición|hypothetical case|🤔
+el dilema|dilemma|||⚖️
+la paradoja|paradox|||♾️
+el sesgo|bias|||↗️
+la tendencia|trend; tendency|||📈
+la brecha|gap; breach|la diferencia|divide|↔️
+el desequilibrio|imbalance|||⚖️
+la polémica|controversy|la controversia|row|🔥
+el malentendido|misunderstanding|el equívoco||🤷
+el desenlace|outcome; ending|el final|denouement|🎬
+el rendimiento|performance; yield|||📊
+la eficiencia|efficiency|||⚙️
+la rentabilidad|profitability|||💹
+el emprendimiento|entrepreneurship; venture|||🚀
+el emprendedor|entrepreneur|la emprendedora||🚀
+la licitación|tender; bid|el concurso público||📑
+la cuota|share; quota; fee|||🍰
+la sede|headquarters; seat|||🏢
+la burocracia|bureaucracy|||🗂️
+la normativa|regulations; rules|la regulación|legislation|📜
+el requisito|requirement|||✅
+la solicitud|application; request|la petición||📨
+el plazo de entrega|delivery period; deadline|||📦
+el convenio|agreement; collective agreement|el acuerdo|pact|🤝
+el litigio|lawsuit; dispute|el pleito|litigation|⚖️
+la demanda|lawsuit; demand|||⚖️
+el juicio|trial; judgement|||🧑‍⚖️
+el fallo|ruling; failure; flaw|el error,la sentencia|mistake|🔨
+la sentencia|sentence; ruling; verdict|el fallo|judgment|🧑‍⚖️
+el soborno|bribe; bribery|||💸
+el chantaje|blackmail|||🕶️
+la estafa|scam; fraud|el timo|swindle|🎣
+el desahucio|eviction|||🏚️
+la precariedad|job insecurity; precariousness|||🪢
+el teletrabajo|remote working; working from home|||🏠
+la conciliación|work-life balance; reconciliation|la conciliación laboral|balance|⚖️
+la despoblación|depopulation|la España vaciada|rural depopulation|🏚️
+el envejecimiento|ageing|||👵
+la natalidad|birth rate|la tasa de natalidad||👶
+la sanidad pública|public health service|||🏥
+la vivienda asequible|affordable housing|||🏘️
+# --- people and character ---
+el portavoz|spokesperson|la portavoz|spokesman|🎤
+el afectado|person affected; victim|la afectada||🩹
+el implicado|person involved|la implicada|those involved|🔗
+el entendido|expert; connoisseur|la entendida||🧐
+el pelota|crawler; suck-up|la pelota,el pelotillero|teacher's pet|🍎
+el aguafiestas|party pooper; killjoy|la aguafiestas|spoilsport|🌧️
+el chivato|snitch; telltale|la chivata|grass|🐀
+el caradura|cheeky so-and-so; shameless person|la caradura,el sinvergüenza|nerve|😏
+el tacaño|tightwad; skinflint|la tacaña,el agarrado|miser|🪙
+el cotilla|gossip; busybody|la cotilla|nosy parker|👂
+el pesado|bore; pain|la pesada,el plasta|nuisance|🥱
+quisquilloso|fussy; touchy|quisquillosa,tiquismiquis|nit-picking|🔬
+susceptible|touchy; sensitive|||🌵
+perspicaz|perceptive; shrewd|agudo|astute|🦉
+astuto|cunning; crafty|astuta,listo|clever|🦊
+ingenioso|witty; ingenious|ingeniosa|clever|💡
+torpe|clumsy; awkward|patoso|slow|🫠
+mezquino|petty; mean|mezquina|small-minded|🐍
+altruista|altruistic; selfless|||🤲
+entrañable|endearing; dear|||🧸
+cercano|approachable; close|cercana|down-to-earth|🤝
+reacio|reluctant|reacia|unwilling|🙅
+propenso|prone; inclined|propensa|liable|📐
+idóneo|ideal; suitable|idónea,adecuado|perfect|🎯
+pertinente|relevant; pertinent|relevante|appropriate|📌
+ineludible|unavoidable|inevitable|inescapable|🚧
+inminente|imminent|||⏱️
+paulatino|gradual|paulatina,progresivo|slow|🐢
+efímero|short-lived; ephemeral|efímera,pasajero|fleeting|🫧
+exhaustivo|thorough; exhaustive|exhaustiva|comprehensive|🔍
+somero|brief; superficial|somera,superficial|cursory|📝
+contundente|forceful; conclusive|||🔨
+rotundo|categorical; resounding|rotunda|flat|⭕
+tajante|categorical; adamant|||🔪
+sutil|subtle|||🪶
+nítido|clear; sharp|nítida|crisp|🔍
+difuso|vague; diffuse|difusa,vago|blurred|🌫️
+ambiguo|ambiguous|ambigua||❔
+coherente|coherent; consistent|||🧩
+obsoleto|obsolete; outdated|obsoleta,anticuado||📼
+pionero|pioneering; pioneer|pionera||🚀
+precario|precarious|precaria|insecure|🪢
+masivo|mass; massive|masiva|huge|👥
+asequible|affordable; accessible|||💶
+desorbitado|exorbitant|desorbitada,excesivo|outrageous|💸
+# --- verbs ---
+abarcar|to cover; to encompass|comprender|to include|🫂
+acarrear|to bring about; to entail|conllevar|to result in|🛒
+conllevar|to entail; to involve|implicar,suponer|to carry|🎒
+plantear|to raise; to pose; to propose|proponer|to set out|🙋
+abordar|to tackle; to address|tratar|to deal with|🛠️
+sobrellevar|to cope with; to bear|soportar|to endure|🎒
+subsanar|to rectify; to remedy|corregir|to put right|🩹
+agravar|to aggravate; to worsen|empeorar||⬇️
+paliar|to alleviate; to mitigate|aliviar|to ease|🩹
+atenuar|to tone down; to attenuate|suavizar|to soften|🔅
+potenciar|to boost; to strengthen|reforzar,impulsar|to enhance|🚀
+impulsar|to drive; to boost; to promote|promover|to push|🚀
+erradicar|to eradicate; to wipe out|eliminar|to stamp out|🧹
+vulnerar|to violate; to breach|violar|to infringe|🚫
+acatar|to obey; to comply with|cumplir,respetar|to abide by|📜
+eludir|to evade; to avoid|evitar|to dodge|🏃
+cuestionar|to question|poner en duda|to challenge|❓
+desmentir|to deny; to refute|negar|to disprove|🙅
+recalcar|to stress; to emphasise|subrayar,hacer hincapié|to underline|❗
+matizar|to qualify; to clarify; to nuance|precisar|to add nuance|🎨
+aludir|to allude; to refer|referirse|to mention|👉
+atribuir|to attribute|||🏷️
+deducir|to deduce; to infer|inferir|to work out|🧠
+vislumbrar|to glimpse; to make out|entrever|to discern|🔭
+prever|to foresee; to forecast|pronosticar|to anticipate|🔮
+desencadenar|to trigger; to unleash|provocar|to spark|💥
+desempeñar|to perform; to carry out|ejercer|to play a role|🎭
+ejercer|to exercise; to practise|desempeñar|to exert|💼
+tramitar|to process; to handle paperwork|gestionar|to deal with|📂
+gestionar|to manage; to handle|administrar|to arrange|🗂️
+rentabilizar|to make profitable; to get the most out of|||💹
+escatimar|to skimp on; to spare|ahorrar|to scrimp|🤏
+derrochar|to squander; to waste|despilfarrar,malgastar|to splash out|💸
+endeudarse|to get into debt|||💳
+desahogarse|to let off steam; to vent|||😮‍💨
+agobiarse|to get stressed; to feel overwhelmed|estresarse||😩
+empeñarse|to insist; to be determined|obstinarse|to persist|🐐
+resignarse|to resign oneself|conformarse||😔
+conformarse|to make do; to settle for|resignarse|to be satisfied|🤷
+arriesgarse|to take a risk|||🎲
+implicarse|to get involved|involucrarse|to commit|🤝
+desentenderse|to wash one's hands of; to ignore|||🙈
+vacilar|to hesitate; to tease|dudar,tomar el pelo|to joke|😜
+tutear|to address as tú|||👋
+madurar|to mature; to ripen|||🍐
+amortizar|to pay off; to get your money's worth|||💰
+# --- connectors and expressions ---
+cabe destacar|it is worth noting|cabe señalar,hay que destacar|it should be pointed out|⭐
+en lo que respecta a|as regards; with respect to|en cuanto a,respecto a|concerning|📌
+a raíz de|as a result of; following|como consecuencia de|in the wake of|🌱
+en vista de|in view of; given|dado|considering|👁️
+de ahí que|hence; which is why|por eso|that's why|➡️
+así pues|so; therefore|por lo tanto|thus|➡️
+con todo|even so; nevertheless|aun así,no obstante|all the same|↩️
+aun así|even so|con todo|still|↩️
+si bien|although; while|aunque|even though|⚖️
+por consiguiente|consequently; therefore|en consecuencia,por lo tanto||➡️
+a grandes rasgos|broadly speaking; in broad terms|en líneas generales|roughly|✏️
+en definitiva|in short; ultimately|en resumen|all in all|🏁
+dicho sea de paso|incidentally; by the way|por cierto|in passing|💬
+a la hora de|when it comes to|||⏰
+en su defecto|failing that|si no|otherwise|🔁
+a efectos de|for the purposes of|||📑
+de antemano|in advance; beforehand|con antelación|ahead of time|⏪
+a sabiendas|knowingly|||🧠
+a regañadientes|reluctantly; grudgingly|de mala gana|unwillingly|😒
+a trancas y barrancas|with great difficulty; by fits and starts|||🚧
+de buenas a primeras|all of a sudden; out of the blue|de repente|just like that|💥
+a la ligera|lightly; carelessly|||🪶
+sin ton ni son|for no reason; without rhyme or reason|||🎲
+a duras penas|barely; only just|apenas|with great difficulty|😮‍💨
+de sobra|more than enough; perfectly well|de sobras|plenty|➕
+a la par|at the same time; on a par|a la vez|equally|🤝
+en balde|in vain|en vano|for nothing|🕳️

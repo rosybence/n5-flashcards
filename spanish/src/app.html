@@ -254,6 +254,9 @@ button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outlin
     <button data-deck="a1" aria-pressed="true"><b>A1</b>Beginner</button>
     <button data-deck="a2" aria-pressed="false"><b>A2</b>Elementary</button>
     <button data-deck="b1" aria-pressed="false"><b>B1</b>Intermediate</button>
+    <button data-deck="b2" aria-pressed="false"><b>B2</b>Upper-int.</button>
+    <button data-deck="c1" aria-pressed="false"><b>C1</b>Advanced</button>
+    <button data-deck="c2" aria-pressed="false"><b>C2</b>Proficiency</button>
   </div>
 
   <div class="seg" role="group" aria-label="Direction">
@@ -303,13 +306,13 @@ button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outlin
 <script>
 /*DATA*/
 /* each row: [spanish, english, otherSpanish[], otherEnglish[], picture]; a leading ~ marks a casual form */
-const LEVELS={a1:'A1',a2:'A2',b1:'B1'};
+const LEVELS={a1:'A1',a2:'A2',b1:'B1',b2:'B2',c1:'C1',c2:'C2'};
 function build(rows,type,deck){return rows.map(([es,en,esA,enA,pic,ph])=>{
   const strip=a=>a.map(x=>x.replace(/^~/,''));
   return{id:deck+':'+es+'|'+en,es,en,type,deck,pic:pic||'',ph:ph||null,esA:strip(esA),enA:strip(enA),
     casual:new Set([...esA,...enA].filter(x=>x[0]==='~').map(x=>x.slice(1)))}})}
 const CARDS=[];
-for(const d of ['a1','a2','b1']){
+for(const d of Object.keys(LEVELS)){
   const W=build(DATA[d+'w'],'w',d),P=build(DATA[d+'p'],'p',d);let p=0;
   W.forEach((w,i)=>{if(i%3===0&&p<P.length)CARDS.push(P[p++]);CARDS.push(w)});while(p<P.length)CARDS.push(P[p++]);
 }
@@ -621,7 +624,7 @@ function render(){
   if(window.__rcReady&&(cur&&cur.id)!==rcCard)rcReset();
   const k=counts();$('cDue').textContent=k.due;$('cNew').textContent=k.fresh;
   document.querySelectorAll('[data-deck]').forEach(b=>b.setAttribute('aria-pressed',S.set.decks.includes(b.dataset.deck)));
-  $('brandSub').textContent=['a1','a2','b1'].filter(d=>S.set.decks.includes(d)).map(d=>LEVELS[d]).join(' · ');
+  $('brandSub').textContent=Object.keys(LEVELS).filter(d=>S.set.decks.includes(d)).map(d=>LEVELS[d]).join(' · ');
   $('dJE').setAttribute('aria-pressed',S.set.dir==='je');$('dEJ').setAttribute('aria-pressed',S.set.dir==='ej');
   const card=$('card');
   if(!cur){card.innerHTML=`<div class="front"><div class="done"><b>¡Buen trabajo!</b>You're done for now. Come back later for reviews, or raise new cards per day in settings.</div></div>`;
