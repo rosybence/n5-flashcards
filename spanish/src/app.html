@@ -186,6 +186,12 @@ button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outlin
 .phans{font-weight:500}
 .phans .tw{font-weight:700}
 .phword{font-size:14px;color:var(--muted)}
+
+.feedback.close{background:var(--accent-soft);color:var(--ink);text-align:left}
+.feedback .fbcmp{display:block;margin-top:4px}
+.feedback .fbl{display:inline-block;min-width:68px;font-size:12px;color:var(--muted)}
+.feedback .dw{color:var(--bad);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.feedback .fbsub{display:block;margin-top:5px;font-size:12.5px;color:var(--muted)}
 </style>
 
 <div class="app">
@@ -520,14 +526,16 @@ function wordHit(h,t){return h===t||phonEs(h)===phonEs(t)||(S.set.check!=='stric
 // right if the card's word is in what you said and most of the phrase is there too
 function judgePhrase(c,heard){
   const exp=phWords(plainPh(c.ph[0])),tgt=phWords((c.ph[0].match(/\[(.*?)\]/)||['',''])[1]);
-  return heard.some(h=>{const H=phWords(h);if(!H.length)return false;
+  return heard.some((h,i)=>{const H=phWords(h);if(!H.length)return false;
     // the card's word, or any of its accepted alternatives (patrimonio, herencia…)
     const opts=[tgt,...(c.esA||[]).map(x=>phWords(x.replace(/^(el|la|los|las|un|una|unos|unas) /i,'')))].filter(o=>o.length);
     const hasT=opts.some(o=>o.every(t=>H.some(w=>wordHit(w,t))));
     // most of the rest of the phrase should be there too (articles and endings may differ)
     const rest=exp.filter(e=>!tgt.includes(e));
     const found=rest.filter(e=>H.some(w=>wordHit(w,e)||(w.length>3&&e.length>3&&w.slice(0,4)===e.slice(0,4)))).length;
-    return hasT&&(!rest.length||found/rest.length>=.5||H.length<=tgt.length+1)});
+    const ok=hasT&&(!rest.length||found/rest.length>=.5||H.length<=tgt.length+1);
+    if(ok)lastHit={i,said:h,ans:plainPh(c.ph[0]),exact:phWords(h).join(' ')===exp.join(' ')};
+    return ok});
 }
 
 let phShowMiss=0,phShowId=null;
@@ -575,18 +583,25 @@ function softNear(a,b){
 function phonMatch(h,t){const a=phonEs(h),b=phonEs(t);if(a===b||(b.length>=5&&sim(a,b)>=.82))return true;
   if(S.set.check!=='strict'&&softNear(a,b)){lastLenient=true;return true}return false}
 function heardAlts(heard){return (()=>{const o=[...new Set(heard.slice(1).filter(x=>x&&x.trim()&&x!==heard[0]))].slice(0,3);return o.length?' (or “'+o.join('”, “')+'”)':''})()}
+let lastHit=null;
 function judge(c,heard){
-  lastLenient=false;
+  lastLenient=false;lastHit=null;
   if(!heard||!heard.length)return false;
   if(phraseOn(c)){lastMatch=null;return judgePhrase(c,heard)}
-  if(S.set.dir==='je'){const T=enTargets(c);return heard.some(h=>{h=normEn(h);return T.some(t=>h===t||(' '+h+' ').includes(' '+t+' ')||sim(h,t)>=.8||overlap(h,t)>=.75)})}
+  if(S.set.dir==='je'){const T=enTargets(c);const disp=[...c.en.split(';').map(x=>x.trim()),c.en,...c.enA];
+    for(const exact of [true,false])for(let i=0;i<heard.length;i++){const h=normEn(heard[i]);
+      for(let j=0;j<T.length;j++){const t=T[j];if(exact?(h===t||(' '+h+' ').includes(' '+t+' ')):(sim(h,t)>=.8||overlap(h,t)>=.75)){lastHit={i,said:heard[i],ans:disp[j]||c.en,exact};return true}}}
+    return false}
   // find which answer you gave: exact matches first, then close ones; the card's own answer wins ties
   // Spanish usually drops the subject pronoun, so 'él no puede…' = 'no puede…'
   const dp=x=>x.replace(/^(yo|tu|el|ella|usted|nosotros|nosotras|vosotros|vosotras|ellos|ellas|ustedes) (?=\S+ )/,'');
   const P=[[c.es,[c.es,...c.enA.filter(x=>/^\d+$/.test(x))]],...c.esA.map(a=>[a,[a]])].map(([l,ts])=>[l,ts.map(normEs).map(dp).filter(Boolean)]);
   const H=heard.map(normEs).map(dp);lastMatch=null;
   const close=(h,t)=>phonMatch(h,t)||h===t||(t.length>=2&&(' '+h+' ').includes(' '+t+' '))||(t.length>6&&sim(h,t)>=(t.length>12?.75:.8))||overlap(h,t)>=.8;
-  for(const pass of [(h,t)=>h===t,close])for(const [l,ts] of P)if(H.some(h=>ts.some(t=>pass(h,t)))){lastMatch=l===c.es?null:l;return true}
+  // same sound, different spelling (b/v, ll/y…) still counts as exact
+  const same=(h,t)=>h===t||phonEs(h)===phonEs(t)||(t.length>=2&&(' '+h+' ').includes(' '+t+' '));
+  for(const [exact,pass] of [[true,same],[false,close]])for(const [l,ts] of P)for(let i=0;i<H.length;i++)if(ts.some(t=>pass(H[i],t))){
+    lastMatch=l===c.es?null:l;lastHit={i,said:heard[i],ans:l,exact:exact&&!lastLenient};return true}
   return false;
 }
 function casualHit(c,heard){
@@ -596,6 +611,23 @@ function casualHit(c,heard){
   return heard.some(h=>cas.includes(n(h)))&&!heard.some(h=>main.includes(n(h)));
 }
 
+
+/* ---------- telling you exactly what was accepted ---------- */
+// words of a that aren't in b get marked
+function markDiff(a,b,norm){const B=new Set(b.split(/\s+/).map(norm).filter(Boolean));
+  return a.split(/\s+/).map(w=>{const n=norm(w);return n&&!B.has(n)?'<b class="dw">'+escH(w)+'</b>':escH(w)}).join(' ')}
+function okFeedback(heard){
+  const h=lastHit||{i:0,said:heard[0],ans:'',exact:true};
+  const extra=(casualHit(cur,heard)?' · casual form':'');
+  const first=h.i>0&&heard[0]&&heard[0]!==h.said?`<span class="fbsub">The phone’s first guess was “${escH(heard[0])}”, but another guess matched.</span>`:'';
+  lastHeard=h.said;
+  if(h.exact)return{cls:'ok',text:'',html:`Correct — heard “${escH(h.said)}”${extra}${first}`};
+  const n=S.set.dir==='je'?normEn:normEs;
+  return{cls:'close',text:'',html:`<b>Accepted as close</b> — not an exact match${extra}`+
+    `<span class="fbcmp"><span class="fbl">You said</span> “${markDiff(h.said,h.ans,n)}”</span>`+
+    `<span class="fbcmp"><span class="fbl">Answer</span> “${markDiff(h.ans,h.said,n)}”</span>${first}`+
+    `<span class="fbsub">If the difference matters, tap “I got it wrong”.</span>`};
+}
 /* ---------- rendering ---------- */
 const $=id=>document.getElementById(id);
 const escH=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
@@ -644,7 +676,7 @@ function render(){
     html+=`<div class="answer">${cur.pic?`<div class="pic" aria-hidden="true">${cur.pic}</div>`:''}${S.set.dir==='je'?`<div class="en">${escH(cur.en)}</div>`:(ph?`<div class="es long phans">${markPh(cur.ph[0])}</div><div class="phword">${esHtml(cur.es)} · ${escH(cur.en)}</div>`:`<div class="es${long?' long':''}">${esHtml(altShown||cur.es)}</div>`)}${altsHtml()}</div>`;
   }
   card.innerHTML=html;
-  const fb=$('fbBar');fb.hidden=!feedback;if(feedback){fb.className='feedback '+feedback.cls;fb.textContent=feedback.text}
+  const fb=$('fbBar');fb.hidden=!feedback;if(feedback){fb.className='feedback '+feedback.cls;if(feedback.html)fb.innerHTML=feedback.html;else fb.textContent=feedback.text}
   $('fixArea').innerHTML=revealed?fixHtml():'';
   $('actions').hidden=revealed;
   $('mic').disabled=micBlocked;
@@ -662,6 +694,7 @@ function show(){triedWrong=false;cur=nextCard();resetCard();render();
 function doReveal(){revealed=true;render();const [t,l]=answerOf(cur);return speak(t,l)}
 function answerGrade(g){if(!cur)return;grade(cur,g);lastId=cur.id;show()}
 function heardFeedback(ok,heard){lastHeard=heard&&heard[0]||'';
+  if(ok&&heard&&heard.length){feedback=okFeedback(heard);return}
   feedback=heard&&heard.length?{cls:ok?'ok':'no',text:(ok?'Correct — heard “':'Not quite — heard “')+heard[0]+'”'+(ok?'':heardAlts(heard))+(ok&&casualHit(cur,heard)?' · casual form':'')+(ok&&lastLenient?' · close enough':'')}:{cls:'no',text:'Didn’t catch anything'}}
 
 /* ---------- manual controls ---------- */
@@ -696,7 +729,7 @@ $('mic').onclick=async()=>{
   if(!ok&&phMaybeSwitch())return;
   if(ok&&!phraseOn(cur)&&S.miss)S.miss[cur.id]=0;
   if(!ok){triedWrong=true;feedback={cls:'no',text:'Not quite — heard “'+heard[0]+'”'+heardAlts(heard)+'. Try again, or tap Show answer.'};return render()}
-  feedback={cls:'ok',text:'Correct — heard “'+heard[0]+'”'+(casualHit(cur,heard)?' · casual form':'')+(lastLenient?' · close enough':'')};
+  feedback=okFeedback(heard);
   suggest=2;doReveal();
 };
 function setDir(d){if(walking)stopWalk();S.set.dir=d;save();lastId=null;show()}
