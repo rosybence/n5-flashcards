@@ -521,9 +521,13 @@ function wordHit(h,t){return h===t||phonEs(h)===phonEs(t)||(S.set.check!=='stric
 function judgePhrase(c,heard){
   const exp=phWords(plainPh(c.ph[0])),tgt=phWords((c.ph[0].match(/\[(.*?)\]/)||['',''])[1]);
   return heard.some(h=>{const H=phWords(h);if(!H.length)return false;
-    const hasT=tgt.every(t=>H.some(w=>wordHit(w,t)));
-    const found=exp.filter(e=>H.some(w=>wordHit(w,e))).length;
-    return hasT&&(found/exp.length>=.5||H.length<=tgt.length+1)});
+    // the card's word, or any of its accepted alternatives (patrimonio, herencia…)
+    const opts=[tgt,...(c.esA||[]).map(x=>phWords(x.replace(/^(el|la|los|las|un|una|unos|unas) /i,'')))].filter(o=>o.length);
+    const hasT=opts.some(o=>o.every(t=>H.some(w=>wordHit(w,t))));
+    // most of the rest of the phrase should be there too (articles and endings may differ)
+    const rest=exp.filter(e=>!tgt.includes(e));
+    const found=rest.filter(e=>H.some(w=>wordHit(w,e)||(w.length>3&&e.length>3&&w.slice(0,4)===e.slice(0,4)))).length;
+    return hasT&&(!rest.length||found/rest.length>=.5||H.length<=tgt.length+1)});
 }
 
 let phShowMiss=0,phShowId=null;

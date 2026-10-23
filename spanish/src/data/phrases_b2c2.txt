@@ -204,7 +204,7 @@ vacilar|¿Me estás [vacilando]?|Are you [winding me up]?
 tutear|Puedes [tutearme].|You can [call me tú].
 madurar|Ha [madurado] mucho.|He's [matured] a lot.
 # --- C2 ---
-el acervo|Forma parte del [acervo] cultural.|It's part of our cultural [heritage].
+el acervo|Forma parte de nuestro [acervo] cultural.|It's part of our cultural [heritage].
 el atisbo|No hay ni un [atisbo] de duda.|There's not a [hint] of doubt.
 el ahínco|Trabaja con [ahínco].|She works with [determination].
 el arraigo|La tradición tiene mucho [arraigo].|The tradition is deeply [rooted].
