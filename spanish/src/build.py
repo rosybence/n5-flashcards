@@ -25,6 +25,17 @@ for lvl in ('a1', 'a2', 'b1'):
             seen.add((es, r[1])); seen_es.setdefault(es, lvl); keep.append(r)
         DATA[lvl + kind] = keep
         print(lvl, kind, len(keep))
+# example phrases for word cards (phrase mode): card|Spanish with [word]|English with [word]
+PH = {}
+for f in ('phrases_a1.txt', 'phrases_a2b1.txt'):
+    for l in open(D + f, encoding='utf-8'):
+        if l.strip() and not l.startswith('#'):
+            c, es_p, en_p = l.rstrip('\n').split('|'); PH[c] = [es_p, en_p]
+for k, rows_ in DATA.items():
+    if k.endswith('w'):
+        for r in rows_:
+            if r[0] in PH: r.append(PH[r[0]])
+print('phrases attached', sum(1 for k, v in DATA.items() if k.endswith('w') for r in v if len(r) > 5))
 js = 'const DATA=' + json.dumps(DATA, ensure_ascii=False, separators=(',', ':')) + ';'
 page = open('/home/claude/spanish/app.html', encoding='utf-8').read().replace('/*DATA*/', js)
 open('/home/claude/spanish/es-flashcards.html', 'w', encoding='utf-8').write(page)

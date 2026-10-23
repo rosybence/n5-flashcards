@@ -1,0 +1,189 @@
+# card (Spanish exactly as on the card) | Spanish phrase with [target word] | English phrase with [target word]
+el tío|Mi [tío] vive en Argentina.|My [uncle] lives in Argentina.
+la tía|Mi [tía] tiene un restaurante.|My [aunt] has a restaurant.
+el primo|Mi [primo] juega al fútbol.|My [cousin] plays football.
+el nieto|Su [nieto] tiene tres años.|Her [grandson] is three years old.
+la nieta|Mi [nieta] vive en Londres.|My [granddaughter] lives in London.
+el jefe|Mi [jefe] es muy simpático.|My [boss] is very nice.
+el cliente|El [cliente] quiere hablar contigo.|The [customer] wants to talk to you.
+la cara|Tienes la [cara] roja.|Your [face] is red.
+la nariz|Me duele la [nariz].|My [nose] hurts.
+el diente|Se me ha roto un [diente].|I've broken a [tooth].
+el cuello|Me duele el [cuello].|My [neck] hurts.
+el hombro|Me duele el [hombro] derecho.|My right [shoulder] hurts.
+el brazo|Se ha roto el [brazo].|He has broken his [arm].
+el dedo|Me he cortado el [dedo].|I've cut my [finger].
+la pierna|Me duele la [pierna].|My [leg] hurts.
+el dolor|Tengo un [dolor] muy fuerte.|I have a very bad [pain].
+la fiebre|El niño tiene [fiebre].|The child has a [temperature].
+la gripe|Estoy en casa con [gripe].|I'm at home with [flu].
+la cita|Tengo una [cita] con el médico.|I have an [appointment] with the doctor.
+la salud|La [salud] es lo más importante.|[Health] is the most important thing.
+el plato|Este [plato] está riquísimo.|This [dish] is delicious.
+el vaso|¿Me das un [vaso] de agua?|Can you give me a [glass] of water?
+la taza|Una [taza] de té, por favor.|A [cup] of tea, please.
+la sopa|La [sopa] está muy caliente.|The [soup] is very hot.
+el ajo|Esta salsa lleva mucho [ajo].|This sauce has a lot of [garlic].
+el limón|Un té con [limón], por favor.|A tea with [lemon], please.
+la fresa|Me encanta el helado de [fresa].|I love [strawberry] ice cream.
+las uvas|Compro [uvas] en el mercado.|I buy [grapes] at the market.
+el postre|¿Qué hay de [postre]?|What's for [dessert]?
+el pastel|Hice un [pastel] de chocolate.|I made a chocolate [cake].
+el jersey|Ponte el [jersey], hace frío.|Put your [jumper] on, it's cold.
+los guantes|He perdido los [guantes].|I've lost my [gloves].
+las gafas|No encuentro mis [gafas].|I can't find my [glasses].
+el bolso|Mi [bolso] es negro.|My [handbag] is black.
+la talla|¿Qué [talla] tienes?|What [size] are you?
+el precio|¿Cuál es el [precio]?|What's the [price]?
+el jardín|Los niños juegan en el [jardín].|The children are playing in the [garden].
+el horno|La pizza está en el [horno].|The pizza is in the [oven].
+la ducha|Me voy a la [ducha].|I'm going in the [shower].
+el barrio|Mi [barrio] es muy tranquilo.|My [neighbourhood] is very quiet.
+el centro|Vivo en el [centro].|I live in the [centre].
+la plaza|Quedamos en la [plaza].|Let's meet in the [square].
+el puente|Cruzamos el [puente].|We crossed the [bridge].
+correos|Tengo que ir a [correos].|I have to go to the [post office].
+el buzón|Hay una carta en el [buzón].|There's a letter in the [letterbox].
+la carta|Te he escrito una [carta].|I've written you a [letter].
+el sobre|Pon la carta en el [sobre].|Put the letter in the [envelope].
+el andén|El tren sale del [andén] dos.|The train leaves from [platform] two.
+el viaje|¡Buen [viaje]!|Have a good [trip]!
+el mapa|Mira el [mapa].|Look at the [map].
+el barco|Vamos a la isla en [barco].|We're going to the island by [boat].
+la moto|Voy al trabajo en [moto].|I go to work by [motorbike].
+el norte|Vivo en el [norte] de España.|I live in the [north] of Spain.
+el sur|En el [sur] hace más calor.|It's hotter in the [south].
+el este|Valencia está en el [este].|Valencia is in the [east].
+el oeste|El sol se pone por el [oeste].|The sun sets in the [west].
+el campo|Los fines de semana vamos al [campo].|At weekends we go to the [countryside].
+el bosque|Paseamos por el [bosque].|We walk in the [forest].
+el lago|Nadamos en el [lago].|We swim in the [lake].
+la isla|Mallorca es una [isla] preciosa.|Mallorca is a beautiful [island].
+el cielo|El [cielo] está muy azul.|The [sky] is very blue.
+la nube|Hay una [nube] negra.|There's a black [cloud].
+el viento|Hace mucho [viento] hoy.|It's very [windy] today.
+el grado|Estamos a un [grado].|It's one [degree].
+la vaca|La [vaca] come hierba.|The [cow] is eating grass.
+el cerdo|El [cerdo] está en el campo.|The [pig] is in the field.
+el pez|Tengo un [pez] rojo.|I have a red [fish].
+el ratón|Hay un [ratón] en la cocina.|There's a [mouse] in the kitchen.
+la flor|Esta [flor] huele muy bien.|This [flower] smells lovely.
+el árbol|El gato está en el [árbol].|The cat is up the [tree].
+la canción|Me encanta esta [canción].|I love this [song].
+la serie|Estoy viendo una [serie] nueva.|I'm watching a new [series].
+la radio|Escucho la [radio] en el coche.|I listen to the [radio] in the car.
+la foto|¿Nos haces una [foto]?|Can you take a [photo] of us?
+el fútbol|Me gusta ver el [fútbol].|I like watching [football].
+el tenis|Juego al [tenis] los sábados.|I play [tennis] on Saturdays.
+la fiesta|Mañana hay una [fiesta].|There's a [party] tomorrow.
+la reunión|Tengo una [reunión] a las diez.|I have a [meeting] at ten.
+el sueldo|Mi [sueldo] es bajo.|My [salary] is low.
+la clase|La [clase] empieza a las nueve.|The [class] starts at nine.
+la idea|¡Qué buena [idea]!|What a good [idea]!
+la cosa|Tengo una [cosa] para ti.|I've got a [thing] for you.
+la vez|Otra [vez], por favor.|One more [time], please.
+el fin|Es el [fin] de la película.|It's the [end] of the film.
+la mitad|Quiero la [mitad].|I want [half].
+el cuarto|Son las tres y [cuarto].|It's a [quarter] past three.
+tonto|No seas [tonto].|Don't be [silly].
+serio|Mi padre es muy [serio].|My father is very [serious].
+gordo|Mi gato está muy [gordo].|My cat is very [fat].
+rubio|Mi hermano es [rubio].|My brother is [blond].
+lento|El tren es muy [lento].|The train is very [slow].
+limpio|El suelo está [limpio].|The floor is [clean].
+sucio|El coche está muy [sucio].|The car is very [dirty].
+lleno|El restaurante está [lleno].|The restaurant is [full].
+vacío|El vaso está [vacío].|The glass is [empty].
+mejor|Hoy me siento [mejor].|I feel [better] today.
+peor|El tiempo está [peor] hoy.|The weather is [worse] today.
+mismo|Tenemos el [mismo] coche.|We have the [same] car.
+otro|Quiero [otro] café.|I'd like [another] coffee.
+todo|Lo sé [todo].|I know [everything].
+cada|Voy al gimnasio [cada] día.|I go to the gym [every] day.
+algo|¿Quieres [algo] de beber?|Do you want [something] to drink?
+nada|No quiero [nada].|I don't want [anything].
+alguien|¿Hay [alguien] en casa?|Is [anyone] home?
+nadie|No hay [nadie] en la calle.|There's [nobody] in the street.
+ya|[Ya] he comido.|I've [already] eaten.
+pronto|Nos vemos [pronto].|See you [soon].
+casi|Son [casi] las diez.|It's [almost] ten o'clock.
+solo|Vivo [solo].|I live [alone].
+juntos|Vamos [juntos] al cine.|We go to the cinema [together].
+dentro|El gato está [dentro].|The cat is [inside].
+fuera|Los niños están [fuera].|The children are [outside].
+detrás|El jardín está [detrás] de la casa.|The garden is [behind] the house.
+entre|La farmacia está [entre] el banco y el bar.|The chemist's is [between] the bank and the bar.
+cambiar|Quiero [cambiar] de trabajo.|I want [to change] jobs.
+probar|¿Puedo [probar] la sopa?|Can I [taste] the soup?
+llevar|Tengo que [llevar] a los niños al colegio.|I have [to take] the children to school.
+traer|¿Puedes [traer] el pan?|Can you [bring] the bread?
+poner|Voy a [poner] la mesa.|I'm going [to set] the table.
+dejar|¿Me puedes [dejar] tu bolígrafo?|Can you [lend] me your pen?
+perder|No quiero [perder] el tren.|I don't want [to miss] the train.
+ganar|Quiero [ganar] el partido.|I want [to win] the match.
+mandar|Te voy a [mandar] un mensaje.|I'm going [to send] you a message.
+coger|Tengo que [coger] el autobús.|I have [to catch] the bus.
+bajar|Tenemos que [bajar] aquí.|We have [to get off] here.
+subir|Vamos a [subir] al tren.|Let's [get on] the train.
+cruzar|Hay que [cruzar] la calle.|We have [to cross] the street.
+girar|Tienes que [girar] a la derecha.|You have [to turn] right.
+seguir|Tienes que [seguir] todo recto.|You have [to carry on] straight ahead.
+parar|¿Puedes [parar] aquí?|Can you [stop] here?
+quedar|¿Quieres [quedar] mañana?|Do you want [to meet up] tomorrow?
+nacer|El bebé va a [nacer] en mayo.|The baby is going [to be born] in May.
+morir|No quiero [morir] de hambre.|I don't want [to die] of hunger.
+sentir|Lo vas a [sentir] mucho.|You're going [to feel] it a lot.
+doler|Te va a [doler] un poco.|It's going [to hurt] a bit.
+cuidar|Tengo que [cuidar] a mi hermano.|I have [to look after] my brother.
+romper|No quiero [romper] el vaso.|I don't want [to break] the glass.
+pedir|Vamos a [pedir] la cuenta.|Let's [ask for] the bill.
+servir|¿Te puedo [servir] más vino?|Can I [serve] you more wine?
+gastar|No quiero [gastar] mucho dinero.|I don't want [to spend] much money.
+costar|Va a [costar] mucho dinero.|It's going [to cost] a lot of money.
+vender|Quiero [vender] mi coche.|I want [to sell] my car.
+usar|¿Puedo [usar] tu móvil?|Can I [use] your phone?
+llover|Va a [llover] mañana.|It's going [to rain] tomorrow.
+nevar|Va a [nevar] esta noche.|It's going [to snow] tonight.
+la boda|La [boda] es en junio.|The [wedding] is in June.
+la vejez|La [vejez] llega para todos.|[Old age] comes to everyone.
+el miedo|Tengo [miedo] a los perros.|I'm [afraid] of dogs.
+el sueño|Tengo mucho [sueño].|I'm very [sleepy].
+la razón|Tienes [razón].|You're [right].
+la verdad|Dime la [verdad].|Tell me the [truth].
+el error|Ha sido un [error].|It was a [mistake].
+el curso|Hago un [curso] de cocina.|I'm doing a cookery [course].
+el puesto|He solicitado el [puesto].|I've applied for the [position].
+el paro|Mi hermano está en el [paro].|My brother is [unemployed].
+la cuenta|La [cuenta], por favor.|The [bill], please.
+la deuda|Tengo una [deuda] con el banco.|I have a [debt] with the bank.
+la crisis|La [crisis] económica es grave.|The economic [crisis] is serious.
+el voto|Mi [voto] es secreto.|My [vote] is secret.
+la ley|Es la [ley].|It's the [law].
+la sequía|La [sequía] es un gran problema.|The [drought] is a big problem.
+la prensa|Lo he leído en la [prensa].|I read it in the [press].
+la red|No hay [red] aquí.|There's no [network] here.
+guardar|Tengo que [guardar] el archivo.|I have [to save] the file.
+borrar|Voy a [borrar] el mensaje.|I'm going [to delete] the message.
+el estrés|Tengo mucho [estrés] en el trabajo.|I have a lot of [stress] at work.
+la dieta|Estoy a [dieta].|I'm on a [diet].
+el ruido|Hay mucho [ruido] en la calle.|There's a lot of [noise] in the street.
+la obra|Hay una [obra] en mi calle.|There's [building work] on my street.
+el vuelo|El [vuelo] sale a las seis.|The [flight] leaves at six.
+la costa|Vivimos en la [costa].|We live on the [coast].
+el cuadro|Me encanta este [cuadro].|I love this [painting].
+sufrir|No quiero [sufrir] más.|I don't want [to suffer] any more.
+crecer|Los niños van a [crecer] muy rápido.|The children are going [to grow up] very fast.
+firmar|Tiene que [firmar] aquí.|You have [to sign] here.
+cobrar|¿Me puede [cobrar], por favor?|Can you [charge] me, please?
+deber|No quiero [deber] dinero.|I don't want [to owe] money.
+prestar|¿Me puedes [prestar] diez euros?|Can you [lend] me ten euros?
+dudar|No hay que [dudar].|There's no need [to doubt] it.
+confiar|Puedes [confiar] en mí.|You can [trust] me.
+actual|La situación [actual] es difícil.|The [current] situation is difficult.
+sano|Mi abuelo está muy [sano].|My grandfather is very [healthy].
+grave|El problema es [grave].|The problem is [serious].
+puntual|Siempre soy [puntual].|I'm always [punctual].
+gratis|La entrada es [gratis].|Entry is [free].
+aunque|Voy a salir, [aunque] llueva.|I'm going out, [even though] it might rain.
+mientras|Escucho música [mientras] cocino.|I listen to music [while] I cook.
+quizás|[Quizás] vaya mañana.|[Maybe] I'll go tomorrow.

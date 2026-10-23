@@ -1,0 +1,235 @@
+# card (Spanish exactly as on the card) | Spanish phrase with [target word] | English phrase with [target word]
+yo|[Yo] soy de Londres.|[I] am from London.
+tú|¿[Tú] hablas inglés?|Do [you] speak English?
+usted|¿Es [usted] el profesor?|Are [you] the teacher?
+él|[Él] trabaja en un banco.|[He] works in a bank.
+ella|[Ella] vive en Madrid.|[She] lives in Madrid.
+ellos|[Ellos] son mis amigos.|[They] are my friends.
+el hombre|El [hombre] lleva un sombrero.|The [man] is wearing a hat.
+la mujer|La [mujer] está en la tienda.|The [woman] is in the shop.
+el niño|El [niño] juega en el parque.|The [boy] is playing in the park.
+la niña|La [niña] tiene seis años.|The [girl] is six years old.
+el chico|El [chico] es muy alto.|The [boy] is very tall.
+la chica|La [chica] habla tres idiomas.|The [girl] speaks three languages.
+la gente|Hay mucha [gente] en la calle.|There are a lot of [people] in the street.
+el padre|Mi [padre] es médico.|My [father] is a doctor.
+la madre|Mi [madre] cocina muy bien.|My [mother] cooks very well.
+los padres|Mis [padres] viven en Sevilla.|My [parents] live in Seville.
+el hijo|Su [hijo] tiene diez años.|Her [son] is ten years old.
+la hija|Mi [hija] estudia en la universidad.|My [daughter] studies at university.
+el novio|Su [novio] es italiano.|Her [boyfriend] is Italian.
+la novia|Su [novia] es de Valencia.|His [girlfriend] is from Valencia.
+el bebé|El [bebé] está durmiendo.|The [baby] is sleeping.
+el nombre|¿Cuál es tu [nombre]?|What is your [name]?
+la edad|No sé su [edad].|I don't know his [age].
+el año|Este [año] voy a Japón.|This [year] I'm going to Japan.
+el mes|El [mes] que viene empiezo a trabajar.|Next [month] I start work.
+el día|Hoy es un [día] bonito.|Today is a lovely [day].
+la hora|¿A qué [hora] empieza la clase?|What [time] does the class start?
+la tarde|Por la [tarde] voy al gimnasio.|In the [afternoon] I go to the gym.
+la noche|Esta [noche] salimos a cenar.|[Tonight] we're going out for dinner.
+hoy|[Hoy] hace mucho sol.|[Today] it's very sunny.
+ayer|[Ayer] fui al cine.|[Yesterday] I went to the cinema.
+luego|Te llamo [luego].|I'll call you [later].
+siempre|[Siempre] desayuno café.|I [always] have coffee for breakfast.
+nunca|[Nunca] como carne.|I [never] eat meat.
+tarde|Llego [tarde] otra vez.|I'm [late] again.
+el lunes|El [lunes] tengo un examen.|On [Monday] I have an exam.
+el martes|El [martes] voy a la piscina.|On [Tuesday] I go to the swimming pool.
+el jueves|El [jueves] cenamos juntos.|On [Thursday] we have dinner together.
+el viernes|El [viernes] salgo con mis amigos.|On [Friday] I go out with my friends.
+marzo|Mi cumpleaños es en [marzo].|My birthday is in [March].
+abril|En [abril] llueve mucho.|It rains a lot in [April].
+mayo|Nos casamos en [mayo].|We're getting married in [May].
+junio|En [junio] terminan las clases.|Classes finish in [June].
+julio|En [julio] vamos a la playa.|In [July] we go to the beach.
+uno|Solo tengo [uno].|I only have [one].
+dos|Tengo [dos] hermanos.|I have [two] brothers.
+tres|Son las [tres] de la tarde.|It's [three] in the afternoon.
+cuatro|Somos [cuatro] en la familia.|There are [four] of us in the family.
+cinco|Trabajo [cinco] días a la semana.|I work [five] days a week.
+seis|La clase empieza a las [seis].|The class starts at [six].
+siete|Me levanto a las [siete].|I get up at [seven].
+ocho|Tengo [ocho] años.|I am [eight] years old.
+nueve|El tren sale a las [nueve].|The train leaves at [nine].
+diez|Cuesta [diez] euros.|It costs [ten] euros.
+once|Mi hijo tiene [once] años.|My son is [eleven] years old.
+doce|Comemos a las [doce].|We have lunch at [twelve].
+trece|Vivo en el número [trece].|I live at number [thirteen].
+quince|Espera [quince] minutos.|Wait [fifteen] minutes.
+veinte|Tengo [veinte] euros.|I have [twenty] euros.
+treinta|Tengo [treinta] años.|I'm [thirty] years old.
+cien|Hay [cien] personas en la sala.|There are [a hundred] people in the room.
+mil|Cuesta [mil] euros.|It costs [a thousand] euros.
+la casa|Mi [casa] es pequeña.|My [house] is small.
+el piso|Vivo en un [piso] en el centro.|I live in a [flat] in the centre.
+el baño|El [baño] está al final del pasillo.|The [bathroom] is at the end of the corridor.
+el salón|Vemos la tele en el [salón].|We watch TV in the [living room].
+la puerta|Cierra la [puerta], por favor.|Close the [door], please.
+la mesa|Las llaves están en la [mesa].|The keys are on the [table].
+la silla|Siéntate en esta [silla].|Sit on this [chair].
+la cama|Me voy a la [cama].|I'm going to [bed].
+el sofá|El gato duerme en el [sofá].|The cat sleeps on the [sofa].
+la llave|No encuentro la [llave].|I can't find the [key].
+el coche|Mi [coche] es rojo.|My [car] is red.
+el tren|El [tren] sale a las ocho.|The [train] leaves at eight.
+el metro|Voy al trabajo en [metro].|I go to work by [underground].
+el avión|El [avión] llega a las diez.|The [plane] arrives at ten.
+el taxi|Vamos a coger un [taxi].|Let's get a [taxi].
+la calle|Vivo en esta [calle].|I live on this [street].
+la ciudad|Madrid es una [ciudad] grande.|Madrid is a big [city].
+el pueblo|Mis abuelos viven en un [pueblo].|My grandparents live in a [village].
+el país|España es un [país] bonito.|Spain is a beautiful [country].
+el mundo|Quiero viajar por todo el [mundo].|I want to travel all over the [world].
+la tienda|La [tienda] cierra a las nueve.|The [shop] closes at nine.
+el banco|El [banco] está enfrente.|The [bank] is opposite.
+el hotel|El [hotel] está cerca de la playa.|The [hotel] is near the beach.
+el bar|Quedamos en el [bar] de la esquina.|Let's meet at the [bar] on the corner.
+el parque|Los niños juegan en el [parque].|The children play in the [park].
+la playa|En verano vamos a la [playa].|In summer we go to the [beach].
+el mar|Me encanta nadar en el [mar].|I love swimming in the [sea].
+el río|El [río] pasa por la ciudad.|The [river] runs through the city.
+el museo|El [museo] abre a las diez.|The [museum] opens at ten.
+el cine|¿Vamos al [cine] esta noche?|Shall we go to the [cinema] tonight?
+el teatro|El [teatro] está lleno.|The [theatre] is full.
+el agua|Bebo mucha [agua].|I drink a lot of [water].
+el café|Un [café] con leche, por favor.|A white [coffee], please.
+el té|Prefiero el [té] sin azúcar.|I prefer [tea] without sugar.
+la leche|No hay [leche] en la nevera.|There's no [milk] in the fridge.
+el zumo|Quiero un [zumo] de naranja.|I'd like an orange [juice].
+el vino|Pedimos una botella de [vino].|We ordered a bottle of [wine].
+el pan|Compro [pan] todos los días.|I buy [bread] every day.
+el queso|Me gusta mucho el [queso].|I really like [cheese].
+el huevo|Desayuno un [huevo] frito.|I have a fried [egg] for breakfast.
+la carne|No como [carne].|I don't eat [meat].
+el pollo|Hoy hay [pollo] para cenar.|There's [chicken] for dinner today.
+el jamón|Un bocadillo de [jamón], por favor.|A [ham] sandwich, please.
+el arroz|La paella lleva [arroz].|Paella is made with [rice].
+la pasta|Esta noche hago [pasta].|Tonight I'm making [pasta].
+la fruta|Como [fruta] todos los días.|I eat [fruit] every day.
+la sal|¿Me pasas la [sal]?|Can you pass me the [salt]?
+la cena|La [cena] está lista.|[Dinner] is ready.
+el perro|Mi [perro] se llama Toby.|My [dog] is called Toby.
+el gato|El [gato] duerme todo el día.|The [cat] sleeps all day.
+el libro|Estoy leyendo un [libro] muy bueno.|I'm reading a very good [book].
+el lápiz|¿Tienes un [lápiz]?|Have you got a [pencil]?
+el papel|Necesito una hoja de [papel].|I need a sheet of [paper].
+el móvil|Mi [móvil] no tiene batería.|My [mobile] has no battery.
+el euro|Solo tengo un [euro].|I only have one [euro].
+la ropa|Tengo que lavar la [ropa].|I have to wash the [clothes].
+la falda|Esta [falda] es muy bonita.|This [skirt] is really pretty.
+el ojo|Me duele el [ojo].|My [eye] hurts.
+la boca|Abre la [boca], por favor.|Open your [mouth], please.
+la mano|Lávate la [mano].|Wash your [hand].
+el pie|Me duele el [pie].|My [foot] hurts.
+el pelo|Tiene el [pelo] largo.|She has long [hair].
+el tiempo|Hoy hace buen [tiempo].|The [weather] is nice today.
+el sol|Hace mucho [sol].|It's very [sunny].
+la lluvia|No me gusta la [lluvia].|I don't like the [rain].
+la nieve|Los niños juegan en la [nieve].|The children play in the [snow].
+el calor|Hoy hace mucho [calor].|It's very [hot] today.
+el frío|En invierno hace [frío].|It's [cold] in winter.
+el color|¿Cuál es tu [color] favorito?|What's your favourite [colour]?
+rojo|Mi coche es [rojo].|My car is [red].
+azul|El cielo está [azul].|The sky is [blue].
+verde|Me gusta el jersey [verde].|I like the [green] jumper.
+negro|Tengo un gato [negro].|I have a [black] cat.
+blanco|El vestido es [blanco].|The dress is [white].
+gris|El cielo está [gris] hoy.|The sky is [grey] today.
+marrón|Quiero el bolso [marrón].|I'd like the [brown] bag.
+rosa|Lleva una camiseta [rosa].|She's wearing a [pink] T-shirt.
+grande|Es una casa muy [grande].|It's a very [big] house.
+bueno|Este libro es muy [bueno].|This book is very [good].
+malo|El tiempo es [malo] hoy.|The weather is [bad] today.
+nuevo|Tengo un móvil [nuevo].|I have a [new] phone.
+viejo|Mi coche es muy [viejo].|My car is very [old].
+joven|Mi profesora es muy [joven].|My teacher is very [young].
+alto|Mi hermano es muy [alto].|My brother is very [tall].
+bajo|Mi abuelo es [bajo].|My grandfather is [short].
+largo|El viaje es muy [largo].|The journey is very [long].
+corto|El vestido es [corto].|The dress is [short].
+caro|Este restaurante es muy [caro].|This restaurant is very [expensive].
+guapo|Tu hermano es muy [guapo].|Your brother is very [handsome].
+feo|El edificio es [feo].|The building is [ugly].
+fácil|El examen es [fácil].|The exam is [easy].
+frío|El café está [frío].|The coffee is [cold].
+triste|Hoy estoy un poco [triste].|I'm a bit [sad] today.
+libre|¿Estás [libre] mañana?|Are you [free] tomorrow?
+mucho|Te quiero [mucho].|I love you [a lot].
+poco|Hablo un [poco] de español.|I speak a [little] Spanish.
+muy|Estoy [muy] cansado.|I'm [very] tired.
+más|Quiero [más] agua.|I want [more] water.
+menos|Hoy trabajo [menos].|Today I'm working [less].
+también|Yo [también] quiero ir.|I want to go [too].
+aquí|Vivo [aquí].|I live [here].
+allí|Mi casa está [allí].|My house is over [there].
+cerca|El banco está [cerca].|The bank is [near].
+lejos|Mi trabajo está [lejos].|My work is [far].
+bien|Estoy [bien], gracias.|I'm [fine], thanks.
+mal|Duermo [mal].|I sleep [badly].
+ser|Quiero [ser] médico.|I want [to be] a doctor.
+estar|Quiero [estar] en casa.|I want [to be] at home.
+tener|Quiero [tener] un perro.|I want [to have] a dog.
+haber|Va a [haber] una fiesta.|There's going [to be] a party.
+hacer|¿Qué vas a [hacer] hoy?|What are you going [to do] today?
+ir|Quiero [ir] a la playa.|I want [to go] to the beach.
+venir|¿Puedes [venir] mañana?|Can you [come] tomorrow?
+llegar|Voy a [llegar] tarde.|I'm going [to arrive] late.
+salir|Quiero [salir] esta noche.|I want [to go out] tonight.
+entrar|¿Puedo [entrar]?|Can I [come in]?
+volver|Tengo que [volver] a casa.|I have [to go back] home.
+comer|Vamos a [comer] juntos.|Let's [eat] together.
+beber|¿Quieres [beber] algo?|Do you want [to drink] something?
+dormir|Necesito [dormir] más.|I need [to sleep] more.
+vivir|Quiero [vivir] en España.|I want [to live] in Spain.
+hablar|Me gusta [hablar] español.|I like [to speak] Spanish.
+decir|¿Qué quieres [decir]?|What do you want [to say]?
+ver|Vamos a [ver] una película.|Let's [watch] a film.
+leer|Me gusta [leer] por la noche.|I like [to read] at night.
+comprar|Tengo que [comprar] pan.|I have [to buy] bread.
+pagar|Quiero [pagar] con tarjeta.|I want [to pay] by card.
+querer|Vas a [querer] más.|You're going [to want] more.
+gustar|Me va a [gustar] la película.|I'm going [to like] the film.
+poder|Quiero [poder] hablar español.|I want [to be able to] speak Spanish.
+saber|Quiero [saber] la verdad.|I want [to know] the truth.
+llamar|Tengo que [llamar] a mi madre.|I have [to call] my mother.
+abrir|¿Puedes [abrir] la ventana?|Can you [open] the window?
+cerrar|Voy a [cerrar] la puerta.|I'm going [to close] the door.
+tomar|Vamos a [tomar] un café.|Let's [have] a coffee.
+dar|Te quiero [dar] un regalo.|I want [to give] you a present.
+buscar|Tengo que [buscar] las llaves.|I have [to look for] the keys.
+pensar|Necesito [pensar] un poco.|I need [to think] a bit.
+creer|No puedo [creer] la noticia.|I can't [believe] the news.
+jugar|Los niños quieren [jugar] al fútbol.|The children want [to play] football.
+andar|Me gusta [andar] por la playa.|I like [to walk] on the beach.
+correr|Voy a [correr] por el parque.|I'm going [to run] in the park.
+nadar|Me encanta [nadar] en el mar.|I love [to swim] in the sea.
+viajar|Me gusta mucho [viajar].|I really like [to travel].
+lavar|Tengo que [lavar] los platos.|I have [to wash] the dishes.
+limpiar|Hoy voy a [limpiar] la casa.|Today I'm going [to clean] the house.
+bailar|¿Quieres [bailar] conmigo?|Do you want [to dance] with me?
+cantar|Me encanta [cantar] en la ducha.|I love [to sing] in the shower.
+qué|¿[Qué] quieres comer?|[What] do you want to eat?
+quién|¿[Quién] es ese chico?|[Who] is that boy?
+dónde|¿[Dónde] está el baño?|[Where] is the bathroom?
+cuándo|¿[Cuándo] es tu cumpleaños?|[When] is your birthday?
+cómo|¿[Cómo] estás?|[How] are you?
+cuánto|¿[Cuánto] cuesta esto?|[How much] does this cost?
+cuántos|¿[Cuántos] años tienes?|[How many] years old are you?
+cuál|¿[Cuál] prefieres?|[Which] do you prefer?
+y|Pan [y] queso.|Bread [and] cheese.
+o|¿Té [o] café?|Tea [or] coffee?
+pero|Es caro, [pero] es muy bueno.|It's expensive, [but] it's very good.
+porque|Estudio español [porque] me gusta.|I study Spanish [because] I like it.
+con|Café [con] leche, por favor.|Coffee [with] milk, please.
+sin|Un té [sin] azúcar.|A tea [without] sugar.
+para|Este regalo es [para] ti.|This present is [for] you.
+de|Soy [de] Inglaterra.|I'm [from] England.
+en|Vivo [en] Madrid.|I live [in] Madrid.
+a|Voy [a] la playa.|I'm going [to] the beach.
+sí|[Sí], por favor.|[Yes], please.
+no|[No], gracias.|[No], thanks.
+hola|[Hola], ¿qué tal?|[Hello], how are you?
+adiós|[Adiós], hasta mañana.|[Goodbye], see you tomorrow.
+gracias|Muchas [gracias] por todo.|[Thank you] very much for everything.
+perdón|[Perdón], ¿dónde está la estación?|[Excuse me], where is the station?

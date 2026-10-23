@@ -178,6 +178,14 @@ button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outlin
 .rc .btn{padding:11px 8px;font-size:14px}
 .rc #rcBtn{flex:1.6}
 .rc #rcBtn.recording{background:var(--bad);border-color:var(--bad);color:var(--surface)}
+
+.en-front.ph{display:flex;flex-direction:column;align-items:center;gap:8px;font-size:clamp(22px,6.5vw,30px)}
+.tw{color:var(--accent);font-weight:700}
+.phnote{font-size:13px;color:var(--muted);font-weight:400}
+.phsingle{font-size:12.5px;color:var(--muted);text-decoration:underline;text-underline-offset:3px;padding:4px}
+.phans{font-weight:500}
+.phans .tw{font-weight:700}
+.phword{font-size:14px;color:var(--muted)}
 </style>
 
 <div class="app">
@@ -220,6 +228,7 @@ button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outlin
 
   <div class="settings" id="settings" hidden>
     <label>Cards <select id="sTypes"><option value="both">Words and phrases</option><option value="words">Words only</option><option value="phrases">Phrases only</option></select></label>
+    <label>Phrase help <select id="sPhrase"><option value="auto">Automatic</option><option value="always">Always phrases</option><option value="off">Off</option></select></label>
     <label>Answer checking <select id="sCheck"><option value="lenient">Forgiving</option><option value="strict">Strict</option></select></label>
     <label id="srModeRow" hidden>Speech recognition <select id="sSrMode"><option value="chrome">Like Chrome</option><option value="search">Short words (voice search)</option></select></label>
     <label>New cards per day <select id="sNew"><option>5</option><option>10</option><option>15</option><option>20</option><option>30</option></select></label>
@@ -293,9 +302,9 @@ button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outlin
 /*DATA*/
 /* each row: [spanish, english, otherSpanish[], otherEnglish[], picture]; a leading ~ marks a casual form */
 const LEVELS={a1:'A1',a2:'A2',b1:'B1'};
-function build(rows,type,deck){return rows.map(([es,en,esA,enA,pic])=>{
+function build(rows,type,deck){return rows.map(([es,en,esA,enA,pic,ph])=>{
   const strip=a=>a.map(x=>x.replace(/^~/,''));
-  return{id:deck+':'+es+'|'+en,es,en,type,deck,pic:pic||'',esA:strip(esA),enA:strip(enA),
+  return{id:deck+':'+es+'|'+en,es,en,type,deck,pic:pic||'',ph:ph||null,esA:strip(esA),enA:strip(enA),
     casual:new Set([...esA,...enA].filter(x=>x[0]==='~').map(x=>x.slice(1)))}})}
 const CARDS=[];
 for(const d of ['a1','a2','b1']){
@@ -396,8 +405,8 @@ function speakWeb(text,lang){return new Promise(res=>{
 const sayable=s=>s.replace(/\(.*?\)/g,'').replace(/…/g,'').split(';').map(x=>x.trim()).filter(Boolean);
 const enSay=c=>sayable(c.en).join(', or ');
 const esSay=c=>c.es.replace(/…/g,'');
-const promptOf=c=>S.set.dir==='je'?[esSay(c),'es-ES']:[enSay(c),'en-GB'];
-const answerOf=c=>S.set.dir==='je'?[enSay(c),'en-GB']:[altShown&&c===cur?altShown.replace(/…/g,''):esSay(c),'es-ES'];
+const promptOf=c=>S.set.dir==='je'?[esSay(c),'es-ES']:phraseOn(c)?[plainPh(c.ph[1]),'en-GB']:[enSay(c),'en-GB'];
+const answerOf=c=>S.set.dir==='je'?[enSay(c),'en-GB']:phraseOn(c)?[plainPh(c.ph[0]),'es-ES']:[altShown&&c===cur?altShown.replace(/…/g,''):esSay(c),'es-ES'];
 
 let actx;
 function tone(ok){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();const t=actx.currentTime;
@@ -438,6 +447,40 @@ function listenWeb(lang,ms,onHeard){return new Promise(res=>{
 
 // the removed on-phone recognizer stored 34 MB of speech data: free it
 try{indexedDB.deleteDatabase('/vosk')}catch(e){}
+
+/* ---------- phrase mode: answer a word card with an example phrase ---------- */
+const plainPh=s=>s.replace(/[\[\]]/g,'');
+const markPh=s=>escH(s).replace(/\[(.*?)\]/g,'<b class="tw">$1</b>');
+function phraseOn(c){if(!c||!c.ph||S.set.dir!=='ej'||c.type!=='w')return false;
+  const m=S.set.phraseMode||'auto';return m==='always'||(m==='auto'&&!!(S.phr||{})[c.id])}
+function setPhrase(c,on){S.phr=S.phr||{};S.miss=S.miss||{};if(on)S.phr[c.id]=1;else{delete S.phr[c.id];S.miss[c.id]=0}save()}
+function noteMiss(c){S.miss=S.miss||{};S.miss[c.id]=(S.miss[c.id]||0)+1;save();return S.miss[c.id]}
+function canSwitch(c){return c&&c.ph&&S.set.dir==='ej'&&c.type==='w'&&(S.set.phraseMode||'auto')==='auto'&&!phraseOn(c)}
+const phWords=s=>s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9ñ ]+/g,' ').split(/\s+/).filter(Boolean);
+function wordHit(h,t){return h===t||phonEs(h)===phonEs(t)||(S.set.check!=='strict'&&softNear(phonEs(h),phonEs(t)))}
+// right if the card's word is in what you said and most of the phrase is there too
+function judgePhrase(c,heard){
+  const exp=phWords(plainPh(c.ph[0])),tgt=phWords((c.ph[0].match(/\[(.*?)\]/)||['',''])[1]);
+  return heard.some(h=>{const H=phWords(h);if(!H.length)return false;
+    const hasT=tgt.every(t=>H.some(w=>wordHit(w,t)));
+    const found=exp.filter(e=>H.some(w=>wordHit(w,e))).length;
+    return hasT&&(found/exp.length>=.5||H.length<=tgt.length+1)});
+}
+
+let phShowMiss=0,phShowId=null;
+// on the Speak button: second miss on a short word in this showing switches the card to its phrase
+function phMaybeSwitch(){
+  if(phShowId!==cur.id){phShowId=cur.id;phShowMiss=0}
+  if(!canSwitch(cur))return false;
+  phShowMiss++;noteMiss(cur);
+  if(phShowMiss<2)return false;
+  setPhrase(cur,true);triedWrong=false;
+  feedback={cls:'info',text:'Your phone keeps mishearing this word, so try it in a phrase. Tap Speak and say the whole phrase.'};render();
+  const pr=promptOf(cur);if(+S.set.auto)speak(pr[0],pr[1]);
+  return true;
+}
+document.addEventListener('click',e=>{if(e.target.closest('#phSingle')){setPhrase(cur,false);phShowMiss=0;feedback=null;render();
+  const pr=promptOf(cur);if(+S.set.auto)speak(pr[0],pr[1])}});
 /* ---------- answer checking ---------- */
 function lev(a,b){const m=a.length,n=b.length;if(!m||!n)return Math.max(m,n);let p=Array.from({length:n+1},(_,j)=>j);
   for(let i=1;i<=m;i++){const q=[i];for(let j=1;j<=n;j++)q[j]=Math.min(p[j]+1,q[j-1]+1,p[j-1]+(a[i-1]===b[j-1]?0:1));p=q}return p[n]}
@@ -472,6 +515,7 @@ function heardAlts(heard){return (()=>{const o=[...new Set(heard.slice(1).filter
 function judge(c,heard){
   lastLenient=false;
   if(!heard||!heard.length)return false;
+  if(phraseOn(c)){lastMatch=null;return judgePhrase(c,heard)}
   if(S.set.dir==='je'){const T=enTargets(c);return heard.some(h=>{h=normEn(h);return T.some(t=>h===t||(' '+h+' ').includes(' '+t+' ')||sim(h,t)>=.8||overlap(h,t)>=.75)})}
   // find which answer you gave: exact matches first, then close ones; the card's own answer wins ties
   const P=[[c.es,[c.es,...c.enA.filter(x=>/^\d+$/.test(x))]],...c.esA.map(a=>[a,[a]])].map(([l,ts])=>[l,ts.map(normEs).filter(Boolean)]);
@@ -528,10 +572,11 @@ function render(){
   if(!cur){card.innerHTML=`<div class="front"><div class="done"><b>¡Buen trabajo!</b>You're done for now. Come back later for reviews, or raise new cards per day in settings.</div></div>`;
     $('actions').hidden=true;$('after').hidden=true;$('fbBar').hidden=true;return}
   const isNew=!st(cur);const long=cur.es.length>18;
-  const front=S.set.dir==='je'?`<div class="es${long?' long':''}">${esHtml(cur.es)}</div>`:`<div class="en-front">${escH(cur.en)}</div>`;
-  let html=`<span class="tag${isNew?' new':''}">${isNew?'New card':'Review'}${cur.type==='p'?' · Phrase':''} · ${LEVELS[cur.deck]}</span><div class="front">${front}</div>`;
+  const ph=phraseOn(cur);
+  const front=S.set.dir==='je'?`<div class="es${long?' long':''}">${esHtml(cur.es)}</div>`:ph?`<div class="en-front ph"><span>${markPh(cur.ph[1])}</span><span class="phnote">Say the whole phrase in Spanish</span>${(S.set.phraseMode||'auto')==='auto'?'<button class="phsingle" id="phSingle">Try the single word instead</button>':''}</div>`:`<div class="en-front">${escH(cur.en)}</div>`;
+  let html=`<span class="tag${isNew?' new':''}">${isNew?'New card':'Review'}${cur.type==='p'?' · Phrase':''}${ph?' · In a phrase':''} · ${LEVELS[cur.deck]}</span><div class="front">${front}</div>`;
   if(revealed){
-    html+=`<div class="answer">${cur.pic?`<div class="pic" aria-hidden="true">${cur.pic}</div>`:''}${S.set.dir==='je'?`<div class="en">${escH(cur.en)}</div>`:`<div class="es${long?' long':''}">${esHtml(altShown||cur.es)}</div>`}${altsHtml()}</div>`;
+    html+=`<div class="answer">${cur.pic?`<div class="pic" aria-hidden="true">${cur.pic}</div>`:''}${S.set.dir==='je'?`<div class="en">${escH(cur.en)}</div>`:(ph?`<div class="es long phans">${markPh(cur.ph[0])}</div><div class="phword">${esHtml(cur.es)} · ${escH(cur.en)}</div>`:`<div class="es${long?' long':''}">${esHtml(altShown||cur.es)}</div>`)}${altsHtml()}</div>`;
   }
   card.innerHTML=html;
   const fb=$('fbBar');fb.hidden=!feedback;if(feedback){fb.className='feedback '+feedback.cls;fb.textContent=feedback.text}
@@ -581,8 +626,10 @@ $('mic').onclick=async()=>{
   const heard=await listen(lang,7000,h=>{if(h){feedback={cls:'info',text:'Heard: '+h};render();b.classList.add('listening')}});
   b.classList.remove('listening');b.lastChild.textContent='Speak';
   if(heard===null){feedback=null;return render()}
-  if(!heard.length||!heard.some(x=>x&&x.trim())){feedback={cls:'no',text:'Didn’t catch that. Tap Speak to try again.'};return render()}
+  if(!heard.length||!heard.some(x=>x&&x.trim())){if(phMaybeSwitch())return;feedback={cls:'no',text:'Didn’t catch that. Tap Speak to try again.'};return render()}
   const ok=judgeShow(cur,heard);tone(ok);lastHeard=heard[0];
+  if(!ok&&phMaybeSwitch())return;
+  if(ok&&!phraseOn(cur)&&S.miss)S.miss[cur.id]=0;
   if(!ok){triedWrong=true;feedback={cls:'no',text:'Not quite — heard “'+heard[0]+'”'+heardAlts(heard)+'. Try again, or tap Show answer.'};return render()}
   feedback={cls:'ok',text:'Correct — heard “'+heard[0]+'”'+(casualHit(cur,heard)?' · casual form':'')+(lastLenient?' · close enough':'')};
   suggest=2;doReveal();
@@ -596,6 +643,7 @@ $('dJE').onclick=()=>setDir('je');$('dEJ').onclick=()=>setDir('ej');
 /* ---------- settings ---------- */
 const bind=(id,key,num)=>{const el=$(id);el.value=String(S.set[key]);el.onchange=()=>{S.set[key]=num?+el.value:el.value;save();render()}};
 bind('sNew','newPerDay',1);bind('sGap','gap',1);bind('sRate','rate',1);bind('sAuto','auto',1);
+$('sPhrase').value=S.set.phraseMode||'auto';$('sPhrase').onchange=()=>{S.set.phraseMode=$('sPhrase').value;save();render()};
 $('sCheck').value=S.set.check||'lenient';$('sCheck').onchange=()=>{S.set.check=$('sCheck').value;save()};
 $('sTypes').value=S.set.types;$('sTypes').onchange=()=>{S.set.types=$('sTypes').value;save();if(walking)stopWalk();lastId=null;show()};
 $('srModeRow').hidden=!(NAT&&NAT.listenWith);$('sSrMode').value=S.set.srMode==='search'?'search':'chrome';$('sSrMode').onchange=()=>{S.set.srMode=$('sSrMode').value;save()};
@@ -669,7 +717,18 @@ async function walkLoop(){
       const heard=await listen(al,S.set.gap*1000,h=>{if(h){feedback={cls:'info',text:'Heard: '+h};render()}});
       if(!walking)break;
       if(heard===null){for(let t=S.set.gap;t>0&&walking;t--){status('Think of the answer… '+t);await wait(1000)}if(!walking)break}
-      ok=heard!==null&&judgeShow(cur,heard);tone(ok);heardFeedback(ok,heard);
+      ok=heard!==null&&judgeShow(cur,heard);
+      if(!ok&&heard!==null&&canSwitch(cur)){
+        setPhrase(cur,true);render();status('Let’s try it in a phrase');
+        await speak('Try it in a phrase.','en-GB');if(!walking)break;
+        await speak(plainPh(cur.ph[1]),'en-GB');if(!walking)break;
+        status('Your turn — say the whole phrase in Spanish');
+        const h2=await listen(al,(S.set.gap+3)*1000,h=>{if(h){feedback={cls:'info',text:'Heard: '+h};render()}});
+        if(!walking)break;
+        ok=h2!==null&&judgeShow(cur,h2);heardFeedback(ok,h2&&h2.length?h2:heard);
+        if(!ok)setPhrase(cur,false),noteMiss(cur);
+      }
+      tone(ok);if(!feedback||feedback.cls==='info')heardFeedback(ok,heard);
       status(ok?'Correct':'Here’s the answer');await doReveal();if(!walking)break;
       if(!ok){await wait(500);const [rt,rl]=answerOf(cur);await speak(rt,rl);if(!walking)break;await sayItBack(al);if(!walking)break}
     }
