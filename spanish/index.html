@@ -469,6 +469,7 @@ function softNear(a,b){
   return false}
 function phonMatch(h,t){const a=phonEs(h),b=phonEs(t);if(a===b||(b.length>=5&&sim(a,b)>=.82))return true;
   if(S.set.check!=='strict'&&softNear(a,b)){lastLenient=true;return true}return false}
+function heardAlts(heard){return (()=>{const o=[...new Set(heard.slice(1).filter(x=>x&&x.trim()&&x!==heard[0]))].slice(0,3);return o.length?' (or “'+o.join('”, “')+'”)':''})()}
 function judge(c,heard){
   lastLenient=false;
   if(!heard||!heard.length)return false;
@@ -551,7 +552,7 @@ function show(){triedWrong=false;cur=nextCard();resetCard();render();
 function doReveal(){revealed=true;render();const [t,l]=answerOf(cur);return speak(t,l)}
 function answerGrade(g){if(!cur)return;grade(cur,g);lastId=cur.id;show()}
 function heardFeedback(ok,heard){lastHeard=heard&&heard[0]||'';
-  feedback=heard&&heard.length?{cls:ok?'ok':'no',text:(ok?'Correct — heard “':'Not quite — heard “')+heard[0]+'”'+(ok&&casualHit(cur,heard)?' · casual form':'')+(ok&&lastLenient?' · close enough':'')}:{cls:'no',text:'Didn’t catch anything'}}
+  feedback=heard&&heard.length?{cls:ok?'ok':'no',text:(ok?'Correct — heard “':'Not quite — heard “')+heard[0]+'”'+(ok?'':heardAlts(heard))+(ok&&casualHit(cur,heard)?' · casual form':'')+(ok&&lastLenient?' · close enough':'')}:{cls:'no',text:'Didn’t catch anything'}}
 
 /* ---------- manual controls ---------- */
 let userActed=false;
@@ -582,7 +583,7 @@ $('mic').onclick=async()=>{
   if(heard===null){feedback=null;return render()}
   if(!heard.length||!heard.some(x=>x&&x.trim())){feedback={cls:'no',text:'Didn’t catch that. Tap Speak to try again.'};return render()}
   const ok=judgeShow(cur,heard);tone(ok);lastHeard=heard[0];
-  if(!ok){triedWrong=true;feedback={cls:'no',text:'Not quite — heard “'+heard[0]+'”. Try again, or tap Show answer.'};return render()}
+  if(!ok){triedWrong=true;feedback={cls:'no',text:'Not quite — heard “'+heard[0]+'”'+heardAlts(heard)+'. Try again, or tap Show answer.'};return render()}
   feedback={cls:'ok',text:'Correct — heard “'+heard[0]+'”'+(casualHit(cur,heard)?' · casual form':'')+(lastLenient?' · close enough':'')};
   suggest=2;doReveal();
 };
@@ -725,7 +726,8 @@ function fillVoices(){
     el.onchange=()=>{S.set.voice[pre]=el.value;save();speak(pre==='en'?ESAMPLE:TSAMPLE,pre==='en'?'en-GB':TTAG)};
   }
   const n=voiceList(TL).length;
-  $('vNote').innerHTML=(n?'':'No Spanish voices found on this phone. ')+'Voices sound robotic? Install <b>Speech Services by Google</b>, then in phone Settings → General management → Language and input → Text-to-speech output, choose it and download the Spanish and English voices.';
+  let rec='';try{rec=NAT&&NAT.recognizerName?NAT.recognizerName():''}catch(e){}
+  $('vNote').innerHTML=(rec?'Listening with '+rec+' speech recognition. ':'')+(n?'':'No Spanish voices found on this phone. ')+'Voices sound robotic? Install <b>Speech Services by Google</b>, then in phone Settings → General management → Language and input → Text-to-speech output, choose it and download the Spanish and English voices.';
 }
 document.querySelectorAll('[data-test]').forEach(b=>b.onclick=()=>{userActed=true;const t=b.dataset.test==='t';speak(t?TSAMPLE:ESAMPLE,t?TTAG:'en-GB')});
 window.__nativeTtsReady=()=>{try{fillVoices()}catch(e){}};

@@ -2,7 +2,10 @@ package com.rosybence.flashcards;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.ResolveInfo;
+import android.speech.RecognitionService;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -132,6 +135,18 @@ public class MainActivity extends Activity {
         return "https".equals(u.getScheme()) && "rosybence.github.io".equals(u.getHost()) && path.startsWith(BuildConfig.SCOPE);
     }
 
+    /** Google's speech recognizer if the phone has it (Samsung phones otherwise default to Samsung's, which is weaker for Spanish and Japanese). */
+    private ComponentName googleRecognizer() {
+        try {
+            List<ResolveInfo> list = getPackageManager().queryIntentServices(new Intent(RecognitionService.SERVICE_INTERFACE), 0);
+            for (ResolveInfo r : list) {
+                if (r.serviceInfo != null && "com.google.android.googlequicksearchbox".equals(r.serviceInfo.packageName))
+                    return new ComponentName(r.serviceInfo.packageName, r.serviceInfo.name);
+            }
+        } catch (Exception ignored) { }
+        return null;
+    }
+
     private boolean isInstalled(String pkg) {
         try { getPackageManager().getPackageInfo(pkg, 0); return true; } catch (Exception e) { return false; }
     }
@@ -161,7 +176,8 @@ public class MainActivity extends Activity {
         }
         if (recognizer != null) { recognizer.destroy(); recognizer = null; }
         if (!SpeechRecognizer.isRecognitionAvailable(this)) { srCallback(id, "error", "\"unavailable\""); return; }
-        recognizer = SpeechRecognizer.createSpeechRecognizer(this);
+        ComponentName google = googleRecognizer();
+        recognizer = google != null ? SpeechRecognizer.createSpeechRecognizer(this, google) : SpeechRecognizer.createSpeechRecognizer(this);
         final String rid = id;
         recognizer.setRecognitionListener(new RecognitionListener() {
             @Override public void onReadyForSpeech(Bundle params) { }
@@ -191,6 +207,9 @@ public class MainActivity extends Activity {
         i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, lang);
         i.putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true);
         i.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 5);
+        i.putExtra(RecognizerIntent.EXTRA_PREFER_OFFLINE, false);
+        i.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_COMPLETE_SILENCE_LENGTH_MILLIS, 1500L);
+        i.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_POSSIBLY_COMPLETE_SILENCE_LENGTH_MILLIS, 1200L);
         i.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, getPackageName());
         recognizer.startListening(i);
     }
@@ -243,6 +262,11 @@ public class MainActivity extends Activity {
 
     /** Methods the web page can call as window.NativeApp.* */
     private class Bridge {
+        @JavascriptInterface public String recognizerName() {
+            if (!trusted) return "";
+            return googleRecognizer() != null ? "Google" : "your phone's default";
+        }
+
         @JavascriptInterface public boolean srAvailable() {
             if (!trusted) return false;
             return SpeechRecognizer.isRecognitionAvailable(MainActivity.this);
