@@ -462,7 +462,7 @@ function judge(c,heard){
   // find which answer you gave: exact matches first, then close ones; the card's own answer wins ties
   const P=[[c.es,[c.es,...c.enA.filter(x=>/^\d+$/.test(x))]],...c.esA.map(a=>[a,[a]])].map(([l,ts])=>[l,ts.map(normEs).filter(Boolean)]);
   const H=heard.map(normEs);lastMatch=null;
-  const close=(h,t)=>phonMatch(h,t)||h===t||(t.length>3&&(' '+h+' ').includes(' '+t+' '))||(t.length>6&&sim(h,t)>=(t.length>12?.75:.8))||overlap(h,t)>=.8;
+  const close=(h,t)=>phonMatch(h,t)||h===t||(t.length>=2&&(' '+h+' ').includes(' '+t+' '))||(t.length>6&&sim(h,t)>=(t.length>12?.75:.8))||overlap(h,t)>=.8;
   for(const pass of [(h,t)=>h===t,close])for(const [l,ts] of P)if(H.some(h=>ts.some(t=>pass(h,t)))){lastMatch=l===c.es?null:l;return true}
   return false;
 }
