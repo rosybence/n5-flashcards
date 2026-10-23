@@ -624,7 +624,7 @@ function markDiff(a,b,norm){const B=new Set(b.split(/\s+/).map(norm).filter(Bool
 function okFeedback(heard){
   const h=lastHit||{i:0,said:heard[0],ans:'',exact:true};
   const extra=(casualHit(cur,heard)?' · casual form':'');
-  const first=h.i>0&&heard[0]&&heard[0]!==h.said?`<span class="fbsub">The phone’s first guess was “${escH(heard[0])}”, but another guess matched.</span>`:'';
+  const first='';  // we show the guess that matched; the phone's other guesses are just noise
   lastHeard=h.said;
   if(h.exact)return{cls:'ok',text:'',html:`Correct — heard “${escH(h.said)}”${extra}${first}`};
   const n=S.set.dir==='je'?normEn:normEs;
