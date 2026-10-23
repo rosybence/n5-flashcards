@@ -286,6 +286,7 @@ button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outlin
     </div>
     <div class="mark" id="mark"></div>
     <div class="rc" id="rcRow">
+      <button class="btn" id="hearAgain"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg><span>Hear again</span></button>
       <button class="btn" id="rcBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg><span>Record &amp; compare</span></button>
       <button class="btn" id="rcMine" hidden>▶ Mine</button>
       <button class="btn" id="rcNative" hidden>▶ Native</button>
@@ -420,17 +421,18 @@ function counts(){
   return{due,fresh:Math.min(fresh,Math.max(0,S.set.newPerDay-S.newDone[S.set.dir]))};
 }
 let lastId=null;
+let walkSkip=new Set();
 function nextCard(){
-  rollDay();const now=Date.now();
+  rollDay();const now=Date.now();const sk=c=>!(walking&&walkSkip.has(c.id));
   const pick=list=>{list.sort((a,b)=>st(a).due-st(b).due);const f=list.find(c=>c.id!==lastId);return f||list[0]};
-  const due=pool().filter(c=>{const s=st(c);return s&&s.due<=now});
+  const due=pool().filter(c=>{const s=st(c);return s&&s.due<=now&&sk(c)});
   if(due.length>1||(due.length===1&&due[0].id!==lastId))return pick(due);
-  if(S.newDone[S.set.dir]<S.set.newPerDay){
+  if(S.newDone[S.set.dir]+(walking?walkNew:0)<S.set.newPerDay){
     const ds=S.set.decks;
-    for(let i=0;i<ds.length;i++){const dk=ds[(S.newDone[S.set.dir]+i)%ds.length];const n=pool().find(c=>c.deck===dk&&!st(c)&&c.id!==lastId);if(n)return n}
+    for(let i=0;i<ds.length;i++){const dk=ds[(S.newDone[S.set.dir]+i)%ds.length];const n=pool().find(c=>c.deck===dk&&!st(c)&&c.id!==lastId&&sk(c));if(n)return n}
   }
   if(due.length)return due[0];
-  const ahead=pool().filter(c=>{const s=st(c);return s&&s.learning&&s.due<=now+20*MIN});
+  const ahead=pool().filter(c=>{const s=st(c);return s&&s.learning&&s.due<=now+20*MIN&&sk(c)});
   if(ahead.length)return pick(ahead);
   return null;
 }
@@ -457,7 +459,14 @@ if('speechSynthesis' in window){loadVoices();speechSynthesis.onvoiceschanged=loa
 function pickVoice(lang){const want=(S.set.voice||{})[lang.slice(0,2).toLowerCase()];if(want){const w=voices.find(v=>v.name===want);if(w)return w}
   const L=lang.toLowerCase();const n=v=>v.lang.replace('_','-').toLowerCase();
   return voices.find(v=>n(v)===L&&/google|siri|enhanced|premium|natural/i.test(v.name))||voices.find(v=>n(v)===L)||voices.find(v=>n(v).startsWith(L.slice(0,2)))}
-function speak(text,lang){return NAT?speakNative(text,lang):speakWeb(text,lang)}
+// phones put the speaker/Bluetooth to sleep between sounds, which clips the start of the next word:
+// keep it awake with an inaudible tone while speaking, and give it a moment after a quiet spell
+let _ka=null,_kaT=null,_lastSpoke=0;
+function audioAwake(){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();if(actx.state==='suspended')actx.resume();
+  if(!_ka){const o=actx.createOscillator(),g=actx.createGain();o.frequency.value=30;g.gain.value=0.0006;o.connect(g).connect(actx.destination);o.start();_ka=o}
+  clearTimeout(_kaT);_kaT=setTimeout(()=>{try{_ka&&_ka.stop()}catch(e){}_ka=null},walking?600000:15000)}catch(e){}}
+function speak(text,lang){const cold=Date.now()-_lastSpoke>3000||!_ka;audioAwake();
+  return (cold?wait(lang.startsWith('en')?150:350):Promise.resolve()).then(()=>NAT?speakNative(text,lang):speakWeb(text,lang)).then(v=>{_lastSpoke=Date.now();audioAwake();return v})}
 function speakWeb(text,lang){return new Promise(res=>{
   if(!('speechSynthesis' in window))return res();
   const u=new SpeechSynthesisUtterance(text);u.lang=lang;const v=pickVoice(lang);if(v)u.voice=v;
@@ -726,6 +735,9 @@ $('reveal').onclick=()=>{if(cur&&!revealed){if(triedWrong)suggest=0;else suggest
 $('grades').onclick=e=>{const b=e.target.closest('button');if(b)answerGrade(+b.dataset.g)};
 $('next').onclick=()=>answerGrade(suggest===0?0:2);
 $('flip').onclick=()=>{suggest=suggest===0?2:0;render()};
+// the Spanish/Japanese side, whichever way round the card is
+function targetAudio(c){const a=answerOf(c),p=promptOf(c);return [a,p].find(x=>x&&x[1]&&!x[1].startsWith('en'))||a}
+$('hearAgain').onclick=()=>{if(!cur)return;const [t,l]=targetAudio(cur);speak(t,l)};
 $('mic').onclick=async()=>{
   if(!cur||revealed||micBlocked)return;
   const b=$('mic');
@@ -825,6 +837,9 @@ async function walkLoop(){
       for(let s=S.set.gap;s>0&&walking;s--){status('Think of the answer… '+s);await wait(1000)}
       if(!walking)break;
       status('Answer');await doReveal();if(!walking)break;
+      // hear the Spanish/Japanese a couple more times
+      {const [t,l]=targetAudio(cur);for(let r=0;r<2&&walking;r++){await wait(900);if(!walking)break;status('Again…');await speak(t,l)}}
+      if(!walking)break;
     }else{
       status('Your turn — say it '+(al.startsWith('es')?'in Spanish':'in English'));
       const heard=await listen(al,S.set.gap*1000,h=>{if(h){feedback={cls:'info',text:'Heard: '+h};render()}});
@@ -846,16 +861,22 @@ async function walkLoop(){
       if(!ok){await wait(500);const [rt,rl]=answerOf(cur);await speak(rt,rl);if(!walking)break;await sayItBack(al);if(!walking)break}
     }
     ok=await afterAnswer(ok);if(!walking)break;
-    grade(cur,ok?(knewIt?3:2):0);lastId=cur.id;await wait(400);
+    if(S.set.walkMode==='listen'||micBlocked){
+      // just listening isn't an answer: keep the card's schedule unless you said you got it wrong
+      if(!ok)grade(cur,0);else{if(!st(cur))walkNew++;walkSkip.add(cur.id)}
+    }else grade(cur,ok?(knewIt?3:2):0);
+    lastId=cur.id;await wait(400);
   }
 }
 function walkHelp(on){const L=S.set.walkMode==='listen'||micBlocked;
-  const steps=L?['You hear the prompt.','Think of the answer during the pause.','You hear the translation.','Say <b>“say it again”</b> to hear it again, <b>“I was wrong”</b> if you missed it, or <b>“next card”</b>. Say nothing and it counts as right.']
+  const steps=L?['You hear the prompt.','Think of the answer during the pause.','You hear the translation.','Say <b>“say it again”</b> to hear it again, <b>“I was wrong”</b> if you missed it, or <b>“next card”</b>.','Just listening doesn’t count as a correct answer: the card keeps its schedule. Say “I was wrong” and it comes back soon.']
     :['You hear the prompt.','Say the answer out loud.','If you get it wrong, it says the correct answer and waits for you to <b>say it back</b> (up to 3 tries).','Then say <b>“say it again”</b>, <b>“I was wrong”</b>, <b>“I was right”</b> or <b>“next card”</b>. Say nothing and it moves on.'];
   return `<ol>${steps.map(x=>`<li>${x}</li>`).join('')}</ol><p>Keep this screen on and the app open.${micBlocked&&!L?' Speaking back isn’t available here, so this works like Listen only.':''}</p>`}
 function setWalkMode(m){S.set.walkMode=m;save();$('wmSpeak').setAttribute('aria-pressed',m==='speak');$('wmListen').setAttribute('aria-pressed',m==='listen');$('wHelp').innerHTML=walkHelp(false)}
 $('wmSpeak').onclick=()=>setWalkMode('speak');$('wmListen').onclick=()=>setWalkMode('listen');
+let walkNew=0;
 async function startWalk(){
+  walkSkip=new Set();walkNew=0;
   walking=true;userActed=true;try{NAT&&NAT.keepAwake(true)}catch(e){}
   $('walkBtn').lastChild.textContent='Stop walk mode';$('walkBtn').classList.remove('primary');
   $('walkModes').hidden=true;$('pocketBtn').hidden=false;$('wHelp').innerHTML=walkHelp(true);

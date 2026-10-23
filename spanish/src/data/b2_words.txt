@@ -1,48 +1,48 @@
 # Spanish | English | other Spanish answers | other English answers | picture
 # --- work and economy ---
-el despido|dismissal; sacking|||📦
+el despido|dismissal; sacking|el cese||📦
 el contrato indefinido|permanent contract|||📝
 el autónomo|self-employed person; freelancer|la autónoma|freelance|🧑‍💻
 la plantilla|staff; workforce|el personal|employees|👥
-el ascenso|promotion|||📈
+el ascenso|promotion|la promoción||📈
 la huelga|strike|||✊
 el sindicato|trade union|||🪧
-el beneficio|profit; benefit|la ganancia|gain|💰
+el beneficio|profit; benefit|la ganancia,el provecho|gain|💰
 la pérdida|loss|||📉
 la hipoteca|mortgage|||🏠
-el presupuesto|budget; quote|||📊
+el presupuesto|budget; quote|la cotización||📊
 la inversión|investment|||📈
-la competencia|competition; competence|||🏁
+la competencia|competition; competence|la rivalidad||🏁
 la entrevista de trabajo|job interview|||🤝
 la experiencia laboral|work experience|||💼
 el plazo|deadline; term|la fecha límite|instalment|⏳
 # --- society and politics ---
-el deber|duty|la obligación|obligation|📌
+el deber|duty|la obligación,el compromiso|obligation|📌
 la igualdad|equality|||⚖️
 la desigualdad|inequality|||📊
 la pobreza|poverty|||🥣
 la riqueza|wealth|||💎
 la inmigración|immigration|||🧳
 el refugiado|refugee|la refugiada||⛺
-la manifestación|demonstration; protest|la protesta|march|🪧
+la manifestación|demonstration; protest|la protesta,la marcha|march|🪧
 el alcalde|mayor|la alcaldesa||🎖️
 el ministro|minister|la ministra||🎩
 el partido político|political party|||🗳️
 la corrupción|corruption|||💸
 la libertad de expresión|freedom of speech|||🗣️
-la encuesta|survey; poll|el sondeo||📋
+la encuesta|survey; poll|el sondeo,el estudio||📋
 la mayoría|majority|||➕
 la minoría|minority|||➖
 el bienestar|well-being; welfare|||🌿
 # --- environment ---
 los residuos|waste; rubbish|la basura|refuse|🗑️
 la energía renovable|renewable energy|||☀️
-el incendio forestal|forest fire; wildfire|||🔥
+el incendio forestal|forest fire; wildfire|el fuego forestal||🔥
 la especie|species|||🦎
 el desarrollo sostenible|sustainable development|||🌱
 la huella de carbono|carbon footprint|||👣
 # --- health and body ---
-la enfermedad|illness; disease|||🤒
+la enfermedad|illness; disease|el mal||🤒
 el síntoma|symptom|||🌡️
 el tratamiento|treatment|||💊
 la tos|cough|||😷
@@ -55,8 +55,8 @@ el embarazo|pregnancy|||🤰
 # --- media and technology ---
 los medios de comunicación|the media|||📰
 el titular|headline|||📰
-la publicidad|advertising|los anuncios|advertisement|📺
-el seguidor|follower|la seguidora||👣
+la publicidad|advertising|los anuncios,la propaganda|advertisement|📺
+el seguidor|follower|la seguidora,el fan||👣
 la descarga|download|||⬇️
 el portátil|laptop|el ordenador portátil||💻
 la inteligencia artificial|artificial intelligence|||🤖
@@ -65,83 +65,83 @@ el bulo|hoax; fake news|la noticia falsa|false rumour|🤥
 el orgullo|pride|||🦁
 la envidia|envy|||😒
 los celos|jealousy|||😠
-la culpa|guilt; fault|||😔
-la decepción|disappointment|||😞
-el agobio|stress; overwhelm|||😩
+la culpa|guilt; fault|la responsabilidad||😔
+la decepción|disappointment|la desilusión,el chasco||😞
+el agobio|stress; overwhelm|el estrés||😩
 la soledad|loneliness; solitude|||🌙
 la confianza|trust; confidence|||🤝
-el rencor|resentment; grudge|||😤
+el rencor|resentment; grudge|el resentimiento||😤
 la nostalgia|nostalgia|la morriña|homesickness|📷
 agobiado|overwhelmed; stressed|agobiada||😩
 decepcionado|disappointed|decepcionada||😞
 avergonzado|ashamed; embarrassed|avergonzada||😳
-harto|fed up|harta|sick of it|😤
-ilusionado|excited; hopeful|ilusionada|looking forward|🤩
+harto|fed up|harta,cansado,hasta las narices|sick of it|😤
+ilusionado|excited; hopeful|ilusionada,emocionado,esperanzado|looking forward|🤩
 emocionado|moved; excited|emocionada|touched|🥹
 agradecido|grateful|agradecida|thankful|🙏
 terco|stubborn|terca,cabezota|obstinate|🐐
-sensato|sensible|sensata|reasonable|🧠
+sensato|sensible|sensata,razonable,prudente|reasonable|🧠
 ingenuo|naive|ingenua||🐣
-exigente|demanding|||📏
+exigente|demanding|estricto||📏
 comprensivo|understanding|comprensiva||🤗
-creído|conceited; big-headed|creída,engreído|arrogant|😏
-despistado|absent-minded; scatterbrained|despistada||🙃
+creído|conceited; big-headed|creída,engreído,presumido,arrogante,chulo|arrogant|😏
+despistado|absent-minded; scatterbrained|despistada,distraído||🙃
 # --- verbs ---
 lograr|to achieve; to manage to|conseguir|to succeed in|🏆
-alcanzar|to reach; to achieve|||🎯
-prevenir|to prevent|||🛡️
+alcanzar|to reach; to achieve|lograr,conseguir,llegar a||🎯
+prevenir|to prevent|evitar||🛡️
 proponer|to propose; to suggest|plantear||💡
-exigir|to demand; to require|||☝️
-reclamar|to claim; to complain|||📢
+exigir|to demand; to require|pedir,requerir||☝️
+reclamar|to claim; to complain|quejarse,exigir||📢
 denunciar|to report; to denounce|||🚨
-apoyar|to support|respaldar|to back|🤝
-asumir|to take on; to accept; to assume|||🎒
+apoyar|to support|respaldar,ayudar|to back|🤝
+asumir|to take on; to accept; to assume|aceptar||🎒
 afrontar|to face; to deal with|enfrentarse a|to confront|🥊
-superar|to overcome; to exceed|||🧗
-aprovechar|to make the most of; to take advantage of|||🍀
+superar|to overcome; to exceed|vencer,sobrepasar||🧗
+aprovechar|to make the most of; to take advantage of|sacar partido||🍀
 desperdiciar|to waste|malgastar|to squander|🗑️
 fomentar|to encourage; to promote|promover|to foster|🌱
-influir|to influence|||🧲
-impedir|to prevent; to stop|||⛔
+influir|to influence|afectar||🧲
+impedir|to prevent; to stop|evitar,prevenir||⛔
 comprobar|to check; to verify|verificar|to confirm|✔️
-averiguar|to find out|enterarse||🔍
-enterarse|to find out; to hear about|||👂
-arrepentirse|to regret; to repent|||😔
+averiguar|to find out|enterarse,descubrir||🔍
+enterarse|to find out; to hear about|saber||👂
+arrepentirse|to regret; to repent|lamentar||😔
 atreverse|to dare|||🦁
 equivocarse|to be wrong; to make a mistake|||❌
 acostumbrarse|to get used to|||🔁
-comprometerse|to commit; to get engaged|||💍
+comprometerse|to commit; to get engaged|prometerse||💍
 despedirse|to say goodbye|||👋
 soportar|to stand; to bear; to put up with|aguantar|to tolerate|🏋️
-sospechar|to suspect|||🕵️
-negar|to deny; to refuse|||🙅
+sospechar|to suspect|desconfiar||🕵️
+negar|to deny; to refuse|negarse||🙅
 reconocer|to recognise; to admit|admitir|to acknowledge|👀
-destacar|to stand out; to highlight|||⭐
-señalar|to point out; to indicate|indicar||👉
+destacar|to stand out; to highlight|sobresalir,resaltar,subrayar||⭐
+señalar|to point out; to indicate|indicar,apuntar,mostrar||👉
 mencionar|to mention|||💬
 resumir|to summarise|||📝
-aclarar|to clarify|||💡
-fingir|to pretend; to fake|||🎭
-madrugar|to get up early|||🌅
-trasnochar|to stay up late|||🌙
+aclarar|to clarify|explicar||💡
+fingir|to pretend; to fake|aparentar,hacer como que||🎭
+madrugar|to get up early|levantarse temprano,levantarse pronto||🌅
+trasnochar|to stay up late|acostarse tarde||🌙
 # --- adjectives ---
 imprescindible|essential; indispensable|esencial,fundamental|vital|❗
-eficaz|effective|efectivo|efficient|🎯
-escaso|scarce; limited|escasa||🫗
-amplio|wide; broad; spacious|amplia||↔️
-complejo|complex|compleja|complicated|🧩
-evidente|obvious; evident|obvio|clear|👁️
-dispuesto|willing; ready|dispuesta|prepared|🙋
+eficaz|effective|efectivo,eficiente|efficient|🎯
+escaso|scarce; limited|escasa,limitado||🫗
+amplio|wide; broad; spacious|amplia,ancho,espacioso||↔️
+complejo|complex|compleja,complicado,difícil|complicated|🧩
+evidente|obvious; evident|obvio,claro|clear|👁️
+dispuesto|willing; ready|dispuesta,listo,preparado|prepared|🙋
 capaz|capable; able|||💪
-cotidiano|everyday; daily|cotidiana|routine|☕
+cotidiano|everyday; daily|cotidiana,diario|routine|☕
 gratuito|free; free of charge|gratuita,gratis||🆓
-ajeno|someone else's; alien to|ajena|other people's|👤
-vigente|current; in force|||📜
-polémico|controversial|polémica|contentious|🔥
-llamativo|striking; eye-catching|llamativa|flashy|🌈
-asombroso|amazing; astonishing|asombrosa|astounding|😲
-inesperado|unexpected|inesperada||🎁
-leve|slight; minor; light|||🪶
+ajeno|someone else's; alien to|ajena,de otro,de los demás|other people's|👤
+vigente|current; in force|actual,válido||📜
+polémico|controversial|polémica,controvertido|contentious|🔥
+llamativo|striking; eye-catching|llamativa,vistoso|flashy|🌈
+asombroso|amazing; astonishing|asombrosa,increíble,sorprendente,impresionante|astounding|😲
+inesperado|unexpected|inesperada,imprevisto,sorprendente||🎁
+leve|slight; minor; light|ligero,pequeño||🪶
 urgente|urgent|||🚨
 # --- connectors and adverbs ---
 no obstante|nevertheless; however|sin embargo||↩️
@@ -157,24 +157,24 @@ por lo visto|apparently|al parecer|it seems|👀
 a lo mejor|maybe; perhaps|quizás,tal vez|probably|🤔
 en cuanto|as soon as|tan pronto como||⏱️
 mientras tanto|meanwhile|entretanto|in the meantime|⏳
-a la larga|in the long run|||🛤️
+a la larga|in the long run|con el tiempo||🛤️
 cuanto antes|as soon as possible|lo antes posible|asap|⏩
 de todas formas|anyway; in any case|de todos modos,en cualquier caso|anyhow|🤷
 hoy en día|nowadays|actualmente|these days|📅
-últimamente|lately; recently|||🕰️
-a propósito|on purpose; by the way|adrede|deliberately|🎯
+últimamente|lately; recently|recientemente,estos días||🕰️
+a propósito|on purpose; by the way|adrede,aposta,por cierto|deliberately|🎯
 # --- education and science ---
-la beca|grant; scholarship|||🎓
-la matrícula|enrolment; registration fee|||📝
+la beca|grant; scholarship|la ayuda||🎓
+la matrícula|enrolment; registration fee|la inscripción||📝
 el máster|master's degree|el posgrado|postgraduate degree|🎓
 la oposición|public competitive exam|las oposiciones|civil service exam|📚
-la investigación|research; investigation|||🔬
+la investigación|research; investigation|el estudio||🔬
 el científico|scientist|la científica||🧪
 el experimento|experiment|||⚗️
 la teoría|theory|||📐
 el descubrimiento|discovery|el hallazgo||🔍
-el invento|invention|||💡
-el dato|piece of data; fact|los datos|figure|📊
+el invento|invention|el descubrimiento||💡
+el dato|piece of data; fact|los datos,la información,la cifra|figure|📊
 el porcentaje|percentage|||💯
 la media|average|el promedio|mean|📏
 # --- crime and justice ---
@@ -185,9 +185,9 @@ la víctima|victim|||🩹
 el testigo|witness|la testigo||👁️
 el juez|judge|la jueza||🧑‍⚖️
 la cárcel|prison; jail|la prisión||⛓️
-la multa|fine|||🎫
-la denuncia|police report; complaint|||📋
-el acusado|defendant; accused|la acusada||🙍
+la multa|fine|la sanción||🎫
+la denuncia|police report; complaint|la queja||📋
+el acusado|defendant; accused|la acusada,el procesado||🙍
 culpable|guilty|||👉
 inocente|innocent|||😇
 # --- arts and culture ---
@@ -196,22 +196,22 @@ la escena|scene; stage|el escenario||🎬
 el público|audience; public|los espectadores||👏
 el estreno|premiere; release|||🎟️
 la crítica|criticism; review; critics|la reseña||✍️
-el guion|script|||📜
-el director|director; head|la directora|manager|🎬
+el guion|script|el libreto||📜
+el director|director; head|la directora,el jefe|manager|🎬
 el poema|poem|la poesía||🪶
 el pintor|painter|la pintora|artist|🎨
 la escultura|sculpture|||🗿
 el patrimonio|heritage|||🏛️
 # --- home and daily life ---
-la reforma|renovation; reform|||🔨
+la reforma|renovation; reform|las obras,la renovación||🔨
 la comunidad de vecinos|residents' association|la comunidad||🏢
 la calefacción|heating|||🔥
 el aire acondicionado|air conditioning|||❄️
 el electrodoméstico|household appliance|||🔌
-el enchufe|plug; socket|||🔌
+el enchufe|plug; socket|la toma de corriente||🔌
 la bombilla|light bulb|||💡
 el grifo|tap|||🚰
-la avería|breakdown; fault|||🛠️
+la avería|breakdown; fault|el fallo,el problema||🛠️
 el fontanero|plumber|la fontanera||🔧
 el trámite|procedure; formality|el papeleo|paperwork|📂
 la cola|queue|la fila|line|🧍
@@ -225,29 +225,29 @@ el ex|ex|la ex|ex-partner|💔
 el cuñado|brother-in-law|la cuñada|sister-in-law|👥
 el suegro|father-in-law|la suegra|mother-in-law|👴
 el yerno|son-in-law|la nuera|daughter-in-law|👥
-el compromiso|commitment; engagement|||💍
+el compromiso|commitment; engagement|la obligación||💍
 la discusión|argument; discussion|la pelea|row|🗯️
 la reconciliación|reconciliation|||🤝
 el apoyo|support|el respaldo||🤝
-el malestar|discomfort; unease|||😣
+el malestar|discomfort; unease|la incomodidad,la inquietud||😣
 # --- more verbs ---
 proporcionar|to provide|facilitar,ofrecer|to supply|📦
-mantener|to maintain; to keep; to support|||🧰
-sostener|to hold; to support; to maintain|||🤲
+mantener|to maintain; to keep; to support|conservar,guardar||🧰
+sostener|to hold; to support; to maintain|aguantar,sujetar||🤲
 añadir|to add|agregar||➕
 sustituir|to replace; to substitute|reemplazar||🔄
 adaptarse|to adapt|||🦎
 enfrentarse|to face; to confront|afrontar||🥊
-comunicar|to communicate; to inform|informar||📣
+comunicar|to communicate; to inform|informar,avisar,decir||📣
 expresar|to express|||💬
-demostrar|to show; to prove|||✅
-valorar|to value; to assess|apreciar|to appreciate|💎
-criticar|to criticise|||👎
-elogiar|to praise|alabar||👏
+demostrar|to show; to prove|mostrar,probar,enseñar||✅
+valorar|to value; to assess|apreciar,evaluar|to appreciate|💎
+criticar|to criticise|censurar||👎
+elogiar|to praise|alabar,halagar||👏
 tratar de|to try to; to be about|intentar|to deal with|🎯
-contar con|to count on; to have|||🤝
+contar con|to count on; to have|tener,confiar en||🤝
 fiarse|to trust|confiar||🤝
-agradecer|to thank; to be grateful for|||🙏
+agradecer|to thank; to be grateful for|dar las gracias||🙏
 detenerse|to stop|pararse||✋
-retrasarse|to be late; to be delayed|||⏰
-investigar|to investigate; to research|||🔍
+retrasarse|to be late; to be delayed|llegar tarde||⏰
+investigar|to investigate; to research|estudiar,indagar||🔍
