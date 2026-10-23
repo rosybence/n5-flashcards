@@ -2089,7 +2089,7 @@ function listenWeb(lang,ms,onHeard){return new Promise(res=>{
   try{rec=new SR()}catch(e){return finish(null)}
   curRec=rec;rec.lang=lang;rec.interimResults=true;rec.maxAlternatives=5;rec.continuous=false;
   rec.onresult=e=>{for(let i=e.resultIndex;i<e.results.length;i++){const r=e.results[i];if(r.isFinal){for(let j=0;j<r.length;j++)alts.push(r[j].transcript)}else interim=r[0].transcript}onHeard&&onHeard(alts[0]||interim)};
-  rec.onerror=e=>{if(/not-allowed|service-not-allowed|audio-capture/.test(e.error)){micBlocked=true;showMicNote();finish(null)}};
+  rec.onerror=e=>{if(e.error==='network'){micErr='network'}if(/not-allowed|service-not-allowed|audio-capture/.test(e.error)){micErr=e.error;micBlocked=true;showMicNote();finish(null)}};
   rec.onend=()=>finish(alts.length?alts:interim?[interim]:[]);
   t=setTimeout(()=>{try{rec.stop()}catch(e){}t=setTimeout(()=>finish(alts.length?alts:interim?[interim]:[]),900)},ms);
   try{rec.start()}catch(e){finish(null)}
@@ -2369,9 +2369,17 @@ $('pocketBtn').onclick=pocketOn;
 document.addEventListener('visibilitychange',()=>{if(walking&&document.visibilityState==='hidden'){stopWalk();status('Walk mode stopped because the screen locked — use pocket mode instead')}});
 document.addEventListener('visibilitychange',async()=>{if(walking&&document.visibilityState==='visible'&&!wake){try{wake=await navigator.wakeLock.request('screen')}catch(e){}}});
 
+let micErr='';
 function showMicNote(){const n=$('micNote');n.hidden=false;
-  n.innerHTML=SR?'<strong>Speaking back is blocked in this view.</strong> Open the file version of this app in Chrome or Safari to answer by voice. Everything else works here.':
-  '<strong>This browser can’t listen.</strong> Use Chrome (Android, desktop) or Safari (iPhone) to answer by voice. You can still study by tapping.';render()}
+  let msg;
+  if(!SR&&!NAT)msg='<strong>This browser can’t listen.</strong> Use Chrome (Android) or Safari (iPhone) to answer by voice. You can still study by tapping.';
+  else if(micErr==='audio-capture')msg='<strong>The microphone is busy.</strong> Another app may be using it (for example the Android version of this app, a call or a voice recorder). Close it, then tap Try again.';
+  else if(micErr==='network')msg='<strong>Speech recognition needs internet.</strong> Check your signal, then tap Try again.';
+  else if(NAT)msg='<strong>The app isn’t allowed to use the microphone.</strong> Go to phone Settings → Apps → this app → Permissions → Microphone → Allow, then tap Try again.';
+  else msg='<strong>Chrome isn’t allowed to use the microphone on this page.</strong> Tap the icon left of the web address → Permissions → Microphone → Allow. Also check phone Settings → Apps → Chrome → Permissions → Microphone. Then tap Try again.';
+  n.innerHTML=msg+'<div class="row" style="margin-top:8px"><button class="btn" id="micRetry">Try again</button></div>';
+  $('micRetry').onclick=()=>{micBlocked=false;micErr='';n.hidden=true;render()};
+  render()}
 if(micBlocked)showMicNote();
 
 show();
