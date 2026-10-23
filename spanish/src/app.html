@@ -521,7 +521,8 @@ function phraseOn(c){if(!c||!c.ph||S.set.dir!=='ej'||c.type!=='w')return false;
 function setPhrase(c,on){S.phr=S.phr||{};S.miss=S.miss||{};if(on)S.phr[c.id]=1;else{delete S.phr[c.id];S.miss[c.id]=0}save()}
 function noteMiss(c){S.miss=S.miss||{};S.miss[c.id]=(S.miss[c.id]||0)+1;save();return S.miss[c.id]}
 function canSwitch(c){return c&&c.ph&&S.set.dir==='ej'&&c.type==='w'&&(S.set.phraseMode||'auto')==='auto'&&!phraseOn(c)}
-const phWords=s=>s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9ñ ]+/g,' ').split(/\s+/).filter(Boolean);
+const NUMW='cero uno dos tres cuatro cinco seis siete ocho nueve diez once doce trece catorce quince dieciseis diecisiete dieciocho diecinueve veinte'.split(' ');
+const phWords=s=>s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9ñ ]+/g,' ').split(/\s+/).filter(Boolean).map(w=>/^\d+$/.test(w)&&+w<=20?NUMW[+w]:w);
 function wordHit(h,t){return h===t||phonEs(h)===phonEs(t)||(S.set.check!=='strict'&&softNear(phonEs(h),phonEs(t)))}
 // right if the card's word is in what you said and most of the phrase is there too
 function judgePhrase(c,heard){
@@ -534,7 +535,11 @@ function judgePhrase(c,heard){
     const rest=exp.filter(e=>!tgt.includes(e));
     const found=rest.filter(e=>H.some(w=>wordHit(w,e)||(w.length>3&&e.length>3&&w.slice(0,4)===e.slice(0,4)))).length;
     const ok=hasT&&(!rest.length||found/rest.length>=.5||H.length<=tgt.length+1);
-    if(ok)lastHit={i,said:h,ans:plainPh(c.ph[0]),exact:phWords(h).join(' ')===exp.join(' ')};
+    if(ok){// exact if it's the phrase word for word, with the card's word or one of its accepted alternatives
+      const hs=H.join(' '),ti=exp.findIndex(e=>e===tgt[0]);
+      const vars=opts.map(o=>ti<0?exp:[...exp.slice(0,ti),...o,...exp.slice(ti+tgt.length)]);
+      const hit=vars.find(v=>v.join(' ')===hs||phonEs(v.join(' '))===phonEs(hs));
+      lastHit={i,said:h,ans:hit?h:plainPh(c.ph[0]),exact:!!hit}}
     return ok});
 }
 
