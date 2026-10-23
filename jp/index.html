@@ -251,6 +251,8 @@ button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outlin
     <label>Reading above kanji <select id="sRuby"><option value="romaji">Romaji</option><option value="kana">Hiragana</option><option value="none">None</option></select></label>
     <label>N5 cards <select id="sTypes"><option value="both">Words and phrases</option><option value="words">Words only</option><option value="phrases">Phrases only</option></select></label>
     <label id="srModeRow" hidden>Speech recognition <select id="sSrMode"><option value="chrome">Like Chrome</option><option value="search">Short words (voice search)</option></select></label>
+    <label>Scheduling <select id="sAlgo"><option value="fsrs">FSRS (recommended)</option><option value="sm2">Classic (SM-2)</option></select></label>
+    <label>Target memory <select id="sRet"><option value="0.85">85% · fewer reviews</option><option value="0.9">90%</option><option value="0.95">95% · more reviews</option></select></label>
     <label>New cards per day <select id="sNew"><option>5</option><option>10</option><option>15</option><option>20</option><option>30</option></select></label>
     <label>Time to answer (walk mode) <select id="sGap"><option value="4">4 s</option><option value="6">6 s</option><option value="8">8 s</option><option value="10">10 s</option></select></label>
     <label>Japanese voice speed <select id="sRate"><option value="0.7">Slow</option><option value="0.85">Relaxed</option><option value="1">Natural</option></select></label>
@@ -1986,7 +1988,60 @@ rollDay();
 const MIN=60e3,DAY=864e5,STEPS=[1,10];
 const ck=c=>S.set.dir+':'+c.id;
 const st=c=>S.cards[ck(c)];
-function schedule(cs,g,now){
+/* ---------- FSRS-6 spaced repetition (ported from open-spaced-repetition/ts-fsrs, MIT) ---------- */
+const FW=[0.212,1.2931,2.3065,8.2956,6.4133,0.8334,3.0194,0.001,1.8722,0.1666,0.796,1.4835,0.0614,0.2629,1.6483,0.6014,1.8729,0.5425,0.0912,0.0658,0.1542];
+const F_DECAY=-FW[20],F_FACTOR=Math.round((Math.exp(Math.log(0.9)/F_DECAY)-1)*1e8)/1e8;
+const fClamp=(x,a,b)=>Math.min(Math.max(x,a),b);
+const fRound=x=>Math.round(x*1e8)/1e8;
+const fRetr=(t,s)=>fRound(Math.pow(1+F_FACTOR*t/s,F_DECAY));
+const fInitS=g=>fClamp(FW[g-1],0.001,36500);
+const fInitD=g=>fRound(FW[4]-Math.exp((g-1)*FW[5])+1);
+function fNextD(d,g){const nd=d+fRound((-FW[6]*(g-3))*(10-d)/9);return fClamp(fRound(FW[7]*fInitD(4)+(1-FW[7])*nd),1,10)}
+function fRecallS(d,s,r,g){return fRound(fClamp(s*(1+Math.exp(FW[8])*(11-d)*Math.pow(s,-FW[9])*(Math.exp((1-r)*FW[10])-1)*(g===2?FW[15]:1)*(g===4?FW[16]:1)),0.001,36500))}
+function fForgetS(d,s,r){const sf=fRound(fClamp(FW[11]*Math.pow(d,-FW[12])*(Math.pow(s+1,FW[13])-1)*Math.exp((1-r)*FW[14]),0.001,36500));
+  return fClamp(fRound(s/Math.exp(FW[17]*FW[18])),0.001,sf)}
+function fShortS(s,g){let k=Math.pow(s,-FW[19])*Math.exp(FW[17]*(g-3+FW[18]));if(g>=2)k=Math.max(k,1);return fRound(fClamp(s*k,0.001,36500))}
+// memory state after a review t days after the previous one, grade g (1 Again .. 4 Easy)
+function fNextState(st,t,g){
+  if(!st)return{s:fInitS(g),d:fClamp(fInitD(g),1,10)};
+  const r=fRetr(t,st.s);let s;
+  if(t===0)s=fShortS(st.s,g);else if(g===1)s=fForgetS(st.d,st.s,r);else s=fRecallS(st.d,st.s,r,g);
+  return{s,d:fNextD(st.d,g)};
+}
+const fIvl=(s,ret)=>Math.max(Math.round((s/F_FACTOR)*(Math.pow(ret,1/F_DECAY)-1)),1);
+
+const dayNo=ts=>Math.floor((ts-new Date(ts).getTimezoneOffset()*60000)/DAY);   // local calendar day
+// memory state; cards studied before FSRS start from their SM-2 interval and ease
+function fState(cs){
+  if(cs&&cs.fs>0)return{s:cs.fs,d:cs.fd};
+  if(cs&&!cs.learning&&cs.ivl>0)return{s:Math.max(cs.ivl,0.1),d:fClamp(5+(2.5-(cs.ease||2.5))*4,1,10)};
+  return null;
+}
+function scheduleFSRS(prev,g,now){
+  const G=g+1,ret=+S.set.retention||0.9;
+  const cs=prev?{...prev}:{ivl:0,ease:2.5,reps:0,lapses:0,step:0,learning:true};
+  const st0=fState(prev);
+  const last=prev&&(prev.last||(prev.due&&prev.ivl?prev.due-prev.ivl*DAY:0));
+  const t=st0&&last?Math.max(0,dayNo(now)-dayNo(last)):0;
+  const st=fNextState(st0,t,G);
+  cs.fs=st.s;cs.fd=st.d;cs.last=now;cs.reps=(cs.reps||0)+1;cs.ease=cs.ease||2.5;
+  if(cs.learning){
+    // learning steps (1 min, 10 min) as before, then FSRS takes over
+    if(G===1){cs.step=0;cs.due=now+STEPS[0]*MIN}
+    else if(G===2){cs.due=now+Math.round(STEPS[Math.min(cs.step,STEPS.length-1)]*1.5)*MIN}
+    else if(G===3){cs.step++;if(cs.step>=STEPS.length){cs.learning=false;cs.ivl=fIvl(st.s,ret);cs.due=now+cs.ivl*DAY}else cs.due=now+STEPS[cs.step]*MIN}
+    else{cs.learning=false;const good=fIvl(fNextState(st0,t,3).s,ret);cs.ivl=Math.max(fIvl(st.s,ret),good+1);cs.due=now+cs.ivl*DAY}
+  }else if(G===1){cs.lapses=(cs.lapses||0)+1;cs.learning=true;cs.step=1;cs.ivl=fIvl(st.s,ret);cs.due=now+STEPS[1]*MIN}
+  else{
+    // Hard < Good < Easy, at least a day apart (as in the reference scheduler)
+    const iv=[2,3,4].map(x=>fIvl(fNextState(st0,t,x).s,ret));
+    const a=Math.min(iv[0],36500),b=Math.min(Math.max(iv[1],a+1),36500),c=Math.min(Math.max(iv[2],b+1),36500);
+    cs.ivl=[a,b,c][G-2];cs.due=now+cs.ivl*DAY;
+  }
+  return cs;
+}
+function schedule(cs,g,now){return S.set.algo==='sm2'?scheduleSM2(cs,g,now):scheduleFSRS(cs,g,now)}
+function scheduleSM2(cs,g,now){
   cs=cs?{...cs}:{ivl:0,ease:2.5,reps:0,lapses:0,step:0,learning:true};
   cs.reps++;
   if(cs.learning){
@@ -2006,7 +2061,7 @@ function schedule(cs,g,now){
   return cs;
 }
 function fmt(ms){const m=ms/MIN;if(m<60)return Math.max(1,Math.round(m))+'m';const h=m/60;if(h<24)return Math.round(h)+'h';const d=h/24;if(d<30)return Math.round(d)+'d';return (d/30).toFixed(1).replace('.0','')+'mo'}
-function grade(c,g){const isNew=!st(c);gradeBase(c,g);logReview(g,isNew)}
+function grade(c,g){const isNew=!st(c);gradeBase(c,g);logReview(g,isNew);(S.revlog=S.revlog||[]).push([ck(c),Date.now(),g]);if(S.revlog.length>20000)S.revlog.splice(0,S.revlog.length-20000);save()}
 function gradeBase(c,g){
   rollDay();const now=Date.now();
   if(!st(c))S.newDone[S.set.dir]++;
@@ -2266,6 +2321,8 @@ $('dJE').onclick=()=>setDir('je');$('dEJ').onclick=()=>setDir('ej');
 const bind=(id,key,num)=>{const el=$(id);el.value=String(S.set[key]);el.onchange=()=>{S.set[key]=num?+el.value:el.value;save();render()}};
 bind('sRuby','ruby');$('sTypes').value=S.set.types;$('sTypes').onchange=()=>{S.set.types=$('sTypes').value;save();if(walking)stopWalk();lastId=null;show()};bind('sNew','newPerDay',1);bind('sGap','gap',1);bind('sRate','rate',1);bind('sAuto','auto',1);
 $('srModeRow').hidden=!(NAT&&NAT.listenWith);$('sSrMode').value=S.set.srMode==='search'?'search':'chrome';$('sSrMode').onchange=()=>{S.set.srMode=$('sSrMode').value;save()};
+$('sAlgo').value=S.set.algo==='sm2'?'sm2':'fsrs';$('sAlgo').onchange=()=>{S.set.algo=$('sAlgo').value;save();render()};
+$('sRet').value=String(S.set.retention||0.9);$('sRet').onchange=()=>{S.set.retention=+$('sRet').value;save();render()};
 $('setBtn').onclick=()=>{const s=$('settings');s.hidden=!s.hidden;if(!s.hidden)fillVoices();$('setBtn').setAttribute('aria-expanded',!s.hidden)};
 let resetArmed=false;
 $('reset').onclick=()=>{if(!resetArmed){resetArmed=true;$('reset').textContent='Tap again to erase all progress';setTimeout(()=>{resetArmed=false;$('reset').textContent='Reset all progress'},4000);return}
