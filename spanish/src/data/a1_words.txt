@@ -18,15 +18,15 @@ la gente|people|las personas||👥
 el amigo|friend (male)|~el colega,el compañero|mate,pal|🧑‍🤝‍🧑
 la amiga|friend (female)|la compañera|mate|🧑‍🤝‍🧑
 la familia|family|||👨‍👩‍👧
-el padre|father|~el papá|dad|👨
-la madre|mother|~la mamá|mum,mom|👩
+el padre|father|el papá|dad|👨
+la madre|mother|la mamá|mum,mom|👩
 los padres|parents|||👫
 el hijo|son|||👦
 la hija|daughter|||👧
 el hermano|brother|||👦
 la hermana|sister|||👧
-el abuelo|grandfather|~el abuelito|grandad,grandpa|👴
-la abuela|grandmother|~la abuelita|grandma,granny|👵
+el abuelo|grandfather|el abuelito|grandad,grandpa|👴
+la abuela|grandmother|la abuelita|grandma,granny|👵
 el marido|husband|el esposo||🤵
 la esposa|wife|la mujer||👰
 el novio|boyfriend|||💑
@@ -123,7 +123,7 @@ la silla|chair|||🪑
 la cama|bed|||🛏️
 el sofá|sofa|||🛋️|couch
 la llave|key|||🔑
-el coche|car|~el auto,el automóvil,el carro|automobile|🚗
+el coche|car|el auto,el automóvil,el carro|automobile|🚗
 el autobús|bus|el bus||🚌
 el tren|train|||🚆
 el metro|underground; metro|||🚇|tube,subway
@@ -165,7 +165,7 @@ el café|coffee|||☕
 el té|tea|||🍵
 la leche|milk|||🥛
 el zumo|juice|el jugo||🧃
-la cerveza|beer|~la caña||🍺
+la cerveza|beer|la caña||🍺
 el vino|wine|||🍷
 el pan|bread|||🍞
 el queso|cheese|||🧀
@@ -354,6 +354,6 @@ sí|yes|||✅
 no|no; not|||❌
 hola|hello|~buenas,buenos días,buenas tardes|hi|👋
 adiós|goodbye|~chao,~chau,hasta luego,hasta pronto,nos vemos|bye|👋
-gracias|thank you|~muchas gracias,mil gracias|thanks|🙏
+gracias|thank you|muchas gracias,mil gracias|thanks|🙏
 por favor|please|||🙏
 perdón|sorry; excuse me|perdona,perdone,disculpe,lo siento,disculpa|pardon|🙇

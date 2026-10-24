@@ -2,10 +2,10 @@
 buenos días|good morning|~buenas||🌅
 buenas tardes|good afternoon; good evening|~buenas||🌇
 buenas noches|good night; good evening|||🌙
-¿Qué tal?|how are you?; how's it going?|~¿cómo estás?,~¿cómo va?,¿cómo te va?|how are things|🙂
-¿Cómo estás?|how are you? (informal)|~¿qué tal?,¿cómo está usted?|how are you|🙂
+¿Qué tal?|how are you?; how's it going?|¿cómo estás?,~¿cómo va?,¿cómo te va?|how are things|🙂
+¿Cómo estás?|how are you? (informal)|¿qué tal?,¿cómo está usted?|how are you|🙂
 ¿Cómo está usted?|how are you? (formal)|¿cómo está?|how are you|🙂
-Estoy bien, gracias.|I'm fine, thanks.|bien gracias,~muy bien,muy bien gracias,bien y tú|i'm well thanks,i'm good thanks|👍
+Estoy bien, gracias.|I'm fine, thanks.|bien gracias,muy bien,muy bien gracias,bien y tú|i'm well thanks,i'm good thanks|👍
 ¿Y tú?|and you?|¿y usted?|what about you|👉
 Mucho gusto.|nice to meet you|encantado,encantada,encantado de conocerte,encantada de conocerte,un placer|pleased to meet you|🤝
 ¿Cómo te llamas?|what's your name?|¿cuál es tu nombre?,¿cómo se llama usted?|what is your name|📛
@@ -25,14 +25,14 @@ Más despacio, por favor.|more slowly, please|¿puedes hablar más despacio?,má
 No sé.|I don't know.|ni idea,no lo sé|no idea|🤷
 Lo siento.|I'm sorry.|perdón,perdona,lo siento mucho,disculpa|sorry|🙇
 De nada.|you're welcome|~nada,no hay de qué,a ti|no problem,not at all|😊
-¡Hasta luego!|see you later!|~¡hasta ahora!,~nos vemos,~¡chao!|bye,see you|👋
-¡Hasta mañana!|see you tomorrow!|~hasta mañana|until tomorrow|📅
-Nos vemos.|see you|~¡hasta luego!,~¡hasta pronto!|see you around|👋
+¡Hasta luego!|see you later!|¡hasta ahora!,nos vemos,~¡chao!|bye,see you|👋
+¡Hasta mañana!|see you tomorrow!|hasta mañana|until tomorrow|📅
+Nos vemos.|see you|¡hasta luego!,¡hasta pronto!|see you around|👋
 ¡Que tengas un buen día!|have a good day!|¡buen día!,¡que tenga un buen día!,que pases un buen día|have a nice day|☀️
 Una mesa para dos, por favor.|a table for two, please|para dos por favor|table for two please|🍽️
 La carta, por favor.|the menu, please|el menú por favor,¿me trae la carta?,¿nos trae la carta?,la carta|can i have the menu|📜
-Quiero un café, por favor.|I'd like a coffee, please.|~un café por favor,quería un café,me pone un café,quisiera un café,póngame un café,¿me pones un café?|a coffee please,i want a coffee|☕
-Para mí, una cerveza.|a beer for me|~una caña por favor,una cerveza por favor|i'll have a beer|🍺
+Quiero un café, por favor.|I'd like a coffee, please.|un café por favor,quería un café,me pone un café,quisiera un café,póngame un café,¿me pones un café?|a coffee please,i want a coffee|☕
+Para mí, una cerveza.|a beer for me|una caña por favor,una cerveza por favor|i'll have a beer|🍺
 ¿Me pone un vaso de agua?|could I have a glass of water?|un vaso de agua por favor,¿me da un vaso de agua?,¿me pones un vaso de agua?,¿me puede traer un vaso de agua?|can i have a glass of water,a glass of water please|💧
 La cuenta, por favor.|the bill, please|¿me trae la cuenta?,¿nos trae la cuenta?,¿me cobras?,¿me cobra?|check please,the check please|🧾
 ¿Cuánto cuesta?|how much is it?|¿cuánto es?,¿cuánto vale?|how much does it cost|💶
@@ -47,12 +47,12 @@ Todo recto.|straight on|siga todo recto,recto,todo derecho|straight ahead|⬆️
 ¿Qué hora es?|what time is it?|¿tienes hora?,¿qué hora tienes?|what's the time|🕒
 Son las tres.|it's three o'clock|son las 3|it's three,three o'clock|🕒
 Es la una.|it's one o'clock|es la 1|it's one|🕐
-Me gusta el café.|I like coffee.|~me encanta el café|i like coffee|☕
+Me gusta el café.|I like coffee.|me encanta el café|i like coffee|☕
 No me gusta.|I don't like it.|no me gusta nada,no me gusta mucho|i don't like that|👎
-Tengo hambre.|I'm hungry.|~tengo mucha hambre|i am hungry|🍽️
-Tengo sed.|I'm thirsty.|~tengo mucha sed|i am thirsty|🥤
-Tengo frío.|I'm cold.|~tengo mucho frío|i am cold|🥶
-Tengo calor.|I'm hot.|~tengo mucho calor|i am hot|🥵
+Tengo hambre.|I'm hungry.|tengo mucha hambre|i am hungry|🍽️
+Tengo sed.|I'm thirsty.|tengo mucha sed|i am thirsty|🥤
+Tengo frío.|I'm cold.|tengo mucho frío|i am cold|🥶
+Tengo calor.|I'm hot.|tengo mucho calor|i am hot|🥵
 Estoy cansado.|I'm tired.|estoy cansada,estoy agotado,estoy agotada|i am tired|😮‍💨
 Hace calor.|it's hot (weather)|hace mucho calor|it's hot,it is hot|🥵
 Hace frío.|it's cold (weather)|hace mucho frío|it's cold,it is cold|🥶
@@ -61,6 +61,6 @@ Vivo en Londres.|I live in London.||i'm living in london|🏙️
 Trabajo en una oficina.|I work in an office.||i'm working in an office|🏢
 Estudio español.|I'm studying Spanish.|estoy estudiando español,aprendo español|i study spanish,i'm learning spanish|📚
 ¡Salud!|cheers!|||🥂
-¡Vale!|OK!|~¡de acuerdo!,~¡bueno!,¡venga!|okay,all right|👌
-¡Claro!|of course!|¡por supuesto!,~¡claro que sí!|sure|👍
-¡Qué bien!|great!; how nice!|~¡genial!,~¡qué guay!,¡estupendo!,¡qué bueno!|that's great,brilliant|🎉
+¡Vale!|OK!|¡de acuerdo!,¡bueno!,¡venga!|okay,all right|👌
+¡Claro!|of course!|¡por supuesto!,¡claro que sí!|sure|👍
+¡Qué bien!|great!; how nice!|¡genial!,~¡qué guay!,¡estupendo!,¡qué bueno!|that's great,brilliant|🎉

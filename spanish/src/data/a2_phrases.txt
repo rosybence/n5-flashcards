@@ -9,7 +9,7 @@ Voy a viajar en verano.|I'm going to travel in the summer.|voy a viajar este ver
 ¿Quedamos mañana?|shall we meet up tomorrow?|¿nos vemos mañana?,¿quedamos para mañana?|do you want to meet tomorrow|📍
 ¿A qué hora quedamos?|what time shall we meet?|¿a qué hora nos vemos?|what time are we meeting|⏰
 ¿Te apetece un café?|do you fancy a coffee?|¿quieres tomar un café?,¿tomamos un café?,¿te apetece tomar un café?,¿vamos a tomar un café?|would you like a coffee|☕
-Me encantaría.|I'd love to.|~me encanta la idea,~¡vale!,me encantaría ir,con mucho gusto|i would love to|😍
+Me encantaría.|I'd love to.|me encanta la idea,¡vale!,me encantaría ir,con mucho gusto|i would love to|😍
 Lo siento, no puedo.|sorry, I can't.|no puedo lo siento|i'm sorry i can't|🙇
 Tengo que trabajar.|I have to work.|tengo trabajo,tengo que currar|i've got to work|💼
 Me duele la cabeza.|I have a headache.|tengo dolor de cabeza|my head hurts|🤕
@@ -21,7 +21,7 @@ Tengo una reserva a nombre de…|I have a reservation under the name…|tengo un
 ¿Qué me recomienda?|what do you recommend?|¿qué recomienda?,¿qué me recomiendas?|what would you recommend|🤔
 Soy vegetariano.|I'm vegetarian.|soy vegetariana|i am vegetarian,i'm a vegetarian|🥗
 Soy alérgico a los frutos secos.|I'm allergic to nuts.|soy alérgica a los frutos secos|i am allergic to nuts|🥜
-Estaba muy rico.|it was delicious|~¡qué rico!,estaba buenísimo,estaba delicioso,estaba riquísimo,estaba muy bueno|that was delicious,it was really good|😋
+Estaba muy rico.|it was delicious|¡qué rico!,estaba buenísimo,estaba delicioso,estaba riquísimo,estaba muy bueno|that was delicious,it was really good|😋
 ¿Me lo puedo probar?|can I try it on?|¿puedo probármelo?|may i try it on|👕
 ¿Tiene una talla más grande?|do you have a bigger size?|¿tiene una talla más?,¿tienen una talla más grande?,¿lo tiene en una talla más grande?|have you got a larger size|📏
 Me lo llevo.|I'll take it.|me lo quedo|i'll have it|🛍️
@@ -48,17 +48,17 @@ Me gusta mucho leer.|I really like reading.|me encanta leer,me gusta mucho la le
 En mi tiempo libre juego al fútbol.|in my free time I play football|juego al fútbol en mi tiempo libre|in my spare time i play football,i play soccer in my free time|⚽
 ¿Te gusta?|do you like it?|¿le gusta?|do you like that|👍
 Me gusta más el té.|I prefer tea.|prefiero el té,prefiero té|i like tea more,i like tea better|🍵
-Estoy de acuerdo.|I agree.|~vale,de acuerdo,estoy de acuerdo contigo|i'm in agreement|🤝
+Estoy de acuerdo.|I agree.|vale,de acuerdo,estoy de acuerdo contigo|i'm in agreement|🤝
 No estoy de acuerdo.|I don't agree.|no estoy de acuerdo contigo|i disagree|🙅
 Creo que sí.|I think so.||i believe so|👍
 Creo que no.|I don't think so.||i think not|👎
 ¿Qué te pasa?|what's wrong?|¿qué pasa?,¿qué te ocurre?,¿estás bien?|what's the matter,what's up|😟
-No pasa nada.|it doesn't matter; no problem|~tranquilo,~no te preocupes,no importa,no hay problema|never mind,don't worry|😌
+No pasa nada.|it doesn't matter; no problem|~tranquilo,no te preocupes,no importa,no hay problema|never mind,don't worry|😌
 No te preocupes.|don't worry|no se preocupe,tranquilo,tranquila|no worries|😌
 ¡Que te mejores!|get well soon!|¡que se mejore!,¡mejórate!,¡que te mejores pronto!|hope you feel better|💐
 ¡Feliz cumpleaños!|happy birthday!|||🎂
 ¡Felicidades!|congratulations!|¡enhorabuena!,¡felicitaciones!|congrats|🎉
 ¡Buen viaje!|have a good trip!|¡que tengas buen viaje!,¡que tengas un buen viaje!|safe travels|🧳
-¡Buen provecho!|enjoy your meal!|~¡que aproveche!|bon appetit|🍽️
-¡Qué pena!|what a shame!|~¡qué lástima!|what a pity|😞
-¡Qué rollo!|how boring!; what a drag!|~¡qué aburrido!,~¡qué pesado!|what a pain|😩
+¡Buen provecho!|enjoy your meal!|¡que aproveche!|bon appetit|🍽️
+¡Qué pena!|what a shame!|¡qué lástima!|what a pity|😞
+¡Qué rollo!|how boring!; what a drag!|¡qué aburrido!,~¡qué pesado!|what a pain|😩

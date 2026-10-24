@@ -11,7 +11,7 @@ Me parece que tienes razón.|I think you're right.|creo que tienes razón,creo q
 En mi opinión…|in my opinion…|para mí,desde mi punto de vista,a mi parecer,yo creo que|i think,from my point of view|💬
 Por un lado… por otro lado…|on the one hand… on the other hand…||on one hand on the other hand|⚖️
 No me importa.|I don't mind.|me da igual,me da lo mismo|it doesn't matter to me,i don't care|🤷
-Me da igual.|I don't mind; it's all the same to me|~me da lo mismo,no me importa|i don't care,whatever|🤷
+Me da igual.|I don't mind; it's all the same to me|me da lo mismo,no me importa|i don't care,whatever|🤷
 ¡Ojalá!|I hope so!; if only!|ojalá que sí|let's hope so|🤞
 ¿Te importa si abro la ventana?|do you mind if I open the window?|¿puedo abrir la ventana?,¿te molesta si abro la ventana?|is it okay if i open the window|🪟
 ¿Podrías ayudarme?|could you help me?|¿me podrías ayudar?,¿me puede ayudar?,¿me ayudas?,¿puedes ayudarme?|can you help me|🆘
@@ -19,7 +19,7 @@ Me da igual.|I don't mind; it's all the same to me|~me da lo mismo,no me importa
 Te echo de menos.|I miss you.|te extraño|i've missed you|💭
 Tengo ganas de verte.|I'm looking forward to seeing you.|tengo muchas ganas de verte|i can't wait to see you|🤩
 Me alegro de verte.|I'm glad to see you.|qué alegría verte,me alegra verte,qué bien verte|good to see you,nice to see you|😄
-¡Cuánto tiempo!|long time no see!|~¡cuánto tiempo sin verte!|it's been ages|🤗
+¡Cuánto tiempo!|long time no see!|¡cuánto tiempo sin verte!|it's been ages|🤗
 Vale la pena.|it's worth it|merece la pena|it is worth it|👍
 No vale la pena.|it's not worth it|no merece la pena|it isn't worth it|👎
 Depende.|it depends|depende de|that depends|🤷
@@ -29,15 +29,15 @@ Tienes razón.|you're right|tiene razón,llevas razón|you are right|👍
 No tienes razón.|you're wrong|estás equivocado,estás equivocada,te equivocas,no llevas razón|you are wrong|👎
 Lo que pasa es que…|the thing is…|el caso es que|what happens is that|💬
 Es que…|it's just that…|||the thing is|💬
-O sea…|I mean…; in other words…|~es decir|that is to say|💬
+O sea…|I mean…; in other words…|es decir|that is to say|💬
 Por cierto…|by the way…|a propósito||incidentally|💡
-Menos mal.|thank goodness; just as well|~menos mal que,gracias a dios|phew,lucky|😅
-¡Qué suerte!|how lucky!|~¡qué suerte tienes!|lucky you|🍀
+Menos mal.|thank goodness; just as well|menos mal que,gracias a dios|phew,lucky|😅
+¡Qué suerte!|how lucky!|¡qué suerte tienes!|lucky you|🍀
 ¡Qué vergüenza!|how embarrassing!|¡qué corte!,¡qué bochorno!||so embarrassing|😳
 ¡Ni idea!|no idea!|no tengo ni idea|i've no idea,i have no idea|🤷
-¡No me digas!|you don't say!; really?|¿en serio?,~¿de verdad?,¡anda!|no way,really|😮
-¡Qué fuerte!|no way!; that's crazy!|~¡qué fuerte!,~¡madre mía!|that's unbelievable,wow|😱
-¡Madre mía!|oh my goodness!|~¡Dios mío!|oh my god,my goodness|😱
+¡No me digas!|you don't say!; really?|¿en serio?,¿de verdad?,¡anda!|no way,really|😮
+¡Qué fuerte!|no way!; that's crazy!|¡qué fuerte!,¡madre mía!|that's unbelievable,wow|😱
+¡Madre mía!|oh my goodness!|¡Dios mío!|oh my god,my goodness|😱
 ¡Ánimo!|cheer up!; come on, you can do it!|~¡venga!,¡tú puedes!|keep going,chin up|💪
 ¡Que te vaya bien!|all the best!; good luck!|¡que le vaya bien!,¡suerte!,¡mucha suerte!|take care|🍀
 Quisiera hacer una reclamación.|I'd like to make a complaint.|quiero poner una reclamación,quiero hacer una queja|i want to complain,i would like to make a complaint|📝
