@@ -812,16 +812,31 @@ function parseCmd(t){t=' '+t.toLowerCase().replace(/[^a-z' áéíóúñ]+/g,' ')
 function commandWindow(flipLabel,ms){return new Promise(res=>{
   const box=$('grace');box.hidden=false;
   box.innerHTML=`<button class="btn" data-c="repeat">↻ Repeat</button><button class="btn" data-c="flip">${flipLabel}</button><button class="btn primary" data-c="next">Next →</button>`;
-  let done=false,t;const fin=v=>{if(done)return;done=true;clearTimeout(t);box.hidden=true;graceRes=null;abortListening();res(v)};
+  let done=false,t,deadline=Date.now()+ms;
+  const fin=v=>{if(done)return;done=true;clearTimeout(t);box.hidden=true;graceRes=null;abortListening();res(v)};
+  const arm=()=>{clearTimeout(t);t=setTimeout(()=>fin(null),Math.max(0,deadline-Date.now()))};
   graceRes=fin;box.onclick=e=>{const b=e.target.closest('[data-c]');if(b)fin(b.dataset.c)};
-  t=setTimeout(()=>fin(null),ms);
-  if(!micBlocked)listen('en-GB',ms-300).then(h=>{if(h&&h.length){const c=parseCmd(h.join(' '));if(c)fin(c)}});
+  arm();
+  if(micBlocked)return;
+  cue();
+  // the phone's recogniser stops after a short silence: keep restarting it until the window ends,
+  // give you more time as soon as you start talking, and act the moment a command is recognised
+  (async()=>{while(!done&&deadline-Date.now()>400){
+    const h=await listen('en-GB',deadline-Date.now(),x=>{if(!x||done)return;const c=parseCmd(x);if(c)return fin(c);
+      deadline=Math.max(deadline,Date.now()+3000);arm()});
+    if(done||h===null)return;
+    if(h&&h.length){const c=parseCmd(h.join(' '));if(c)return fin(c);deadline=Math.max(deadline,Date.now()+1500);arm()}
+  }})();
 })}
+// a soft tick: "I'm listening for a command now"
+function cue(){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();const o=actx.createOscillator(),g=actx.createGain(),n=actx.currentTime;
+  o.frequency.value=1320;g.gain.setValueAtTime(0.0001,n);g.gain.exponentialRampToValueAtTime(0.08,n+0.01);g.gain.exponentialRampToValueAtTime(0.0001,n+0.12);
+  o.connect(g).connect(actx.destination);o.start(n);o.stop(n+0.13)}catch(e){}}
 async function replay(){const pr=promptOf(cur),an=answerOf(cur);await speak(pr[0],pr[1]);await wait(700);if(walking)await speak(an[0],an[1])}
 async function afterAnswer(ok){
   for(let i=0;i<6&&walking;i++){
     status((ok?'Marked right':'Marked wrong')+' — say “say it again”, “'+(ok?'I was wrong':'I was right')+'” or “next card”');
-    const c=await commandWindow(ok?'✗ I got it wrong':'✓ I was right',micBlocked?3500:7000);
+    const c=await commandWindow(ok?'✗ I got it wrong':'✓ I was right',micBlocked?3500:6000);
     if(!walking)return ok;
     if(c==='repeat'){status('Repeating…');await replay();continue}
     if(c==='flip')ok=!ok;else if(c==='wrong')ok=false;else if(c==='right')ok=true;
