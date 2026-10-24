@@ -213,6 +213,10 @@ button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outlin
 .feedback .fbl{display:inline-block;min-width:68px;font-size:12px;color:var(--muted)}
 .feedback .dw{color:var(--bad);font-weight:700;text-decoration:underline;text-underline-offset:3px}
 .feedback .fbsub{display:block;margin-top:5px;font-size:12.5px;color:var(--muted)}
+#pocket{-webkit-touch-callout:none}
+#pocket.holding p{color:#8a8a8a;transition:color 1.4s linear}
+#pocket.holding::after{content:'';position:absolute;left:0;bottom:0;height:3px;width:100%;background:#3a3a3a;transform-origin:left;animation:pkfill 1.5s linear forwards}
+@keyframes pkfill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 </style>
 
 <div class="app">
@@ -323,7 +327,7 @@ button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outlin
     <button class="btn primary" id="walkBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="4" r="1.6"/><path d="M10 21l2-6-2.5-2.5L11 8l4 3 3 1M9.5 12.5L7 14M12 15l3 2 1 4"/></svg><span>Start walk mode</span></button>
     <button class="btn" id="pocketBtn" hidden>Black screen (pocket mode)</button>
   </div>
-  <div id="pocket" hidden><p id="pocketStatus"></p><p>Hold anywhere for 2 seconds to show the screen</p></div>
+  <div id="pocket" hidden><p id="pocketStatus"></p><p>Hold anywhere for a second and a half to show the screen</p></div>
 
   <div class="notice" id="micNote" hidden></div>
 </div>
@@ -2448,9 +2452,15 @@ function status(t){$('wStatus').textContent=t;const p=$('pocketStatus');if(p)p.t
 // pocket mode: black screen that ignores touches; hold 2 s to exit
 function pocketOn(){try{NAT&&NAT.immersive(true)}catch(e){}$('pocket').hidden=false;try{document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen().catch(()=>{})}catch(e){}}
 function pocketOff(){try{NAT&&NAT.immersive(false)}catch(e){}$('pocket').hidden=true;try{document.fullscreenElement&&document.exitFullscreen()}catch(e){}}
-{let ht;const pk=()=>$('pocket');
- document.addEventListener('pointerdown',e=>{if(pk().hidden||!pk().contains(e.target))return;e.preventDefault();clearTimeout(ht);ht=setTimeout(pocketOff,2000)},true);
- ['pointerup','pointercancel','pointerleave'].forEach(t=>document.addEventListener(t,()=>clearTimeout(ht),true));
+{let ht=null,fingers=0;const pk=()=>$('pocket');
+ // hold to exit: only lifting your finger cancels it (Android's long-press 'cancel' and small movements don't)
+ const start=e=>{if(pk().hidden||!pk().contains(e.target))return;e.preventDefault();fingers++;if(ht)return;
+   pk().classList.add('holding');ht=setTimeout(()=>{ht=null;pk().classList.remove('holding');try{navigator.vibrate&&navigator.vibrate(40)}catch(_){}pocketOff()},1500)};
+ const end=e=>{if(e.touches&&e.touches.length)return;fingers=0;if(ht){clearTimeout(ht);ht=null}pk().classList.remove('holding')};
+ document.addEventListener('touchstart',start,{capture:true,passive:false});
+ document.addEventListener('mousedown',start,true);
+ document.addEventListener('touchend',end,true);document.addEventListener('mouseup',end,true);
+ document.addEventListener('contextmenu',e=>{if(!pk().hidden)e.preventDefault()},true);
  document.addEventListener('click',e=>{if(!pk().hidden&&pk().contains(e.target)){e.preventDefault();e.stopPropagation()}},true)}
 function grace(label,ms){return new Promise(res=>{
   const box=$('grace');box.hidden=false;box.innerHTML=`<button class="btn" id="gBtn">${label}</button>`;
