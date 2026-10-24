@@ -1,0 +1,121 @@
+# card (as on the card) | Japanese sentence with [target as said] | kana reading of the target as said | English with [word]
+人|あの[人]は先生です。|ひと|That [person] is a teacher.
+医者|父は[医者]です。|いしゃ|My father is a [doctor].
+父|[父]は会社員です。|ちち|My [father] is an office worker.
+母|[母]は料理が上手です。|はは|My [mother] is good at cooking.
+兄|[兄]は東京に住んでいます。|あに|My [older brother] lives in Tokyo.
+姉|[姉]は大学生です。|あね|My [older sister] is a university student.
+一|[一]時に会いましょう。|いち|Let's meet at [one] o'clock.
+二|[二]時に会いましょう。|に|Let's meet at [two] o'clock.
+三|[三]月に日本へ行きます。|さん|I'm going to Japan in [March].
+四|これは[四]百円です。|よん|This is [four] hundred yen.
+五|[五]分待ってください。|ご|Please wait [five] minutes.
+六|[六]時に起きます。|ろく|I get up at [six] o'clock.
+七|これは[七]百円です。|なな|This is [seven] hundred yen.
+八|[八]時に学校へ行きます。|はち|I go to school at [eight] o'clock.
+九|これは[九]百円です。|きゅう|This is [nine] hundred yen.
+十|この飴は[十]円です。|じゅう|This sweet is [ten] yen.
+百|これは[百]円です。|ひゃく|This is [a hundred] yen.
+千|[千]円あります。|せん|I have [a thousand] yen.
+万|一[万]円です。|まん|It's [ten thousand] yen.
+円|このパンは二百[円]です。|えん|This bread is two hundred [yen].
+日|[日]が出ました。|ひ|The [sun] has come out.
+月|今日は[月]がきれいです。|つき|The [moon] is beautiful tonight.
+今|[今]、何時ですか。|いま|What time is it [now]?
+今日|[今日]は暑いですね。|きょう|It's hot [today], isn't it?
+朝|[朝]、コーヒーを飲みます。|あさ|I drink coffee in the [morning].
+昼|[昼]ご飯を食べましょう。|ひる|Let's have [lunch].
+夜|[夜]は静かです。|よる|It's quiet at [night].
+午後|[午後]は暇です。|ごご|I'm free in the [afternoon].
+半|三時[半]に会いましょう。|はん|Let's meet at [half] past three.
+駅|[駅]はどこですか。|えき|Where is the [station]?
+店|あの[店]は安いです。|みせ|That [shop] is cheap.
+家|[家]に帰ります。|いえ|I'm going [home].
+部屋|私の[部屋]は小さいです。|へや|My [room] is small.
+国|どの[国]から来ましたか。|くに|Which [country] are you from?
+道|この[道]をまっすぐ行ってください。|みち|Please go straight along this [road].
+山|[山]に登ります。|やま|I'm going to climb a [mountain].
+川|[川]で泳ぎます。|かわ|I swim in the [river].
+空|[空]が青いです。|そら|The [sky] is blue.
+雨|[雨]が降っています。|あめ|It's [raining].
+雪|[雪]が降りました。|ゆき|It [snowed].
+花|きれいな[花]ですね。|はな|What a beautiful [flower].
+木|大きい[木]があります。|き|There's a big [tree].
+水|[水]をください。|みず|[Water], please.
+肉|[肉]が好きです。|にく|I like [meat].
+お茶|[お茶]を飲みませんか。|おちゃ|Would you like some [tea]?
+本|この[本]はおもしろいです。|ほん|This [book] is interesting.
+西|駅の[西]にあります。|にし|It's to the [west] of the station.
+北|[北]は寒いです。|きた|It's cold in the [north].
+右|[右]に曲がってください。|みぎ|Please turn [right].
+上|机の[上]に本があります。|うえ|There's a book [on] the desk.
+下|椅子の[下]に猫がいます。|した|There's a cat [under] the chair.
+前|駅の[前]で待っています。|まえ|I'm waiting in [front] of the station.
+中|箱の[中]に何がありますか。|なか|What's [in] the box?
+外|[外]は寒いです。|そと|It's cold [outside].
+目|[目]が痛いです。|め|My [eyes] hurt.
+耳|[耳]が痛いです。|みみ|My [ear] hurts.
+口|[口]を開けてください。|くち|Please open your [mouth].
+手|[手]を洗ってください。|て|Please wash your [hands].
+足|[足]が痛いです。|あし|My [leg] hurts.
+行く|学校に[行きます]。|いきます|I [go] to school.
+来る|友達が家に[来ます]。|きます|A friend is [coming] to my house.
+飲む|水を[飲みます]。|のみます|I [drink] water.
+見る|テレビを[見ます]。|みます|I [watch] TV.
+聞く|音楽を[聞きます]。|ききます|I [listen] to music.
+読む|本を[読みます]。|よみます|I [read] a book.
+書く|手紙を[書きます]。|かきます|I [write] a letter.
+言う|もう一度[言って]ください。|いって|Please [say] it again.
+買う|パンを[買います]。|かいます|I [buy] bread.
+会う|駅で友達に[会います]。|あいます|I [meet] a friend at the station.
+待つ|ここで[待って]ください。|まって|Please [wait] here.
+寝る|十一時に[寝ます]。|ねます|I [go to bed] at eleven.
+出る|八時に家を[出ます]。|でます|I [leave] home at eight.
+立つ|[立って]ください。|たって|Please [stand] up.
+好き|猫が[好き]です。|すき|I [like] cats.
+ああ|[ああ]、そうですか。|ああ|[Oh], I see.
+青|[青]が好きです。|あお|I like [blue].
+赤|[赤]い車です。|あか|It's a [red] car.
+秋|[秋]は涼しいです。|あき|[Autumn] is cool.
+開く|ドアが[開きました]。|あきました|The door [opened].
+後|[後]で電話します。|あと|I'll call you [later].
+あの|[あの]人は誰ですか。|あの|Who is [that] person?
+飴|[飴]を一つどうぞ。|あめ|Have a [sweet].
+在る|近くに銀行が[あります]。|あります|[There's] a bank nearby.
+有る|時間が[あります]か。|あります|Do you [have] time?
+あれ|[あれ]は何ですか。|あれ|What's [that]?
+いい|[いい]天気ですね。|いい|[Nice] weather, isn't it?
+池|[池]に魚がいます。|いけ|There are fish in the [pond].
+椅子|[椅子]に座ってください。|いす|Please sit on the [chair].
+いつ|[いつ]日本へ行きますか。|いつ|[When] are you going to Japan?
+犬|[犬]が好きです。|いぬ|I like [dogs].
+意味|この言葉の[意味]は何ですか。|いみ|What's the [meaning] of this word?
+嫌|雨は[嫌]です。|いや|I [hate] rain.
+居る|弟が[います]。|います|I [have] a younger brother.
+要る|傘は[要りません]。|いりません|I don't [need] an umbrella.
+色|好きな[色]は何ですか。|いろ|What's your favourite [colour]?
+歌|[歌]を歌いましょう。|うた|Let's sing a [song].
+うち|[うち]に来てください。|うち|Please come to [my place].
+海|夏は[海]へ行きます。|うみ|I go to the [sea] in summer.
+売る|あの店で切手を[売って]います。|うって|That shop [sells] stamps.
+絵|きれいな[絵]ですね。|え|What a beautiful [picture].
+ええ|[ええ]、そうです。|ええ|[Yes], that's right.
+お|[お]名前は何ですか。|お|What's your name? (polite [o-])
+置く|かばんをここに[置いて]ください。|おいて|Please [put] your bag here.
+押す|ボタンを[押して]ください。|おして|Please [press] the button.
+回|一日に三[回]薬を飲みます。|かい|I take medicine three [times] a day.
+階|トイレは二[階]です。|かい|The toilet is on the second [floor].
+顔|[顔]を洗います。|かお|I wash my [face].
+鍵|[鍵]をなくしました。|かぎ|I lost my [key].
+傘|[傘]を持っていますか。|かさ|Do you have an [umbrella]?
+貸す|ペンを[貸して]ください。|かして|Please [lend] me a pen.
+風|今日は[風]が強いです。|かぜ|The [wind] is strong today.
+風邪|[風邪]をひきました。|かぜ|I caught a [cold].
+方|あの[方]は先生です。|かた|That [person] is a teacher.
+角|あの[角]を右に曲がってください。|かど|Please turn right at that [corner].
+紙|[紙]に名前を書いてください。|かみ|Please write your name on the [paper].
+がる|子供が[ほしがって]います。|ほしがって|The child [wants] it.
+側|右[側]を歩いてください。|がわ|Please walk on the right [side].
+切る|紙を[切ります]。|きります|I [cut] the paper.
+着る|コートを[着ます]。|きます|I [put on] a coat.
+キロ|駅まで二[キロ]です。|きろ|It's two [kilometres] to the station.

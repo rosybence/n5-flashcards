@@ -1,0 +1,113 @@
+靴|新しい[靴]を買いました。|くつ|I bought new [shoes].
+黒|[黒]いかばんです。|くろ|It's a [black] bag.
+今朝|[今朝]、パンを食べました。|けさ|I ate bread [this morning].
+消す|電気を[消して]ください。|けして|Please [turn off] the light.
+個|りんごを三[個]ください。|こ|Three apples, please. ([counter])
+語|何[語]を話しますか。|ご|What [language] do you speak?
+声|大きい[声]で話してください。|こえ|Please speak in a loud [voice].
+ここ|[ここ]に座ってください。|ここ|Please sit [here].
+この|[この]本は私のです。|この|[This] book is mine.
+これ|[これ]は何ですか。|これ|What's [this]?
+ころ|三時[ごろ]に来てください。|ごろ|Please come at [about] three.
+さあ|[さあ]、行きましょう。|さあ|[Come on], let's go.
+歳|私は三十[歳]です。|さい|I'm thirty [years old].
+先|お[先]に失礼します。|さき|Excuse me for leaving [first].
+咲く|花が[咲きました]。|さきました|The flowers have [bloomed].
+差す|傘を[差して]ください。|さして|Please [put up] your umbrella.
+冊|本を二[冊]買いました。|さつ|I bought two books. ([counter])
+さん|田中[さん]はいますか。|さん|Is [Mr] Tanaka here?
+時|今、三[時]です。|じ|It's three [o'clock] now.
+塩|[塩]を取ってください。|しお|Please pass the [salt].
+辞書|[辞書]を使ってもいいですか。|じしょ|May I use a [dictionary]?
+死ぬ|花が[死にました]。|しにました|The flower has [died].
+じゃ|[じゃ]、また明日。|じゃ|[Well], see you tomorrow.
+知る|その人を[知って]いますか。|しって|Do you [know] that person?
+白|[白]いシャツを着ます。|しろ|I wear a [white] shirt.
+吸う|ここでたばこを[吸わないで]ください。|すわないで|Please don't [smoke] here.
+すぎ|今、三時[すぎ]です。|すぎ|It's [past] three now.
+ずつ|一人二つ[ずつ]取ってください。|ずつ|Please take two [each].
+住む|東京に[住んで]います。|すんで|I [live] in Tokyo.
+する|毎日勉強を[します]。|します|I [study] every day.
+背|兄は[背]が高いです。|せ|My older brother is [tall].
+ゼロ|[ゼロ]から始めます。|ぜろ|I'll start from [zero].
+そう|[そう]ですね。|そう|That's [right].
+そこ|[そこ]に置いてください。|そこ|Please put it [there].
+その|[その]かばんはいくらですか。|その|How much is [that] bag?
+そば|駅の[そば]に住んでいます。|そば|I live [near] the station.
+それ|[それ]をください。|それ|I'll have [that one], please.
+台|車が二[台]あります。|だい|There are two cars. ([counter])
+だけ|少し[だけ]食べました。|だけ|I [only] ate a little.
+出す|宿題を[出して]ください。|だして|Please [hand in] your homework.
+たち|子供[たち]が遊んでいます。|たち|The children are playing. ([plural])
+たて|[縦]に書いてください。|たて|Please write it [vertically].
+誰|あの人は[誰]ですか。|だれ|[Who] is that person?
+地図|[地図]を見せてください。|ちず|Please show me the [map].
+次|[次]の駅で降ります。|つぎ|I'm getting off at the [next] station.
+着く|駅に[着きました]。|つきました|I've [arrived] at the station.
+では|[では]、始めましょう。|では|[Well then], let's begin.
+でも|[でも]、時間がありません。|でも|[But] I don't have time.
+戸|[戸]を閉めてください。|と|Please close the [door].
+度|もう一[度]言ってください。|ど|Please say it one more [time].
+ドア|[ドア]を開けてください。|どあ|Please open the [door].
+どう|日本は[どう]ですか。|どう|[How] is Japan?
+どこ|トイレは[どこ]ですか。|どこ|[Where] is the toilet?
+年|[年]はいくつですか。|とし|How [old] are you?
+どの|[どの]かばんですか。|どの|[Which] bag is it?
+飛ぶ|鳥が[飛んで]います。|とんで|The birds are [flying].
+鳥|[鳥]が鳴いています。|とり|A [bird] is singing.
+取る|塩を[取って]ください。|とって|Please [pass] the salt.
+撮る|写真を[撮って]もいいですか。|とって|May I [take] a photo?
+どれ|[どれ]がいいですか。|どれ|[Which one] is good?
+ない|時間が[ない]から、急ぎましょう。|ない|There's [no] time, so let's hurry.
+鳴く|犬が[鳴いて]います。|ないて|The dog is [barking].
+なぜ|[なぜ]来ませんでしたか。|なぜ|[Why] didn't you come?
+夏|[夏]は暑いです。|なつ|[Summer] is hot.
+など|りんごやみかん[など]を買いました。|など|I bought apples, oranges [and so on].
+何|これは[何]ですか。|なん|[What] is this?
+なる|春に[なりました]。|なりました|It's [become] spring.
+庭|[庭]に花があります。|にわ|There are flowers in the [garden].
+脱ぐ|靴を[脱いで]ください。|ぬいで|Please [take off] your shoes.
+猫|[猫]が好きです。|ねこ|I like [cats].
+乗る|バスに[乗ります]。|のります|I [take] the bus.
+歯|[歯]が痛いです。|は|My [tooth] hurts.
+杯|コーヒーを一[杯]ください。|ぱい|One [cup] of coffee, please.
+はく|ズボンを[はきます]。|はきます|I [put on] trousers.
+箱|[箱]の中に何がありますか。|はこ|What's in the [box]?
+橋|あの[橋]を渡ってください。|はし|Please cross that [bridge].
+箸|[箸]で食べます。|はし|I eat with [chopsticks].
+バス|[バス]で行きます。|ばす|I'll go by [bus].
+鼻|[鼻]が高いです。|はな|He has a long [nose].
+春|[春]が好きです。|はる|I like [spring].
+貼る|切手を[貼って]ください。|はって|Please [stick] a stamp on it.
+晴れ|明日は[晴れ]です。|はれ|It'll be [sunny] tomorrow.
+晩|[晩]ご飯を食べました。|ばん|I had [dinner].
+番|三[番]のバスに乗ります。|ばん|I take bus [number] three.
+パン|朝は[パン]を食べます。|ぱん|I eat [bread] in the morning.
+匹|猫が二[匹]います。|ひき|I have two cats. ([counter])
+引く|ドアを[引いて]ください。|ひいて|Please [pull] the door.
+弾く|ピアノを[弾きます]。|ひきます|I [play] the piano.
+暇|今日は[暇]です。|ひま|I'm [free] today.
+吹く|風が[吹いて]います。|ふいて|The wind is [blowing].
+服|新しい[服]を買いました。|ふく|I bought new [clothes].
+冬|[冬]は寒いです。|ふゆ|[Winter] is cold.
+降る|雨が[降って]います。|ふって|It's [raining].
+分|五[分]待ってください。|ふん|Please wait five [minutes].
+下手|私は歌が[下手]です。|へた|I'm [bad] at singing.
+辺|この[辺]に銀行はありますか。|へん|Is there a bank around [here]?
+ペン|[ペン]を貸してください。|ぺん|Please lend me a [pen].
+枚|切手を三[枚]ください。|まい|Three stamps, please. ([counter])
+また|[また]来てください。|また|Please come [again].
+まだ|[まだ]食べていません。|まだ|I haven't eaten [yet].
+町|小さい[町]に住んでいます。|まち|I live in a small [town].
+窓|[窓]を開けてください。|まど|Please open the [window].
+村|[村]は静かです。|むら|The [village] is quiet.
+もう|[もう]食べました。|もう|I've [already] eaten.
+持つ|傘を[持って]いますか。|もって|Do you [have] an umbrella with you?
+物|この[物]は何ですか。|もの|What is this [thing]?
+門|[門]の前で待っています。|もん|I'm waiting in front of the [gate].
+屋|本[屋]へ行きます。|や|I'm going to the book[shop].
+やる|宿題を[やります]。|やります|I'll [do] my homework.
+よく|[よく]映画を見ます。|よく|I [often] watch films.
+横|駅の[横]に銀行があります。|よこ|There's a bank [next to] the station.
+呼ぶ|タクシーを[呼んで]ください。|よんで|Please [call] a taxi.
+零|[零]点でした。|れい|I got [zero] points.

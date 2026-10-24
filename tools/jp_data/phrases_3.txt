@@ -1,0 +1,124 @@
+踏む|足を[踏まないで]ください。|ふまないで|Please don't [step on] my foot.
+区|私は新宿[区]に住んでいます。|く|I live in Shinjuku [ward].
+鳴る|電話が[鳴って]います。|なって|The phone is [ringing].
+沸く|お湯が[沸きました]。|わきました|The water has [boiled].
+折る|紙を[折って]ください。|おって|Please [fold] the paper.
+会|明日、[会]があります。|かい|There's a [meeting] tomorrow.
+僕|[僕]は学生です。|ぼく|[I]'m a student.
+止む|雨が[止みました]。|やみました|The rain has [stopped].
+もし|[もし]雨なら、行きません。|もし|[If] it rains, I won't go.
+別|[別]の日にしましょう。|べつ|Let's make it a [different] day.
+気|[気]をつけてください。|き|Please [take care].
+だめ|ここで写真は[だめ]です。|だめ|Photos are [not allowed] here.
+うん|[うん]、いいよ。|うん|[Yeah], OK.
+焼く|魚を[焼きます]。|やきます|I [grill] fish.
+ごみ|[ごみ]を捨ててください。|ごみ|Please throw away the [rubbish].
+点|テストで百[点]を取りました。|てん|I got a hundred [points] in the test.
+彼|[彼]は日本人です。|かれ|[He]'s Japanese.
+製|これは日本[製]です。|せい|This is [made in] Japan.
+軒|家が三[軒]あります。|げん|There are three houses. ([counter])
+葉|[葉]が赤くなりました。|は|The [leaves] have turned red.
+絹|これは[絹]のシャツです。|きぬ|This is a [silk] shirt.
+ガス|[ガス]を止めてください。|がす|Please turn off the [gas].
+噛む|よく[噛んで]食べてください。|かんで|Please [chew] well when you eat.
+嘘|[嘘]をつかないでください。|うそ|Please don't tell [lies].
+親|[親]と住んでいます。|おや|I live with my [parents].
+式|明日は結婚[式]です。|しき|Tomorrow is the wedding [ceremony].
+建て|二階[建て]の家です。|だて|It's a two-[storey] house.
+寄る|帰りに本屋に[寄ります]。|よります|I'll [stop by] a bookshop on the way home.
+地理|[地理]の勉強をします。|ちり|I study [geography].
+無理|それは[無理]です。|むり|That's [impossible].
+ビル|あの高い[ビル]は何ですか。|びる|What's that tall [building]?
+星|[星]がきれいですね。|ほし|The [stars] are beautiful, aren't they?
+倍|値段が二[倍]になりました。|ばい|The price has [doubled].
+線|白い[線]の前で待ってください。|せん|Please wait behind the white [line].
+パパ|[パパ]はどこですか。|ぱぱ|Where's [Daddy]?
+雲|今日は[雲]が多いです。|くも|There are lots of [clouds] today.
+坂|この[坂]は急です。|さか|This [slope] is steep.
+客|[客]がたくさん来ました。|きゃく|Lots of [customers] came.
+事|大切な[事]を忘れました。|こと|I forgot an important [thing].
+壁|[壁]に絵を掛けます。|かべ|I hang a picture on the [wall].
+泣く|赤ちゃんが[泣いて]います。|ないて|The baby is [crying].
+熱|[熱]があります。|ねつ|I have a [fever].
+ベル|[ベル]が鳴りました。|べる|The [bell] rang.
+事故|[事故]がありました。|じこ|There was an [accident].
+変|この味は[変]です。|へん|This taste is [strange].
+員|兄は会社[員]です。|いん|My older brother is an office [worker].
+祖母|[祖母]は八十歳です。|そぼ|My [grandmother] is eighty.
+場所|[場所]を教えてください。|ばしょ|Please tell me the [place].
+内|三日の[内]に返してください。|うち|Please return it [within] three days.
+以下|十歳[以下]は無料です。|いか|Children ten [and under] are free.
+だす|急に雨が降り[だしました]。|だしました|It suddenly [started] raining.
+森|[森]の中を歩きます。|もり|I walk in the [forest].
+石|[石]を投げないでください。|いし|Please don't throw [stones].
+塗る|パンにバターを[塗ります]。|ぬります|I [spread] butter on bread.
+用|今日は[用]があります。|よう|I have [something to do] today.
+火|[火]を消してください。|ひ|Please put out the [fire].
+味噌|[味噌]汁が好きです。|みそ|I like [miso] soup.
+はず|彼はもう着いた[はず]です。|はず|He [should] have arrived already.
+おる|父は今、家に[おります]。|おります|My father [is] at home now. (humble)
+皆|[皆]さん、こんにちは。|みな|Hello, [everyone].
+味|この[味]が好きです。|あじ|I like this [taste].
+祖父|[祖父]は元気です。|そふ|My [grandfather] is well.
+火事|[火事]です!|かじ|[Fire]!
+足す|二に三を[足して]ください。|たして|Please [add] three to two.
+釣る|川で魚を[釣ります]。|つります|I [fish] in the river.
+ちゃん|花子[ちゃん]、おはよう。|ちゃん|Good morning, Hanako[-chan].
+打つ|ボールを[打ちます]。|うちます|I [hit] the ball.
+米|[米]を買います。|こめ|I buy [rice].
+邪魔|お[邪魔]します。|じゃま|Sorry to [disturb] you.
+隅|部屋の[隅]に置いてください。|すみ|Please put it in the [corner] of the room.
+夢|[夢]を見ました。|ゆめ|I had a [dream].
+喉|[喉]が痛いです。|のど|My [throat] hurts.
+血|[血]が出ています。|ち|It's [bleeding].
+毛|猫の[毛]が白いです。|け|The cat's [fur] is white.
+子|あの[子]は誰ですか。|こ|Who is that [child]?
+レジ|[レジ]で払ってください。|れじ|Please pay at the [till].
+空く|この席は[空いて]いますか。|あいて|Is this seat [free]?
+こう|[こう]書いてください。|こう|Please write it [like this].
+是非|[是非]来てください。|ぜひ|Please [do] come.
+裏|紙の[裏]に書いてください。|うら|Please write on the [back] of the paper.
+為|健康の[ため]に歩きます。|ため|I walk [for] my health.
+済む|仕事が[済みました]。|すみました|The work is [finished].
+市|大阪[市]に住んでいます。|し|I live in Osaka [city].
+音|変な[音]がします。|おと|There's a strange [sound].
+まず|[まず]、手を洗いましょう。|まず|[First], let's wash our hands.
+都|東京[都]に住んでいます。|と|I live in the Tokyo [metropolis].
+島|小さい[島]に行きました。|しま|I went to a small [island].
+まま|靴を履いた[まま]入らないでください。|まま|Please don't come in with your shoes on. ([as it is])
+妻|[妻]は先生です。|つま|My [wife] is a teacher.
+髪|[髪]を切りました。|かみ|I had my [hair] cut.
+枝|木の[枝]が折れました。|えだ|A [branch] of the tree broke.
+腕|[腕]が痛いです。|うで|My [arm] hurts.
+訳|遅れた[訳]を話してください。|わけ|Please tell me the [reason] you were late.
+似る|姉は母に[似て]います。|にて|My older sister [looks like] my mother.
+留守|父は今、[留守]です。|るす|My father is [out] right now.
+寺|京都で[寺]を見ました。|てら|I saw a [temple] in Kyoto.
+席|この[席]に座ってください。|せき|Please sit in this [seat].
+様|お客[様]、どうぞ。|さま|This way, please, sir. ([-sama])
+字|きれいな[字]ですね。|じ|What neat [handwriting].
+あ|[あ]、雨だ。|あ|[Oh], it's raining.
+合う|この服は私に[合います]。|あいます|These clothes [suit] me.
+代|二十[代]です。|だい|I'm in my twenties. ([age range])
+汽車|昔は[汽車]で旅行しました。|きしゃ|In the old days we travelled by [steam train].
+おき|一日[おき]に走ります。|おき|I run [every other] day.
+御|[ご]家族はお元気ですか。|ご|How is your family? ([honorific go-])
+億|一[億]円です。|おく|It's one [hundred million] yen.
+君|[君]の名前は?|きみ|What's [your] name?
+点く|電気が[つきません]。|つきません|The light won't [come on].
+首|[首]が痛いです。|くび|My [neck] hurts.
+程|三十分[ほど]待ちました。|ほど|I waited [about] thirty minutes.
+ひげ|父は[ひげ]があります。|ひげ|My father has a [beard].
+舟|[舟]で川を渡ります。|ふね|We cross the river by [boat].
+虫|[虫]が嫌いです。|むし|I don't like [insects].
+勝つ|試合に[勝ちました]。|かちました|We [won] the match.
+砂|靴に[砂]が入りました。|すな|I've got [sand] in my shoes.
+草|[草]を取ります。|くさ|I pull up the [weeds].
+込む|電車が[込んで]います。|こんで|The train is [crowded].
+湯|お[湯]を沸かします。|ゆ|I boil some [water].
+糸|[糸]と針を貸してください。|いと|Please lend me [thread] and a needle.
+急|[急]に雨が降りました。|きゅう|It [suddenly] rained.
+棚|本を[棚]に置いてください。|たな|Please put the book on the [shelf].
+すり|[すり]に気をつけてください。|すり|Watch out for [pickpockets].
+趣味|[趣味]は何ですか。|しゅみ|What are your [hobbies]?
+指|[指]を切りました。|ゆび|I cut my [finger].
