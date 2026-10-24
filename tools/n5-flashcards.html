@@ -2454,6 +2454,9 @@ function grace(label,ms){return new Promise(res=>{
 })}
 function parseCmd(t){t=' '+t.toLowerCase().replace(/[^a-z' ぁ-んァ-ン一-龯]+/g,' ').replace(/\s+/g,' ')+' ';
   // longer phrases first ("I was right", "next card"…); short words and common mishearings as backup
+  // "correct" / "incorrect": checked first, including how the Japanese and Spanish recognisers write them
+  if(/ (in|un|and|an|on|im) ?correct| incorrect| incorrecto| incorrecta|インコレクト|インコレ/.test(t))return 'wrong';
+  if(/ correct| corrects| correcto| correcta| collect | corect|コレクト/.test(t))return 'right';
   if(/ (i was|i got it|i'm|i am|that was|it was|was) (wrong|incorrect)| (i )?(didn'?t|did not) know| i (got it )?wrong| wrong | ron | rung | incorrect |違う|ちがう/.test(t))return 'wrong';
   if(/ (i was|i got it|i'm|i am|that was|it was|was) (right|correct)| i (got it|knew it)| right | write | alright | correct /.test(t))return 'right';
   if(/ next (card|question|one|word|please)| next | text | nest | skip | carry on| continue | go on/.test(t))return 'next';
@@ -2494,7 +2497,7 @@ function cue(){try{actx=actx||new (window.AudioContext||window.webkitAudioContex
 async function replay(){const pr=promptOf(cur),an=answerOf(cur);if(pr){await speak(pr[0],pr[1]);await wait(700)}if(walking)await speak(an[0],an[1])}
 async function afterAnswer(ok){
   for(let i=0;i<6&&walking;i++){
-    status((ok?'Marked right':'Marked wrong')+' — say “say it again”, “'+(ok?'I was wrong':'I was right')+'” or “next card”');
+    status((ok?'Marked right':'Marked wrong')+' — say “'+(ok?'incorrect':'correct')+'”, “next card” or “say it again”');
     const c=await commandWindow(ok?'✗ I got it wrong':'✓ I was right',micBlocked?3500:6000);
     if(!walking)return ok;
     if(c==='repeat'){status('Repeating…');await replay();continue}
@@ -2571,8 +2574,8 @@ function stopWalk(){
   revealed=false;feedback=null;cur=nextCard();render();
 }
 function walkHelp(on){const L=S.set.walkMode==='listen'||micBlocked;
-  const steps=L?['You hear the prompt.','Think of the answer during the pause.','You hear the translation.','Say <b>“say it again”</b> to hear it again, <b>“I was wrong”</b> if you missed it, or <b>“next card”</b>.','Just listening doesn’t count as a correct answer: the card keeps its schedule. Say “I was wrong” and it comes back soon.']
-    :['You hear the prompt.','Say the answer out loud.','If you get it wrong, it says the correct answer and waits for you to <b>say it back</b> (up to 3 tries).','Then say <b>“say it again”</b>, <b>“I was wrong”</b>, <b>“I was right”</b> or <b>“next card”</b>. Say nothing and it moves on.'];
+  const steps=L?['You hear the prompt.','Think of the answer during the pause.','You hear the translation.','Say <b>“say it again”</b> to hear it again, <b>“incorrect”</b> if you missed it, or <b>“next card”</b>.','Just listening doesn’t count as a correct answer: the card keeps its schedule. Say “incorrect” and it comes back soon.']
+    :['You hear the prompt.','Say the answer out loud.','If you get it wrong, it says the correct answer and waits for you to <b>say it back</b> (up to 3 tries).','Then say <b>“correct”</b> or <b>“incorrect”</b> to change the mark, <b>“next card”</b>, or <b>“say it again”</b>. Say nothing and it moves on.'];
   return `<ol>${steps.map(x=>`<li>${x}</li>`).join('')}</ol><p>Keep this screen on and the app open.${micBlocked&&!L?' Speaking back isn’t available here, so this works like Listen only.':''}</p>`}
 function setWalkMode(m){S.set.walkMode=m;save();$('wmSpeak').setAttribute('aria-pressed',m==='speak');$('wmListen').setAttribute('aria-pressed',m==='listen');$('wHelp').innerHTML=walkHelp(false)}
 $('wmSpeak').onclick=()=>setWalkMode('speak');$('wmListen').onclick=()=>setWalkMode('listen');
