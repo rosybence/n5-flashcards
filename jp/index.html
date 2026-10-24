@@ -2131,7 +2131,9 @@ function pickVoice(lang){const want=(S.set.voice||{})[lang.slice(0,2).toLowerCas
 let _ka=null,_kaT=null,_lastSpoke=0;
 function audioAwake(){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();if(actx.state==='suspended')actx.resume();
   if(!_ka){const o=actx.createOscillator(),g=actx.createGain();o.frequency.value=30;g.gain.value=0.0006;o.connect(g).connect(actx.destination);o.start();_ka=o}
-  clearTimeout(_kaT);_kaT=setTimeout(()=>{try{_ka&&_ka.stop()}catch(e){}_ka=null},walking?600000:15000)}catch(e){}}
+  clearTimeout(_kaT);_kaT=setTimeout(audioSleep,2500)}catch(e){}}
+// never play anything while the microphone is listening: it makes phones process the mic differently
+function audioSleep(){clearTimeout(_kaT);try{_ka&&_ka.stop()}catch(e){}_ka=null}
 function speak(text,lang){const cold=Date.now()-_lastSpoke>3000||!_ka;audioAwake();
   return (cold?wait(lang.startsWith('en')?150:350):Promise.resolve()).then(()=>NAT?speakNative(text,lang):speakWeb(text,lang)).then(v=>{_lastSpoke=Date.now();audioAwake();return v})}
 function speakWeb(text,lang){return new Promise(res=>{
@@ -2174,6 +2176,7 @@ let micBlocked=NAT?!NAT.srAvailable():!SR,curRec=null;
 let listenGen=0;
 function abortListening(){listenGen++;try{curRec&&curRec.abort()}catch(e){}}
 async function listen(lang,ms,onHeard){
+  audioSleep();
   const gen=++listenGen,until=Date.now()+ms;
   await new Promise(r=>setTimeout(r,250));
   while(gen===listenGen){
