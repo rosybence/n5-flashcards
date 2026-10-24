@@ -1,6 +1,6 @@
 // Network first so updates arrive; cached copy when offline (e.g. on a walk with no signal).
 // Only handles files inside this app's own folder, so the two apps never mix.
-const CACHE = 'jp-v13';
+const CACHE = 'jp-v14';
 const FILES = ['./', './index.html', './app.webmanifest', './icon2-192.png', './icon2-512.png'];
 const SCOPE = self.registration.scope;
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES))); self.skipWaiting(); });

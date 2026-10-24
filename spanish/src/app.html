@@ -845,6 +845,8 @@ async function sayItBack(al){
     status('Now say it back'+(i?' — try again':''));await wait(250);
     const h=await listen(al,S.set.gap*1000,x=>{if(x){feedback={cls:'info',text:'Heard: '+x};render()}});
     if(!walking||h===null)return;
+    // a command instead of the answer ("I was right", "next card"…) is acted on straight away
+    {const cmd=h.length&&!judge(cur,h)&&parseCmd(h.join(' '));if(cmd&&cmd!=='repeat'){feedback={cls:'info',text:'Heard “'+h[0]+'”'};render();return cmd}}
     if(judge(cur,h)){tone(true);feedback={cls:'ok',text:'Nice — you said it right'};render();status('Nice — you said it right');await wait(700);return}
     tone(false);feedback={cls:'no',text:h.length?'Heard “'+h[0]+'” — listen again':'Didn’t catch that — listen again'};render();
     if(i<2){await wait(300);await speak(rt,rl)}
@@ -857,7 +859,7 @@ async function walkLoop(){
     if(!cur){status('All done for now');await speak('All done for now. Great work.','en-GB');stopWalk();break}
     const pr=promptOf(cur);const [,al]=answerOf(cur);
     status('Listen…');await speak(pr[0],pr[1]);if(!walking)break;
-    let ok=true,knewIt=false;
+    let ok=true,knewIt=false,sayCmd=null;
     if(S.set.walkMode==='listen'||micBlocked){
       for(let s=S.set.gap;s>0&&walking;s--){status('Think of the answer… '+s);await wait(1000)}
       if(!walking)break;
@@ -883,9 +885,10 @@ async function walkLoop(){
       }
       tone(ok);if(!feedback||feedback.cls==='info')heardFeedback(ok,heard);
       status(ok?'Correct':'Here’s the answer');await doReveal();if(!walking)break;
-      if(!ok){await wait(500);const [rt,rl]=answerOf(cur);await speak(rt,rl);if(!walking)break;await sayItBack(al);if(!walking)break}
+      if(!ok){await wait(500);const [rt,rl]=answerOf(cur);await speak(rt,rl);if(!walking)break;sayCmd=await sayItBack(al);if(!walking)break}
     }
-    ok=await afterAnswer(ok);if(!walking)break;
+    if(sayCmd==='right'||sayCmd==='wrong'||sayCmd==='next'){if(sayCmd==='right')ok=true;status(ok?'Marked right':'Marked wrong');tone(ok);await wait(500)}
+    else ok=await afterAnswer(ok);if(!walking)break;
     if(S.set.walkMode==='listen'||micBlocked){
       // just listening isn't an answer: keep the card's schedule unless you said you got it wrong
       if(!ok)grade(cur,0);else{if(!st(cur))walkNew++;walkSkip.add(cur.id)}
