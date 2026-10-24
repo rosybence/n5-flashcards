@@ -2151,8 +2151,15 @@ function enSay(c){return c.en.split(';').map(seg=>{const hints=[];
     .replace(/…/g,'').replace(/\s+/g,' ').trim();
   const h=hints.join(', ').replace(/\be\.g\.,?/g,'for example').replace(/\babbr\./g,'short form').replace(/\betc\./g,'and so on');
   return base?(h?base+', '+h:base):''}).filter(Boolean).join('. Or, ')}
-const promptOf=c=>c.type==='k'?null:S.set.dir==='je'?[c.kana,'ja-JP']:[enSay(c),'en-GB'];
-const answerOf=c=>c.type==='k'?[c.kana,'ja-JP']:S.set.dir==='je'?[enSay(c),'en-GB']:[altShown&&c===cur?(READ[altShown]&&READ[altShown][0]||altShown):c.kana,'ja-JP'];
+// what the Japanese voice reads: phrases use the written form, since kana-only text makes it guess
+// (ゆっくりはなして… read as 'yukkuri wa nashite'); single words keep kana, where a lone kanji could be ambiguous
+const jaSay=c=>{if(c.k===c.kana||!/[\u3400-\u9fff]/.test(c.k))return c.kana;
+  if(c.type==='p')return c.k;
+  // words with は/へ inside (あさごはん, はずかしい): the written form avoids 'wa'/'e' misreadings
+  if(/[はへ]/.test(c.kana.slice(0,-1))&&!(/する$/.test(c.kana)&&!/する$/.test(c.k)))return c.k;
+  return c.kana}
+const promptOf=c=>c.type==='k'?null:S.set.dir==='je'?[jaSay(c),'ja-JP']:[enSay(c),'en-GB'];
+const answerOf=c=>c.type==='k'?[c.kana,'ja-JP']:S.set.dir==='je'?[enSay(c),'en-GB']:[altShown&&c===cur?(c.type==='p'?altShown:(READ[altShown]&&READ[altShown][0]||altShown)):jaSay(c),'ja-JP'];
 
 let actx;
 function tone(ok){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();const t=actx.currentTime;
