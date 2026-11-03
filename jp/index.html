@@ -691,7 +691,7 @@ const RAW_N5X=`ああ|ああ|ā|Ah!; Oh!
 面白い|おもしろい|omoshiroi|interesting; amusing
 泳ぐ|およぐ|oyogu|to swim
 降りる|おりる|oriru|to get off
-終る|おわる|owaru|to finish; to close
+終わる|おわる|owaru|to finish; to close
 女の子|おんなのこ|onnanoko|girl
 回|かい|kai|counter for occurrences (~ times)
 階|かい|kai|counter for stories (floors) of a building
@@ -1054,7 +1054,7 @@ const RAW_N5X=`ああ|ああ|ā|Ah!; Oh!
 毎週|まいしゅう|maishū|every week
 毎年|まいねん|mainen|every year; yearly; annually|まいとし
 毎晩|まいばん|maiban|every night
-曲る|まがる|magaru|to turn; to bend
+曲がる|まがる|magaru|to turn; to bend
 まずい|まずい|mazui|terrible (in reference to food); unappetizing; unpleasant (taste)
 また|また|mata|and; furthermore
 まだ|まだ|mada|yet; still; besides
@@ -1420,7 +1420,7 @@ const RAW_N4=`踏む|ふむ|fumu|to step on; to tread on
 はず|はず|hazu|it should be so
 法律|ほうりつ|hōritsu|law
 進む|すすむ|susumu|to advance; to proceed
-楽む|たのしむ|tanoshimu|to enjoy
+楽しむ|たのしむ|tanoshimu|to enjoy
 貿易|ぼうえき|bōeki|trade
 反対|はんたい|hantai|oppose; opposition; resistance
 おる|おる|oru|extra-modest expression for いる
@@ -1668,14 +1668,14 @@ const RAW_N4=`踏む|ふむ|fumu|to step on; to tread on
 この間|このあいだ|konoaida|the other day; recently
 格好|かっこう|kakkō|appearance; manner; shape|form,posture
 かまう|かまう|kamau|to mind; to care about; to be concerned about
-落す|おとす|otosu|to drop; to lose
+落とす|おとす|otosu|to drop; to lose
 出発|しゅっぱつする|shuppatsusuru|departure
 拝見|はいけんする|haikensuru|(humble) (polite) seeing; look at
 割れる|われる|wareru|to break
 背中|せなか|senaka|back (of body)
 新聞社|しんぶんしゃ|shinbunsha|newspaper company
 いじめる|いじめる|ijimeru|to bully; to torment
-回る、回す|まわる、まわす|mawaru、mawasu|to go around; to revolve
+回る|まわる|mawaru|to go around; to turn
 おっしゃる|おっしゃる|ossharu|honorific expression for いう
 眠い|ねむい|nemui|sleepy; drowsy
 濡れる|ぬれる|nureru|to get wet
@@ -2114,7 +2114,7 @@ function nextCard(){
   if(S.newDone[S.set.dir]+(walking?walkNew:0)<S.set.newPerDay){
     // take new cards from the chosen decks in turn
     const ds=S.set.decks;
-    for(let i=0;i<ds.length;i++){const dk=ds[(S.newDone[S.set.dir]+i)%ds.length];const n=pool().find(c=>c.deck===dk&&!st(c)&&c.id!==lastId&&sk(c));if(n)return n}
+    for(let i=0;i<ds.length;i++){const dk=ds[(S.newDone[S.set.dir]+i)%ds.length];const n=pool().find(c=>c.deck===dk&&!st(c)&&c.id!==lastId&&sk(c)&&conjUnlocked(c));if(n)return n}
   }
   if(due.length)return due[0];
   const ahead=pool().filter(c=>{const s=st(c);return s&&s.learning&&s.due<=now+20*MIN&&sk(c)});
@@ -2381,7 +2381,7 @@ document.addEventListener('click',e=>{if(e.target.closest('#phSingle')){setPhras
 // う-verbs that end in -iru/-eru (they look like る-verbs but aren't)
 const GODAN_RU=new Set(['かえる:帰る','はいる:入る','いる:要る','きる:切る','しる:知る','はしる:走る','すべる:滑る','しゃべる:喋る','へる:減る','かぎる:限る','ける:蹴る','にぎる:握る','まいる:参る','てる:照る','ちる:散る','あせる:焦る','ねる:練る']);
 const HONORIFIC=new Set(['くださる','いらっしゃる','おっしゃる','なさる']);
-const isVerb=c=>c.type==='w'&&!/ます$/.test(c.kana)&&(/する$/.test(c.kana)||HONORIFIC.has(c.kana)||/^to /i.test(c.en.replace(/^\([^)]*\)\s*/,''))&&/[うくぐすつぬぶむる]$/.test(c.kana));
+const isVerb=c=>c.type==='w'&&!c.conj&&!/ます$/.test(c.kana)&&(/する$/.test(c.kana)||HONORIFIC.has(c.kana)||/^to /i.test(c.en.replace(/^\([^)]*\)\s*/,''))&&/[うくぐすつぬぶむる]$/.test(c.kana));
 const A={う:'わ',く:'か',ぐ:'が',す:'さ',つ:'た',ぬ:'な',ぶ:'ば',む:'ま',る:'ら'},I={う:'い',く:'き',ぐ:'ぎ',す:'し',つ:'ち',ぬ:'に',ぶ:'び',む:'み',る:'り'};
 const TE={う:'って',つ:'って',る:'って',む:'んで',ぶ:'んで',ぬ:'んで',く:'いて',ぐ:'いで',す:'して'};
 // forms for one spelling (kanji or kana) of the verb; base = dictionary form, kana = its reading
@@ -2408,6 +2408,45 @@ function conjHtml(c,open){
 }
 let showConj=false;
 document.addEventListener('click',e=>{if(e.target.closest('#cjBtn')){showConj=true;render()}});
+
+/* ---------- conjugation cards: one form of a verb per card, unlocked once you know the verb ---------- */
+const VEN={"行く":["go","went"],"来る":["come","came"],"帰る":["go home","went home"],"食べる":["eat","ate"],"飲む":["drink","drank"],"見る":["see","saw"],"聞く":["listen","listened"],"読む":["read","read"],"書く":["write","wrote"],"話す":["speak","spoke"],"言う":["say","said"],"買う":["buy","bought"],"会う":["meet","met"],"待つ":["wait","waited"],"起きる":["get up","got up"],"寝る":["go to bed","went to bed"],"休む":["rest","rested"],"歩く":["walk","walked"],"入る":["go in","went in"],"出る":["go out","went out"],"立つ":["stand up","stood up"],"分かる":["understand","understood"],"教える":["teach","taught"],"開く":["open (by itself)","opened (by itself)"],"開ける":["open (something)","opened (something)"],"上げる":["raise","raised"],"遊ぶ":["play","played"],"浴びる":["have a shower","had a shower"],"洗う":["wash","washed"],"要る":["need","needed"],"入れる":["put in","put in"],"歌う":["sing","sang"],"生まれる":["be born","was born"],"売る":["sell","sold"],"置く":["put","put"],"押す":["push","pushed"],"覚える":["remember","remembered"],"泳ぐ":["swim","swam"],"降りる":["get off","got off"],"終わる":["finish","finished"],"返す":["give back","gave back"],"掛ける":["hang (something)","hung (something)"],"かける":["make a call","made a call"],"貸す":["lend","lent"],"かぶる":["put on (a hat)","put on (a hat)"],"借りる":["borrow","borrowed"],"消える":["disappear","disappeared"],"切る":["cut","cut"],"着る":["put on (a top)","put on (a top)"],"曇る":["cloud over","clouded over"],"消す":["turn off","turned off"],"答える":["answer","answered"],"コピーする":["copy","copied"],"困る":["be in trouble","was in trouble"],"咲く":["bloom","bloomed"],"差す":["put up (an umbrella)","put up (an umbrella)"],"死ぬ":["die","died"],"閉まる":["close (by itself)","closed (by itself)"],"閉める":["close (something)","closed (something)"],"締める":["fasten","fastened"],"吸う":["smoke","smoked"],"住む":["live","lived"],"する":["do","did"],"座る":["sit down","sat down"],"出す":["take out","took out"],"頼む":["ask (a favour)","asked (a favour)"],"違う":["be different","was different"],"使う":["use","used"],"疲れる":["get tired","got tired"],"着く":["arrive","arrived"],"作る":["make","made"],"つける":["turn on","turned on"],"勤める":["work (for a company)","worked (for a company)"],"出かける":["go out","went out"],"できる":["be able to","was able to"],"飛ぶ":["fly","flew"],"止まる":["stop (by itself)","stopped (by itself)"],"取る":["take","took"],"撮る":["take (a photo)","took (a photo)"],"鳴く":["cry (animal)","cried (animal)"],"無くす":["lose (something)","lost (something)"],"習う":["learn","learned"],"並ぶ":["line up","lined up"],"並べる":["line (things) up","lined (things) up"],"なる":["become","became"],"脱ぐ":["take off (clothes)","took off (clothes)"],"登る":["climb","climbed"],"乗る":["get on","got on"],"はく":["put on (shoes or trousers)","put on (shoes or trousers)"],"走る":["run","ran"],"働く":["work","worked"],"貼る":["stick","stuck"],"晴れる":["clear up","cleared up"],"引く":["pull","pulled"],"弾く":["play (an instrument)","played (an instrument)"],"吹く":["blow","blew"],"降る":["fall (rain, snow)","fell (rain, snow)"],"曲がる":["turn","turned"],"磨く":["brush (teeth)","brushed (teeth)"],"見せる":["show","showed"],"持つ":["hold","held"],"やる":["do","did"],"呼ぶ":["call","called"],"忘れる":["forget","forgot"],"渡す":["hand over","handed over"],"渡る":["cross","crossed"],"踏む":["step on","stepped on"],"盗む":["steal","stole"],"鳴る":["ring","rang"],"生きる":["live","lived"],"沸く":["boil","boiled"],"折る":["fold","folded"],"聞こえる":["be heard","was heard"],"壊す":["break (something)","broke (something)"],"怒る":["get angry","got angry"],"運動する":["exercise","exercised"],"止む":["stop (rain)","stopped (rain)"],"心配する":["worry","worried"],"拾う":["pick up","picked up"],"比べる":["compare","compared"],"焼く":["grill","grilled"],"建てる":["build","built"],"通る":["pass through","passed through"],"過ぎる":["pass","passed"],"止める":["quit","quit"],"壊れる":["break (by itself)","broke (by itself)"],"揺れる":["shake","shook"],"落ちる":["fall","fell"],"祈る":["pray","prayed"],"起こす":["wake (someone) up","woke (someone) up"],"噛む":["chew","chewed"],"思う":["think","thought"],"出席する":["attend","attended"],"迎える":["meet (someone arriving)","met (someone arriving)"],"触る":["touch","touched"],"捕まえる":["catch","caught"],"寄る":["stop by","stopped by"],"決まる":["be decided","was decided"],"逃げる":["run away","ran away"],"包む":["wrap","wrapped"],"飾る":["decorate","decorated"],"けんかする":["have a fight","had a fight"],"頑張る":["do your best","did your best"],"投げる":["throw","threw"],"故障する":["break down","broke down"],"受ける":["take (an exam)","took (an exam)"],"間違える":["make a mistake","made a mistake"],"足りる":["be enough","was enough"],"行う":["carry out","carried out"],"無くなる":["be lost","was lost"],"準備する":["prepare","prepared"],"痩せる":["lose weight","lost weight"],"決める":["decide","decided"],"調べる":["look up","looked up"],"光る":["shine","shone"],"知らせる":["let (someone) know","let (someone) know"],"始める":["start","started"],"もらう":["receive","received"],"泣く":["cry","cried"],"治る":["get better","got better"],"残る":["remain","remained"],"立てる":["stand (something) up","stood (something) up"],"くれる":["give (to me)","gave (to me)"],"驚く":["be surprised","was surprised"],"漬ける":["soak","soaked"],"増える":["increase","increased"],"けがする":["get hurt","got hurt"],"選ぶ":["choose","chose"],"届ける":["deliver","delivered"],"挨拶する":["greet","greeted"],"乾く":["dry","dried"],"思い出す":["remember","remembered"],"踊る":["dance","danced"],"塗る":["paint","painted"],"探す":["look for","looked for"],"運転する":["drive","drove"],"育てる":["bring up","brought up"],"案内する":["show around","showed around"],"通う":["commute","commuted"],"連れる":["take (someone) along","took (someone) along"],"招待する":["invite","invited"],"進む":["go forward","went forward"],"楽しむ":["enjoy","enjoyed"],"泊まる":["stay the night","stayed the night"],"チェックする":["check","checked"],"喜ぶ":["be delighted","was delighted"],"引っ越す":["move house","moved house"],"遠慮する":["hold back","held back"],"亡くなる":["pass away","passed away"],"入学する":["start school","started school"],"片付ける":["tidy up","tidied up"],"写す":["copy","copied"],"足す":["add","added"],"生産する":["produce","produced"],"暮れる":["get dark","got dark"],"釣る":["fish","fished"],"打つ":["hit","hit"],"謝る":["apologise","apologised"],"続ける":["continue","continued"],"叱る":["scold","scolded"],"びっくりする":["be surprised","was surprised"],"変える":["change (something)","changed (something)"],"沸かす":["boil (water)","boiled (water)"],"空く":["become free","became free"],"計画する":["plan","planned"],"変わる":["change (by itself)","changed (by itself)"],"済む":["be finished","was finished"],"支度する":["get ready","got ready"],"見える":["be visible","was visible"],"折れる":["snap","snapped"],"伝える":["tell","told"],"滑る":["slip","slipped"],"送る":["send","sent"],"あげる":["give","gave"],"騒ぐ":["make a noise","made a noise"],"尋ねる":["ask","asked"],"放送する":["broadcast","broadcast"],"負ける":["lose","lost"],"見つける":["find","found"],"下りる":["go down","went down"],"承知する":["agree","agreed"],"慣れる":["get used to","got used to"],"手伝う":["help","helped"],"笑う":["laugh","laughed"],"運ぶ":["carry","carried"],"下る":["go down","went down"],"褒める":["praise","praised"],"合う":["fit","fitted"],"退院する":["leave hospital","left hospital"],"遅れる":["be late","was late"],"見つかる":["be found","was found"],"太る":["put on weight","put on weight"],"直る":["be fixed","was fixed"],"集める":["collect","collected"],"直す":["fix","fixed"],"続く":["continue","continued"],"世話する":["look after","looked after"],"払う":["pay","paid"],"焼ける":["burn","burned"],"冷える":["get cold","got cold"],"点く":["come on (light)","came on (light)"],"かまう":["mind","minded"],"落とす":["drop","dropped"],"出発する":["depart","departed"],"割れる":["break (glass)","broke (glass)"],"いじめる":["bully","bullied"],"回る":["go around","went around"],"濡れる":["get wet","got wet"],"倒れる":["fall over","fell over"],"考える":["think about","thought about"],"向かう":["head for","headed for"],"移る":["move","moved"],"動く":["move","moved"],"植える":["plant","planted"],"汚れる":["get dirty","got dirty"],"経験する":["experience","experienced"],"勝つ":["win","won"],"取り替える":["exchange","exchanged"],"急ぐ":["hurry","hurried"],"間に合う":["be in time","was in time"],"役に立つ":["be useful","was useful"],"戻る":["come back","came back"],"込む":["be crowded","was crowded"],"訪ねる":["visit","visited"],"下げる":["lower","lowered"],"入院する":["go into hospital","went into hospital"],"乗り換える":["change (trains)","changed (trains)"],"別れる":["split up","split up"],"相談する":["consult","consulted"],"眠る":["sleep","slept"],"上がる":["go up","went up"],"食事する":["have a meal","had a meal"],"集まる":["gather","gathered"],"生活する":["live","lived"],"輸出する":["export","exported"]};
+const CONJ_LABEL={pol:'polite',te:'て-form',neg:'negative',past:'past'};
+const IT_VERBS=new Set(['開く','消える','曇る','咲く','閉まる','止まる','鳴く','晴れる','吹く','降る','鳴る','沸く','聞こえる','止む','壊れる','揺れる','落ちる','決まる','足りる','無くなる','光る','残る','増える','乾く','暮れる','空く','変わる','済む','見える','折れる','見つかる','直る','続く','焼ける','冷える','点く','割れる','込む','役に立つ','違う','故障']);
+// English 3rd person for "it …": go→goes, carry→carries, rain→rains
+const third=w=>w==='have'?'has':w==='do'?'does':w==='go'?'goes':/(s|sh|ch|x|z|o)$/.test(w)?w+'es':/[^aeiou]y$/.test(w)?w.slice(0,-1)+'ies':w+'s';
+function conjPrompt(base,past,f,k){
+  const it=IT_VERBS.has(k)||IT_VERBS.has(k.replace(/する$/,'')),they=k==='くれる',be=/^be /.test(base),able=base==='be able to';
+  const subj=it?'it':they?'they':'I';
+  const [w0,...rest]=base.split(' '),tail=rest.length?' '+rest.join(' '):'';
+  if(f==='te')return (able?'can':base)+' and… (て-form)';
+  if(f==='pol'){if(able)return 'I can (polite)';if(be)return (it?'it is':'I am')+' '+base.slice(3)+' (polite)';
+    return subj+' '+(it?third(w0)+tail:base)+' (polite)'}
+  if(f==='neg'){if(able)return "I can't";if(be)return (it?"it isn't":"I'm not")+' '+base.slice(3);
+    return subj+' '+(it?"doesn't":"don't")+' '+base}
+  return subj+' '+(be&&!it?past:past)}
+function makeConjCards(){
+  const out=[],byBase={};
+  for(const v of CARDS){const en=isVerb(v)&&(VEN[v.k]||VEN[v.k+'する']);if(!en)continue;
+    const [base,past]=en;let k=v.k;if(/する$/.test(v.kana)&&!/する$/.test(k))k+='する';
+    const W=conjOf(k,v.kana,v.k),R=conjOf(v.kana,v.kana,v.k);
+    const polNeg=s=>s.replace(/ます$/,'ません'),polPast=s=>s.replace(/ます$/,'ました');
+    const F={pol:[W.pol,R.pol,[]],te:[W.te,R.te,[]],neg:[W.neg,R.neg,[[polNeg(W.pol),polNeg(R.pol),'polite']]],past:[W.past,R.past,[[polPast(W.pol),polPast(R.pol),'polite']]]};
+    for(const f in F){const [wk,rk,alts]=F[f];
+      for(const [a,ar,note] of alts){READ[a]=[ar,kanaRomaji(ar)];if(note)NOTE[a]=note}
+      const c={id:'cj:'+f+':'+v.id,k:wk,kana:rk,r:kanaRomaji(rk),en:conjPrompt(base,past,f,v.k),type:'w',deck:v.deck,jl:[],pic:v.pic,
+        alts:alts.map(x=>x[0]),casual:new Set(),conj:f,base:v};
+      out.push(c);(byBase[base+'|'+f]=byBase[base+'|'+f]||[]).push(c)}
+  }
+  // verbs that share an English meaning (出る / 出かける "go out") accept each other's forms
+  for(const g of Object.values(byBase))if(g.length>1)for(const c of g)for(const o of g)if(o!==c){
+    for(const x of [o.k,...o.alts])if(!c.alts.includes(x)&&x!==c.k){c.alts.push(x);if(!READ[x])READ[x]=[o.kana,o.r]}}
+  // place each verb's cards straight after the verb, so they come up soon after you've learned it
+  for(const c of out.slice().reverse()){const i=CARDS.indexOf(c.base);CARDS.splice(i+1,0,c)}
+  return out.length;
+}
+const CONJ_COUNT=makeConjCards();
+const conjUnlocked=c=>!c.conj||(()=>{const s=st(c.base);return !!s&&!s.learning})();
 /* ---------- telling you exactly what was accepted ---------- */
 function markDiffEn(a,b){const B=new Set(b.split(/\s+/).map(normEn).filter(Boolean));
   return a.split(/\s+/).map(w=>{const n=normEn(w);return n&&!B.has(n)?'<b class="dw">'+escH(w)+'</b>':escH(w)}).join(' ')}
@@ -2495,10 +2534,10 @@ function render(){
   const isNew=!st(cur);const long=cur.k.length>5;
   const ph=phraseOn(cur);
   const front=S.set.dir==='je'?`<div class="jp${long?' long':''}">${ruby(cur)}</div>`:ph?`<div class="en-front ph"><span>${markPh(cur.ph[2])}</span><span class="phnote">Say the whole sentence in Japanese</span>${(S.set.phraseMode||'auto')==='auto'?'<button class="phsingle" id="phSingle">Try the single word instead</button>':''}</div>`:`<div class="en-front">${cur.en}</div>`;
-  let html=`<span class="tag${isNew?' new':''}">${isNew?'New card':'Review'}${cur.type==='p'?' · Phrase':''}${ph?' · In a sentence':''} · ${cur.type==='k'?DECKS[cur.deck]:(JW[cur.k]||JW[cur.kana])?'JLPT '+(JW[cur.k]||JW[cur.kana]):'Extra'}</span><div class="front">${front}</div>`;
+  let html=`<span class="tag${isNew?' new':''}">${isNew?'New card':'Review'}${cur.type==='p'?' · Phrase':''}${ph?' · In a sentence':''}${cur.conj?' · '+CONJ_LABEL[cur.conj]+' of '+escH(cur.base.k):''} · ${cur.type==='k'?DECKS[cur.deck]:(()=>{const b=cur.conj?cur.base:cur,l=JW[b.k]||JW[b.kana];return l?'JLPT '+l:'Extra'})()}</span><div class="front">${front}</div>`;
   if(revealed){
     html+=`<div class="answer">${cur.pic?`<div class="pic" aria-hidden="true">${cur.pic}</div>`:''}${S.set.dir==='je'?`<div class="en">${cur.en}</div>`:
-      ph?`<div class="jp phans">${phRuby(cur)}</div><div class="phword">${escH(cur.k)}${cur.k!==cur.kana?'（'+escH(cur.kana)+'）':''} · ${escH(cur.en)}</div>`:`<div class="jp">${ruby(shownCard())}</div>${cur.type==='k'&&S.set.ruby==='romaji'?`<div class="kana">${cur.r}</div>`:''}`}${altsHtml()}${conjHtml(cur,isNew||showConj)}</div>`;
+      ph?`<div class="jp phans">${phRuby(cur)}</div><div class="phword">${escH(cur.k)}${cur.k!==cur.kana?'（'+escH(cur.kana)+'）':''} · ${escH(cur.en)}</div>`:`<div class="jp">${ruby(shownCard())}</div>${cur.type==='k'&&S.set.ruby==='romaji'?`<div class="kana">${cur.r}</div>`:''}`}${altsHtml()}${conjHtml(cur,showConj)}</div>`;
   }
   card.innerHTML=html;
   const fb=$('fbBar');fb.hidden=!feedback;if(feedback){fb.className='feedback '+feedback.cls;if(feedback.html)fb.innerHTML=feedback.html;else fb.textContent=feedback.text}
@@ -2817,12 +2856,15 @@ function renderStats(){
   // cards by level
   let learned=0;const rows=[];
   for(const [dk,name] of Object.entries(DECKNAMES)){
-    const cs=CARDS.filter(x=>x.deck===dk);if(!cs.length)continue;
+    const cs=CARDS.filter(x=>x.deck===dk&&!x.conj);if(!cs.length)continue;
     const n={new:0,learn:0,known:0,master:0};for(const x of cs)n[bucket(stateOf(x,dir))]++;
     learned+=n.known+n.master;
     const seg=['learn','known','master','new'].filter(k=>n[k]).map(k=>`<i class="s-${k}" style="flex:${n[k]}" title="${n[k]} ${k}"></i>`).join('');
     rows.push(`<div class="drow"><div class="top"><b>${name}</b><span>${n.known+n.master} of ${cs.length} learned${n.learn?` · ${n.learn} learning`:''}</span></div><div class="pstack">${seg}</div></div>`);
   }
+  {const cs=CARDS.filter(x=>x.conj&&S.set.decks.includes(x.deck));if(cs.length){const n={new:0,learn:0,known:0,master:0};for(const x of cs)n[bucket(stateOf(x,dir))]++;
+    const seg=['learn','known','master','new'].filter(k=>n[k]).map(k=>`<i class="s-${k}" style="flex:${n[k]}" title="${n[k]} ${k}"></i>`).join('');
+    rows.push(`<div class="drow"><div class="top"><b>Verb forms</b><span>${n.known+n.master} of ${cs.length} learned${n.learn?` · ${n.learn} learning`:''}</span></div><div class="pstack">${seg}</div></div>`)}}
   $('stDecks').innerHTML=rows.join('');$('stKnown').textContent=learned;
   // coming up
   const end=new Date();end.setHours(23,59,59,999);const t1=end.getTime()+DAY,t7=end.getTime()+7*DAY;
