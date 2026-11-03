@@ -2000,7 +2000,8 @@ const parse=(raw,type,deck,imported)=>raw.trim().split('\n').map(l=>{const [k,ka
 const WORDS=parse(RAW,'w','n5').concat(parse(RAW_N5X,'w','n5',true)),PHRASES=parse(RAW_P,'p','n5');
 const N4=parse(RAW_N4,'w','n4',true),HIRA=parse(RAW_HIRA,'k','hira'),KATA=parse(RAW_KATA,'k','kata');
 // introduce one phrase after every three words
-const CARDS=[];{let p=0;WORDS.forEach((w,i)=>{if(i%3===0&&p<PHRASES.length)CARDS.push(PHRASES[p++]);CARDS.push(w)});while(p<PHRASES.length)CARDS.push(PHRASES[p++])}
+// phrases spread evenly through the whole word list (not bunched at the start)
+const CARDS=[];{const gap=WORDS.length/Math.max(1,PHRASES.length);let p=0;WORDS.forEach((w,i)=>{if(p<PHRASES.length&&i>=Math.floor(p*gap))CARDS.push(PHRASES[p++]);CARDS.push(w)});while(p<PHRASES.length)CARDS.push(PHRASES[p++])}
 CARDS.push(...N4,...HIRA,...KATA);
 const DECKS={hira:'Hiragana',kata:'Katakana',n5:'N5',n4:'N4'};
 let _pk='',_pool=[];
@@ -2114,15 +2115,7 @@ function nextCard(){
   if(S.newDone[S.set.dir]+(walking?walkNew:0)<S.set.newPerDay){
     // take new cards from the chosen decks in turn
     const ds=S.set.decks;
-    // words and phrases are mixed at random (phrases spread evenly through what's left); now and then a verb form
-    const kind=c=>c.conj?'c':c.type==='p'?'p':'w';
-    for(let i=0;i<ds.length;i++){const dk=ds[(S.newDone[S.set.dir]+i)%ds.length];
-      const ok=c=>c.deck===dk&&!st(c)&&c.id!==lastId&&sk(c)&&conjUnlocked(c);
-      const left=k=>pool().filter(c=>kind(c)===k&&ok(c));
-      const W=left('w'),P=left('p'),C=left('c');
-      if(C.length&&Math.random()<.25)return C[0];
-      if(W.length&&P.length)return Math.random()<3*P.length/(3*P.length+W.length)?P[Math.floor(Math.random()*Math.min(P.length,5))]:W[0];
-      const n=W[0]||P[0]||C[0];if(n)return n}
+    for(let i=0;i<ds.length;i++){const dk=ds[(S.newDone[S.set.dir]+i)%ds.length];const n=pool().find(c=>c.deck===dk&&!st(c)&&c.id!==lastId&&sk(c)&&conjUnlocked(c));if(n)return n}
   }
   if(due.length)return due[0];
   const ahead=pool().filter(c=>{const s=st(c);return s&&s.learning&&s.due<=now+20*MIN&&sk(c)});

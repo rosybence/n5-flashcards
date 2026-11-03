@@ -326,7 +326,7 @@ function build(rows,type,deck){return rows.map(([es,en,esA,enA,pic,ph])=>{
 const CARDS=[];
 for(const d of Object.keys(LEVELS)){
   const W=build(DATA[d+'w'],'w',d),P=build(DATA[d+'p'],'p',d);let p=0;
-  W.forEach((w,i)=>{if(i%3===0&&p<P.length)CARDS.push(P[p++]);CARDS.push(w)});while(p<P.length)CARDS.push(P[p++]);
+  const gap=W.length/Math.max(1,P.length);W.forEach((w,i)=>{if(p<P.length&&i>=Math.floor(p*gap))CARDS.push(P[p++]);CARDS.push(w)});while(p<P.length)CARDS.push(P[p++]);  // phrases spread through the whole level
 }
 
 /* ---------- storage ---------- */
