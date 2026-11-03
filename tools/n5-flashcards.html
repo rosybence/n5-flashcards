@@ -2099,7 +2099,10 @@ function nextCard(){
   if(S.newDone[S.set.dir]+(walking?walkNew:0)<S.set.newPerDay){
     // take new cards from the chosen decks in turn
     const ds=S.set.decks;
-    for(let i=0;i<ds.length;i++){const dk=ds[(S.newDone[S.set.dir]+i)%ds.length];const n=pool().find(c=>c.deck===dk&&!st(c)&&c.id!==lastId&&sk(c)&&conjUnlocked(c));if(n)return n}
+    // and mix the kinds of card: word → phrase → word → verb form, so new words keep coming and phrases are spread out
+    const kind=c=>c.conj?'c':c.type==='p'?'p':'w',PAT=['w','p','w','c'],nd=S.newDone[S.set.dir]+(walking?walkNew:0);
+    for(let j=0;j<PAT.length;j++){const want=PAT[(nd+j)%PAT.length];
+      for(let i=0;i<ds.length;i++){const dk=ds[(nd+i)%ds.length];const n=pool().find(c=>c.deck===dk&&kind(c)===want&&!st(c)&&c.id!==lastId&&sk(c)&&conjUnlocked(c));if(n)return n}}
   }
   if(due.length)return due[0];
   const ahead=pool().filter(c=>{const s=st(c);return s&&s.learning&&s.due<=now+20*MIN&&sk(c)});
