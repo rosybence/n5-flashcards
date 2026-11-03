@@ -2097,6 +2097,7 @@ function fmt(ms){const m=ms/MIN;if(m<60)return Math.max(1,Math.round(m))+'m';con
 function grade(c,g){const isNew=!st(c);gradeBase(c,g);logReview(g,isNew);(S.revlog=S.revlog||[]).push([ck(c),Date.now(),g]);if(S.revlog.length>20000)S.revlog.splice(0,S.revlog.length-20000);save()}
 function gradeBase(c,g){
   rollDay();const now=Date.now();
+  revSinceNew=st(c)?revSinceNew+1:0;
   if(!st(c)){S.newMix=(S.newMix||0)+1;if(g<3&&!c.conj)S.newDone[S.set.dir]++}  // verb forms aren't new words: they don't use the daily allowance
   S.cards[ck(c)]=schedule(st(c),g,now);save();
 }
@@ -2107,16 +2108,19 @@ function counts(){
 }
 let lastId=null;
 let walkSkip=new Set();
+// new cards are mixed in among reviews: one new card after every 3 reviews (reviews still come by their intervals)
+let revSinceNew=0;
 function nextCard(){
   rollDay();const now=Date.now();const sk=c=>!(walking&&walkSkip.has(c.id));
   const pick=list=>{list.sort((a,b)=>st(a).due-st(b).due);const f=list.find(c=>c.id!==lastId);return f||list[0]};
   const due=pool().filter(c=>{const s=st(c);return s&&s.due<=now&&sk(c)});
-  if(due.length>1||(due.length===1&&due[0].id!==lastId))return pick(due);
+  let fresh=null;
   if(S.newDone[S.set.dir]+(walking?walkNew:0)<S.set.newPerDay){
-    // take new cards from the chosen decks in turn
     const ds=S.set.decks;
-    for(let i=0;i<ds.length;i++){const dk=ds[(S.newDone[S.set.dir]+i)%ds.length];const n=pool().find(c=>c.deck===dk&&!st(c)&&c.id!==lastId&&sk(c)&&conjUnlocked(c));if(n)return n}
+    for(let i=0;i<ds.length&&!fresh;i++){const dk=ds[(S.newDone[S.set.dir]+i)%ds.length];fresh=pool().find(c=>c.deck===dk&&!st(c)&&c.id!==lastId&&sk(c)&&conjUnlocked(c))||null}
   }
+  if(due.length>1||(due.length===1&&due[0].id!==lastId))return fresh&&revSinceNew>=3?fresh:pick(due);
+  if(fresh)return fresh;
   if(due.length)return due[0];
   const ahead=pool().filter(c=>{const s=st(c);return s&&s.learning&&s.due<=now+20*MIN&&sk(c)});
   if(ahead.length)return pick(ahead);
