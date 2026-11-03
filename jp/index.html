@@ -2457,7 +2457,7 @@ function markDiffJa(a,b){const A=[...a],B=[...b],n=A.length,m=B.length,L=Array.f
   return A.map((ch,k)=>keep.has(k)?escH(ch):'<b class="dw">'+escH(ch)+'</b>').join('')}
 function okFeedback(heard){
   const h=lastHit||{i:0,said:heard[0],ans:'',exact:true};
-  const extra=(casualHit(cur,heard)?' · '+regOf(heard.find(h=>cur.casual.has(normJa(h)))||'')+' form':'');
+  const extra=(casualHit(cur,heard)?' · '+regLabel(heard.find(h=>cur.casual.has(normJa(h)))||'')+' form':'');
   const first='';  // we show the guess that matched; the phone's other guesses are just noise
   lastHeard=h.said;
   if(h.exact)return{cls:'ok',text:'',html:`Correct — heard “${escH(h.said)}”${h.saidR?' · read as '+escH(h.saidR):''}${extra}${first}`};
@@ -2471,6 +2471,9 @@ function okFeedback(heard){
 }
 // still polite (〜ます/〜です) but informal, e.g. a dropped particle or い: 'informal'; otherwise 'casual'
 const regOf=x=>/(ます|ますか|です|ですか|ません|ました|ましたか|ください|お願いします)$/.test(x)?'informal':'casual';
+// forms that are said but not normally written: shown as 'informal · spoken' (never 'spoken' on its own)
+const SPOKEN_ONLY=new Set(['すいません']);
+const regLabel=x=>regOf(x)+(SPOKEN_ONLY.has(x)?' · spoken':'');
 /* ---------- rendering ---------- */
 const $=id=>document.getElementById(id);
 let cur=null,revealed=false,feedback=null,suggest=null,showAlts=false,showFix=false,fixKind='missing',fixText='',lastHeard='';
@@ -2512,7 +2515,7 @@ function altsHtmlBase(){
   const total=showJa?nJa:a.length-nJa+jl.length;if(!total)return '';
   if(!showAlts)return `<button class="alts-btn" id="altsBtn" aria-expanded="false">Other answers · ${total}</button>`;
   const ja=a.filter(x=>/[^\x00-\x7F]/.test(x)),en=a.filter(x=>!/[^\x00-\x7F]/.test(x)).map(x=>x.replace(/\bi\b/g,'I'));
-    const grp=(l,xs,cls)=>xs.length?`<div class="grp"><span class="lbl">${l}</span>${xs.map(x=>{const c=cls!=='jlpt'&&(cur.casual.has(x)||cur.casual.has(x.replace(/\bI\b/g,'i')));const r=cls.includes('jpc')?rdOf(x):'';const j=cls.includes('jl')&&JW[x];return `<span class="chip ${cls}${c?' casual':''}"><span class="cw">${r}<span>${escH(x)}</span></span>${j?`<small>JLPT ${JW[x]}</small>`:''}${c?`<small>${regOf(x)}</small>`:''}${NOTE[x]?`<small class="note">${NOTE[x]}</small>`:''}</span>`}).join('')}</div>`:'';
+    const grp=(l,xs,cls)=>xs.length?`<div class="grp"><span class="lbl">${l}</span>${xs.map(x=>{const c=cls!=='jlpt'&&(cur.casual.has(x)||cur.casual.has(x.replace(/\bI\b/g,'i')));const r=cls.includes('jpc')?rdOf(x):'';const j=cls.includes('jl')&&JW[x];return `<span class="chip ${cls}${c?' casual':''}"><span class="cw">${r}<span>${escH(x)}</span></span>${j?`<small>JLPT ${JW[x]}</small>`:''}${c?`<small>${regLabel(x)}</small>`:''}${NOTE[x]?`<small class="note">${NOTE[x]}</small>`:''}</span>`}).join('')}</div>`:'';
   return `<button class="alts-btn" id="altsBtn" aria-expanded="true">Hide other answers</button><div class="alts">${showJa?grp('JLPT list · preferred',ja.filter(x=>JW[x]),'jpc jl')+grp(ja.some(x=>JW[x])?'Other Japanese':'Japanese',ja.filter(x=>!JW[x]),'jpc'):grp('JLPT list · preferred',jl,'jlpt')+grp(jl.length?'Other English':'English',en,'')}</div>`;
 }
 function ruby(c){
