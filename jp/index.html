@@ -2013,7 +2013,7 @@ let S={cards:{},day:'',newDone:{je:0,ej:0},set:{dir:'je',ruby:'romaji',newPerDay
 try{const s=JSON.parse(localStorage.getItem(KEY));if(s){S={...S,...s,set:{...S.set,...(s.set||{})}}}}catch(e){}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 function today(){const d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()}
-function rollDay(){if(S.day!==today()){S.day=today();S.newDone={je:0,ej:0};save()}}
+function rollDay(){if(S.day!==today()){S.day=today();S.newDone={je:0,ej:0};S.newMix=0;save()}}
 rollDay();
 
 /* ---------- scheduler (Anki-style SM-2 with learning steps) ---------- */
@@ -2096,7 +2096,7 @@ function fmt(ms){const m=ms/MIN;if(m<60)return Math.max(1,Math.round(m))+'m';con
 function grade(c,g){const isNew=!st(c);gradeBase(c,g);logReview(g,isNew);(S.revlog=S.revlog||[]).push([ck(c),Date.now(),g]);if(S.revlog.length>20000)S.revlog.splice(0,S.revlog.length-20000);save()}
 function gradeBase(c,g){
   rollDay();const now=Date.now();
-  if(!st(c)&&g<3)S.newDone[S.set.dir]++;
+  if(!st(c)){S.newMix=(S.newMix||0)+1;if(g<3&&!c.conj)S.newDone[S.set.dir]++}  // verb forms aren't new words: they don't use the daily allowance
   S.cards[ck(c)]=schedule(st(c),g,now);save();
 }
 function counts(){
@@ -2115,7 +2115,7 @@ function nextCard(){
     // take new cards from the chosen decks in turn
     const ds=S.set.decks;
     // and mix the kinds of card: word → phrase → word → verb form, so new words keep coming and phrases are spread out
-    const kind=c=>c.conj?'c':c.type==='p'?'p':'w',PAT=['w','p','w','c'],nd=S.newDone[S.set.dir]+(walking?walkNew:0);
+    const kind=c=>c.conj?'c':c.type==='p'?'p':'w',PAT=['w','p','w','c'],nd=(S.newMix||0)+(walking?walkNew:0);
     for(let j=0;j<PAT.length;j++){const want=PAT[(nd+j)%PAT.length];
       for(let i=0;i<ds.length;i++){const dk=ds[(nd+i)%ds.length];const n=pool().find(c=>c.deck===dk&&kind(c)===want&&!st(c)&&c.id!==lastId&&sk(c)&&conjUnlocked(c));if(n)return n}}
   }
