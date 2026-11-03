@@ -2114,10 +2114,15 @@ function nextCard(){
   if(S.newDone[S.set.dir]+(walking?walkNew:0)<S.set.newPerDay){
     // take new cards from the chosen decks in turn
     const ds=S.set.decks;
-    // and mix the kinds of card: word → phrase → word → verb form, so new words keep coming and phrases are spread out
-    const kind=c=>c.conj?'c':c.type==='p'?'p':'w',PAT=['w','p','w','c'],nd=(S.newMix||0)+(walking?walkNew:0);
-    for(let j=0;j<PAT.length;j++){const want=PAT[(nd+j)%PAT.length];
-      for(let i=0;i<ds.length;i++){const dk=ds[(nd+i)%ds.length];const n=pool().find(c=>c.deck===dk&&kind(c)===want&&!st(c)&&c.id!==lastId&&sk(c)&&conjUnlocked(c));if(n)return n}}
+    // words and phrases are mixed at random (phrases spread evenly through what's left); now and then a verb form
+    const kind=c=>c.conj?'c':c.type==='p'?'p':'w';
+    for(let i=0;i<ds.length;i++){const dk=ds[(S.newDone[S.set.dir]+i)%ds.length];
+      const ok=c=>c.deck===dk&&!st(c)&&c.id!==lastId&&sk(c)&&conjUnlocked(c);
+      const left=k=>pool().filter(c=>kind(c)===k&&ok(c));
+      const W=left('w'),P=left('p'),C=left('c');
+      if(C.length&&Math.random()<.25)return C[0];
+      if(W.length&&P.length)return Math.random()<3*P.length/(3*P.length+W.length)?P[Math.floor(Math.random()*Math.min(P.length,5))]:W[0];
+      const n=W[0]||P[0]||C[0];if(n)return n}
   }
   if(due.length)return due[0];
   const ahead=pool().filter(c=>{const s=st(c);return s&&s.learning&&s.due<=now+20*MIN&&sk(c)});
