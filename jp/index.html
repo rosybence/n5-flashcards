@@ -2469,8 +2469,8 @@ function okFeedback(heard){
     `<span class="fbcmp"><span class="fbl">Answer</span> “${ans}”</span>${first}`+
     `<span class="fbsub">If the difference matters, tap “I got it wrong”.</span>`};
 }
-// still polite (〜ます/〜です) but conversational, e.g. a dropped particle: 'spoken'; otherwise 'casual'
-const regOf=x=>/(ます|ますか|です|ですか|ません|ました|ましたか|ください|お願いします)$/.test(x)?'spoken':'casual';
+// still polite (〜ます/〜です) but informal, e.g. a dropped particle or い: 'informal'; otherwise 'casual'
+const regOf=x=>/(ます|ますか|です|ですか|ません|ました|ましたか|ください|お願いします)$/.test(x)?'informal':'casual';
 /* ---------- rendering ---------- */
 const $=id=>document.getElementById(id);
 let cur=null,revealed=false,feedback=null,suggest=null,showAlts=false,showFix=false,fixKind='missing',fixText='',lastHeard='';
