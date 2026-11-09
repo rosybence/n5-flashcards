@@ -2082,7 +2082,8 @@ function fmt(ms){const m=ms/MIN;if(m<60)return Math.max(1,Math.round(m))+'m';con
 function grade(c,g){const isNew=!st(c);gradeBase(c,g);logReview(g,isNew);(S.revlog=S.revlog||[]).push([ck(c),Date.now(),g]);if(S.revlog.length>20000)S.revlog.splice(0,S.revlog.length-20000);save()}
 function gradeBase(c,g){
   rollDay();const now=Date.now();
-  revSinceNew=st(c)?revSinceNew+1:0;
+  revSinceNew=st(c)||c.conj?revSinceNew+1:0;
+  lastRevVerb=st(c)&&!st(c).learning&&isVerb(c)?c:null;  // a learned verb was just reviewed
   if(!st(c)){S.newMix=(S.newMix||0)+1;if(g<3&&!c.conj)S.newDone[S.set.dir]++}  // verb forms aren't new words: they don't use the daily allowance
   S.cards[ck(c)]=schedule(st(c),g,now);save();
 }
@@ -2094,15 +2095,17 @@ function counts(){
 let lastId=null;
 let walkSkip=new Set();
 // new cards are mixed in among reviews: one new card after every 3 reviews (reviews still come by their intervals)
-let revSinceNew=0;
+let revSinceNew=0,lastRevVerb=null;
 function nextCard(){
   rollDay();const now=Date.now();const sk=c=>!(walking&&walkSkip.has(c.id));
+  // verb forms come with the verb's reviews: straight after reviewing a verb you know, one of its forms you haven't done
+  if(lastRevVerb){const v=lastRevVerb;lastRevVerb=null;const f=pool().find(x=>x.conj&&x.base===v&&!st(x)&&sk(x));if(f)return f}
   const pick=list=>{list.sort((a,b)=>st(a).due-st(b).due);const f=list.find(c=>c.id!==lastId);return f||list[0]};
   const due=pool().filter(c=>{const s=st(c);return s&&s.due<=now&&sk(c)});
   let fresh=null;
   if(S.newDone[S.set.dir]+(walking?walkNew:0)<S.set.newPerDay){
     const ds=S.set.decks;
-    for(let i=0;i<ds.length&&!fresh;i++){const dk=ds[(S.newDone[S.set.dir]+i)%ds.length];fresh=pool().find(c=>c.deck===dk&&!st(c)&&c.id!==lastId&&sk(c)&&conjUnlocked(c))||null}
+    for(let i=0;i<ds.length&&!fresh;i++){const dk=ds[(S.newDone[S.set.dir]+i)%ds.length];fresh=pool().find(c=>c.deck===dk&&!c.conj&&!st(c)&&c.id!==lastId&&sk(c))||null}
   }
   if(due.length>1||(due.length===1&&due[0].id!==lastId))return fresh&&revSinceNew>=3?fresh:pick(due);
   if(fresh)return fresh;
