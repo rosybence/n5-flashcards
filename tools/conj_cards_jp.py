@@ -47,9 +47,11 @@ function makeConjCards(){
         alts:alts.map(x=>x[0]),casual:new Set(alts.map(x=>x[0])),conj:f,base:v};
       out.push(c);const gk=f==='te'?'te|'+c.en:base+'|'+f;(byBase[gk]=byBase[gk]||[]).push(c)}
   }
-  // verbs that share an English meaning (出る / 出かける "go out") accept each other's forms
-  for(const g of Object.values(byBase))if(g.length>1)for(const c of g)for(const o of g)if(o!==c){
-    for(const x of [o.k,...o.alts])if(!c.alts.includes(x)&&x!==c.k){c.alts.push(x);if(!READ[x])READ[x]=[o.kana,o.r]}}
+  // true synonyms accept each other's forms (with their casual/informal tags); verbs that only share an English word don't
+  const SYN=[['出る','出かける'],['する','やる'],['驚く','びっくりする'],['写す','コピーする']];
+  const syn=(a,b)=>SYN.some(g=>g.includes(a.base.k)&&g.includes(b.base.k));
+  for(const g of Object.values(byBase))if(g.length>1)for(const c of g)for(const o of g)if(o!==c&&syn(c,o)){
+    for(const x of [o.k,...o.alts])if(!c.alts.includes(x)&&x!==c.k){c.alts.push(x);if(o.casual.has(x))c.casual.add(x);if(!READ[x])READ[x]=[o.kana,o.r]}}
   // place each verb's cards straight after the verb, so they come up soon after you've learned it
   for(const c of out.slice().reverse()){const i=CARDS.indexOf(c.base);CARDS.splice(i+1,0,c)}
   return out.length;
