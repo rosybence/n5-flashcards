@@ -14,6 +14,7 @@ def patch(p, ven_path):
     JS = r'''
 /* ---------- conjugation cards: one form of a verb per card, unlocked once you know the verb ---------- */
 const VEN=''' + json.dumps(VEN, ensure_ascii=False, separators=(',', ':')) + r''';
+const TEF={"開く":"it's open","消える":"it's gone out","曇る":"it's cloudy","咲く":"it's in bloom","閉まる":"it's closed","止まる":"it's stopped","鳴く":"it's crying (an animal)","晴れる":"it's sunny","吹く":"it's blowing (the wind)","降る":"it's raining","鳴る":"it's ringing","沸く":"it's boiling","止む":"it's stopped (raining)","壊れる":"it's broken","揺れる":"it's shaking","落ちる":"it's fallen","決まる":"it's been decided","足りる":"there's enough","無くなる":"it's gone","光る":"it's shining","違う":"it's different","故障する":"it's broken down","残る":"it's left over","増える":"it's increasing","乾く":"it's dry","暮れる":"it's dark","空く":"it's free (empty)","変わる":"it's changed","済む":"it's done","折れる":"it's snapped","見つかる":"it's been found","直る":"it's fixed","続く":"it's continuing","焼ける":"it's burnt","冷える":"it's cold (chilled)","点く":"it's on (a light)","割れる":"it's broken (cracked)","込む":"it's crowded","役に立つ":"it's useful","汚れる":"it's dirty","倒れる":"it's fallen over","合う":"it's right","終わる":"it's finished","着く":"it's arrived","できる":"it's ready","動く":"it's moving","飛ぶ":"it's flying","分かる":"I understand","困る":"I'm in trouble","疲れる":"I'm tired","驚く":"I'm surprised","びっくりする":"I'm surprised","喜ぶ":"I'm delighted","怒る":"I'm angry","心配する":"I'm worried","けがする":"I'm hurt","治る":"I've got better","慣れる":"I'm used to it","太る":"I'm overweight","痩せる":"I'm thin","濡れる":"I'm wet","遅れる":"I'm running late","間に合う":"I'm in time","生きる":"I'm alive","死ぬ":"it's dead","亡くなる":"he has passed away","住む":"I live (somewhere)","勤める":"I work for a company","働く":"I'm working","通う":"I go there regularly","生活する":"I'm living","入院する":"I'm in hospital","眠る":"I'm sleeping","食事する":"I'm having a meal","思う":"I'm thinking","向かう":"I'm on my way","借りる":"I've borrowed it","吸う":"I'm smoking","釣る":"I'm fishing","見える":"I can see it","聞こえる":"I can hear it","負ける":"we're losing","勝つ":"we're winning","けんかする":"they're fighting","別れる":"they've split up","泣く":"she's crying","騒ぐ":"they're making a noise","踏む":"you're stepping on it","盗む":"they're stealing","いじめる":"they're bullying","叱る":"she's scolding","育てる":"I'm bringing up","建てる":"they're building","間違える":"it's wrong","生産する":"they're producing","輸出する":"they're exporting","放送する":"they're broadcasting","要る":"SKIP","生まれる":"SKIP","なる":"SKIP","過ぎる":"SKIP","もらう":"SKIP","くれる":"SKIP","連れる":"SKIP","無くす":"SKIP","落とす":"SKIP","滑る":"SKIP","入学する":"SKIP","退院する":"SKIP","承知する":"SKIP","経験する":"SKIP","かまう":"SKIP"};
 const CONJ_LABEL={pol:'polite',te:'て-form',neg:'negative',past:'past'};
 const IT_VERBS=new Set(['開く','消える','曇る','咲く','閉まる','止まる','鳴く','晴れる','吹く','降る','鳴る','沸く','聞こえる','止む','壊れる','揺れる','落ちる','決まる','足りる','無くなる','光る','残る','増える','乾く','暮れる','空く','変わる','済む','見える','折れる','見つかる','直る','続く','焼ける','冷える','点く','割れる','込む','役に立つ','違う','故障']);
 // English 3rd person for "it …": go→goes, carry→carries, rain→rains
@@ -34,12 +35,17 @@ function makeConjCards(){
     const [base,past]=en;let k=v.k;if(/する$/.test(v.kana)&&!/する$/.test(k))k+='する';
     const W=conjOf(k,v.kana,v.k),R=conjOf(v.kana,v.kana,v.k);
     const polNeg=s=>s.replace(/ます$/,'ません'),polPast=s=>s.replace(/ます$/,'ました');
-    const F={pol:[W.pol,R.pol,[]],te:[W.te,R.te,[]],neg:[W.neg,R.neg,[[polNeg(W.pol),polNeg(R.pol),'polite']]],past:[W.past,R.past,[[polPast(W.pol),polPast(R.pol),'polite']]]};
+    // negative and past: polite form is the answer, the plain form (said to friends) is accepted as casual
+    const F={pol:[W.pol,R.pol,[]],te:[W.te,R.te,[]],neg:[polNeg(W.pol),polNeg(R.pol),[[W.neg,R.neg,'']]],past:[polPast(W.pol),polPast(R.pol),[[W.past,R.past,'']]]};
+    // て-form: a request (please… → 〜てください) or, for verbs that can't be requested, 〜ています with its own English
+    const tk=TEF[v.k]??TEF[v.k+'する'];if(tk==='SKIP')delete F.te;
+    else if(tk)F.te=[W.te+'います',R.te+'います',[[W.te+'ます',R.te+'ます','']]];
+    else F.te=[W.te+'ください',R.te+'ください',[[W.te,R.te,'']]];
     for(const f in F){const [wk,rk,alts]=F[f];
       for(const [a,ar,note] of alts){READ[a]=[ar,kanaRomaji(ar)];if(note)NOTE[a]=note}
-      const c={id:'cj:'+f+':'+v.id,k:wk,kana:rk,r:kanaRomaji(rk),en:conjPrompt(base,past,f,v.k),type:'w',deck:v.deck,jl:[],pic:v.pic,
-        alts:alts.map(x=>x[0]),casual:new Set(),conj:f,base:v};
-      out.push(c);(byBase[base+'|'+f]=byBase[base+'|'+f]||[]).push(c)}
+      const c={id:'cj:'+(f==='te'?'te2':f)+':'+v.id,k:wk,kana:rk,r:kanaRomaji(rk),en:f==='te'?(tk||'please '+base):conjPrompt(base,past,f,v.k),type:'w',deck:v.deck,jl:[],pic:v.pic,
+        alts:alts.map(x=>x[0]),casual:new Set(alts.map(x=>x[0])),conj:f,base:v};
+      out.push(c);const gk=f==='te'?'te|'+c.en:base+'|'+f;(byBase[gk]=byBase[gk]||[]).push(c)}
   }
   // verbs that share an English meaning (出る / 出かける "go out") accept each other's forms
   for(const g of Object.values(byBase))if(g.length>1)for(const c of g)for(const o of g)if(o!==c){
