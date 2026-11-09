@@ -2421,11 +2421,12 @@ function makeConjCards(){
     const [base,past]=en;let k=v.k;if(/する$/.test(v.kana)&&!/する$/.test(k))k+='する';
     const W=conjOf(k,v.kana,v.k),R=conjOf(v.kana,v.kana,v.k);
     const polNeg=s=>s.replace(/ます$/,'ません'),polPast=s=>s.replace(/ます$/,'ました');
-    const F={pol:[W.pol,R.pol,[]],te:[W.te,R.te,[]],neg:[W.neg,R.neg,[[polNeg(W.pol),polNeg(R.pol),'polite']]],past:[W.past,R.past,[[polPast(W.pol),polPast(R.pol),'polite']]]};
+    // negative and past: polite form is the answer, the plain form (said to friends) is accepted as casual
+    const F={pol:[W.pol,R.pol,[]],te:[W.te,R.te,[]],neg:[polNeg(W.pol),polNeg(R.pol),[[W.neg,R.neg,'']]],past:[polPast(W.pol),polPast(R.pol),[[W.past,R.past,'']]]};
     for(const f in F){const [wk,rk,alts]=F[f];
       for(const [a,ar,note] of alts){READ[a]=[ar,kanaRomaji(ar)];if(note)NOTE[a]=note}
       const c={id:'cj:'+f+':'+v.id,k:wk,kana:rk,r:kanaRomaji(rk),en:conjPrompt(base,past,f,v.k),type:'w',deck:v.deck,jl:[],pic:v.pic,
-        alts:alts.map(x=>x[0]),casual:new Set(),conj:f,base:v};
+        alts:alts.map(x=>x[0]),casual:new Set(f==='neg'||f==='past'?alts.map(x=>x[0]):[]),conj:f,base:v};
       out.push(c);(byBase[base+'|'+f]=byBase[base+'|'+f]||[]).push(c)}
   }
   // verbs that share an English meaning (出る / 出かける "go out") accept each other's forms
