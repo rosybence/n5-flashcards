@@ -2446,6 +2446,10 @@ function conjPrompt(base,past,f,k){
   const subj=it?'it':they?'they':'I';
   const [w0,...rest]=base.split(' '),tail=rest.length?' '+rest.join(' '):'';
   if(f==='te')return (able?'can':base)+' and… (て-form)';
+  // verbs whose past looks like the present (read, put, cut…): a time word makes the tense clear, for you and the voice
+  const same=!it&&!be&&past.split(' ')[0]===w0,odd=['止める','別れる','太る'].includes(k);
+  if(same&&f==='pol')return subj+' '+base+(odd?' (polite)':' every day (polite)');
+  if(same&&f==='past')return subj+' '+past+(odd?' (past)':' yesterday');
   if(f==='pol'){if(able)return 'I can (polite)';if(be)return (it?'it is':'I am')+' '+base.slice(3)+' (polite)';
     return subj+' '+(it?third(w0)+tail:base)+' (polite)'}
   if(f==='neg'){if(able)return "I can't";if(be)return (it?"it isn't":"I'm not")+' '+base.slice(3);
