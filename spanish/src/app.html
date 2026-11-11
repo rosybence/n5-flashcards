@@ -909,7 +909,7 @@ async function walkLoop(){
     else ok=await afterAnswer(ok);if(!walking)break;
     if(S.set.walkMode==='listen'||micBlocked){
       // just listening isn't an answer: keep the card's schedule unless you said you got it wrong
-      if(!ok)grade(cur,0);else{if(!st(cur))walkNew++;walkSkip.add(cur.id)}
+      if(!ok)grade(cur,0);else{if(!st(cur)){walkNew++;revSinceNew=0}else revSinceNew++;walkSkip.add(cur.id)}  // listening still counts towards 'a new card every 3'
     }else grade(cur,ok?(knewIt?3:2):0);
     lastId=cur.id;await wait(400);
   }
