@@ -385,6 +385,8 @@ function scheduleFSRS(prev,g,now){
     // learning steps (1 min, 10 min) as before, then FSRS takes over
     if(G===1){cs.step=0;cs.due=now+STEPS[0]*MIN}
     else if(G===2){cs.due=now+Math.round(STEPS[Math.min(cs.step,STEPS.length-1)]*1.5)*MIN}
+    // right first time on a brand-new card: no 10-minute repeat, straight to its first interval
+    else if(G===3&&!prev){cs.learning=false;cs.ivl=fIvl(st.s,ret);cs.due=now+cs.ivl*DAY}
     else if(G===3){cs.step++;if(cs.step>=STEPS.length){cs.learning=false;cs.ivl=fIvl(st.s,ret);cs.due=now+cs.ivl*DAY}else cs.due=now+STEPS[cs.step]*MIN}
     else{cs.learning=false;const good=fIvl(fNextState(st0,t,3).s,ret);cs.ivl=Math.max(fIvl(st.s,ret),good+1);cs.due=now+cs.ivl*DAY}
   }else if(G===1){cs.lapses=(cs.lapses||0)+1;cs.learning=true;cs.step=1;cs.ivl=fIvl(st.s,ret);cs.due=now+STEPS[1]*MIN}

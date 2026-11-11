@@ -2061,6 +2061,8 @@ function scheduleFSRS(prev,g,now){
     // learning steps (1 min, 10 min) as before, then FSRS takes over
     if(G===1){cs.step=0;cs.due=now+STEPS[0]*MIN}
     else if(G===2){cs.due=now+Math.round(STEPS[Math.min(cs.step,STEPS.length-1)]*1.5)*MIN}
+    // right first time on a brand-new card: no 10-minute repeat, straight to its first interval
+    else if(G===3&&!prev){cs.learning=false;cs.ivl=fIvl(st.s,ret);cs.due=now+cs.ivl*DAY}
     else if(G===3){cs.step++;if(cs.step>=STEPS.length){cs.learning=false;cs.ivl=fIvl(st.s,ret);cs.due=now+cs.ivl*DAY}else cs.due=now+STEPS[cs.step]*MIN}
     else{cs.learning=false;const good=fIvl(fNextState(st0,t,3).s,ret);cs.ivl=Math.max(fIvl(st.s,ret),good+1);cs.due=now+cs.ivl*DAY}
   }else if(G===1){cs.lapses=(cs.lapses||0)+1;cs.learning=true;cs.step=1;cs.ivl=fIvl(st.s,ret);cs.due=now+STEPS[1]*MIN}
@@ -2181,9 +2183,10 @@ function enSay(c){return c.en.split(';').map(seg=>{const hints=[];
 // what the Japanese voice reads: phrases use the written form, since kana-only text makes it guess
 // (ゆっくりはなして… read as 'yukkuri wa nashite'); single words keep kana, where a lone kanji could be ambiguous
 const jaSay=c=>{if(c.k===c.kana||!/[\u3400-\u9fff]/.test(c.k))return c.kana;
-  if(c.type==='p')return c.k;
-  // words with は/へ inside (あさごはん, はずかしい): the written form avoids 'wa'/'e' misreadings
-  if(/[はへ]/.test(c.kana.slice(0,-1))&&!(/する$/.test(c.kana)&&!/する$/.test(c.k)))return c.k;
+  // phrases and verb forms: the written form (with okurigana it's unambiguous, and は isn't misread as 'wa')
+  if(c.type==='p'||c.conj)return c.k;
+  // compounds with は/へ in the middle (朝御飯, 大変): the kanji; everything else, incl. single kanji (八 → はち), kana
+  if([...c.k].length>=2&&/[はへ]/.test(c.kana.slice(1,-1))&&!(/する$/.test(c.kana)&&!/する$/.test(c.k)))return c.k;
   return c.kana}
 const promptOf=c=>c.type==='k'?null:S.set.dir==='je'?[jaSay(c),'ja-JP']:phraseOn(c)?[plainPh(c.ph[2]),'en-GB']:[enSay(c),'en-GB'];
 const answerOf=c=>c.type==='k'?[c.kana,'ja-JP']:S.set.dir==='je'?[enSay(c),'en-GB']:phraseOn(c)?[plainPh(c.ph[0]),'ja-JP']:[altShown&&c===cur?(c.type==='p'?altShown:(READ[altShown]&&READ[altShown][0]||altShown)):jaSay(c),'ja-JP'];
